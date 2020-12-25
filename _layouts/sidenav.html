@@ -61,7 +61,7 @@
 
               <div class="list-group">
                   <li class="nav-item">
-                    <a class="nav-link" href="indonesia2011.html">
+                    <a class="nav-link" href="indonesia2011sn.html">
                       <span data-feather="film"></span>
                       Тана Тораджа
                     </a>
@@ -159,7 +159,22 @@
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
           <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
 
-{{ content }}
+              <div class="container">
+
+              {% if page.category == "travel" %}
+
+                <div class="jumbotron text-center well">
+                  <h1>{{ page.title }}</h1>
+                </div>  
+                {{ content }}
+
+              {% else %}
+
+                {{ content }}
+
+              {% endif %}
+
+               </div>
 
           </div>
         </main>
