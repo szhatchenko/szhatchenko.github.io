@@ -63,6 +63,7 @@
   text-transform: uppercase;
 }
 
+/* https://stackoverflow.com/questions/29063244/consistent-styling-for-nested-lists-with-bootstrap */
 .list-group > .nav-item {
   padding-left: 20px;
 }
