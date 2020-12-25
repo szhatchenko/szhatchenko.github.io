@@ -29,6 +29,13 @@
   <style>
    .jumbotron { padding-top: 3%; padding-bottom: 3%; } 
   </style>
+
+  <!-- Custom styles for this template -->
+  <link href="sidenav.css" rel="stylesheet">
+
+  <!-- Icons -->
+  <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
+
 </head>
 <body>
 
@@ -37,42 +44,81 @@
         <nav class="col-md-2 d-none d-md-block bg-light sidebar">
           <div class="sidebar-sticky">
             <ul class="nav flex-column">
+
               <li class="nav-item">
                 <a class="nav-link active" href="#">
-                  <span data-feather="home"></span>
-                  Dashboard <span class="sr-only">(current)</span>
+                  <span data-feather="map"></span>
+                  Начало <span class="sr-only">(current)</span>
                 </a>
               </li>
+
               <li class="nav-item">
                 <a class="nav-link" href="#">
-                  <span data-feather="file"></span>
-                  Orders
+                  <span data-feather="briefcase"></span>
+                  Путешествия
                 </a>
               </li>
+
+              <div class="list-group">
+                  <li class="nav-item">
+                    <a class="nav-link" href="indonesia2011.html">
+                      <span data-feather="film"></span>
+                      Тана Тораджа
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="indonesia2013.html">
+                      <span data-feather="eye"></span>
+                      Батаки Суматры
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="roundtheworld2014.html">
+                      <span data-feather="globe"></span>
+                      Кругосветка 2014
+                    </a>
+                  </li>
+              </div> 
+
               <li class="nav-item">
                 <a class="nav-link" href="#">
-                  <span data-feather="shopping-cart"></span>
-                  Products
+                  <span data-feather="camera"></span>
+                  Таиланд
                 </a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">
-                  <span data-feather="users"></span>
-                  Customers
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">
-                  <span data-feather="bar-chart-2"></span>
-                  Reports
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">
-                  <span data-feather="layers"></span>
-                  Integrations
-                </a>
-              </li>
+
+              <div class="list-group">
+
+                 <li class="nav-item">
+                   <a class="nav-link" href="chinatown-walk2090.html">
+                     <span data-feather="film"></span>
+                     Чайнатаун
+                   </a>
+                 </li>
+
+                 <li class="nav-item">
+                   <a class="nav-link" href="kanchanaburi2010.html">
+                     <span data-feather="film"></span>
+                     Канчанабури
+                   </a>
+                 </li>
+
+                 <li class="nav-item">
+                   <a class="nav-link" href="bangkok-walk2010.html">
+                     <span data-feather="film"></span>
+                     Бангкок
+                   </a>
+                 </li>
+
+                 <li class="nav-item">
+                   <a class="nav-link" href="newyear2011.html">
+                     <span data-feather="film"></span>
+                     Новый год 2011
+                   </a>
+                 </li>
+
+              </div> 
+
             </ul>
 
             <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
@@ -120,5 +166,10 @@
 
       </div>
     </div>
+
+<script>
+  feather.replace()
+</script>
+
 </body>
 </html>
