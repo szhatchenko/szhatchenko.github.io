@@ -51,7 +51,7 @@ https://stackoverflow.com/questions/29063244/consistent-styling-for-nested-lists
             <ul class="nav flex-column">
 
               <li class="nav-item">
-                <a class="nav-link active" href="#">
+                <a class="nav-link {{ page.index-active }}" href="index2.html">
                   <span data-feather="map"></span>
                   Начало <span class="sr-only">(current)</span>
                 </a>
@@ -65,19 +65,19 @@ https://stackoverflow.com/questions/29063244/consistent-styling-for-nested-lists
 
               <div id="travels" class="list-group collapse show">
                   <li class="nav-item">
-                    <a class="nav-link" href="indonesia2011sn.html">
+                    <a class="nav-link {{ page.indonesia2011sn-active }}" href="indonesia2011sn.html">
                       <span data-feather="film"></span>
                       Тана Тораджа
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="indonesia2013.html">
+                    <a class="nav-link {{ page.indonesia2013sn-active }}" href="indonesia2013.html">
                       <span data-feather="eye"></span>
                       Батаки Суматры
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="roundtheworld2014.html">
+                    <a class="nav-link {{page.roundtheworld2014sn-active}}" href="roundtheworld2014.html">
                       <span data-feather="globe"></span>
                       Кругосветка 2014
                     </a>
