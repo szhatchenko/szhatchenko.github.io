@@ -125,36 +125,57 @@ https://stackoverflow.com/questions/29063244/consistent-styling-for-nested-lists
             </ul>
 
             <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-              <span>Saved reports</span>
+              <span>Интересные ссылки</span>
               <a class="d-flex align-items-center text-muted" href="#">
-                <span data-feather="plus-circle"></span>
+                <span data-feather="bookmark"></span>
               </a>
             </h6>
             <ul class="nav flex-column mb-2">
-              <li class="nav-item">
-                <a class="nav-link" href="#">
-                  <span data-feather="file-text"></span>
-                  Current month
+
+              <li class="nav-item my-collapsible-item">
+                <a class="nav-link" href="#astrophysics" data-toggle="collapse">
+                  <i data-feather="chevron-down"></i> Астрофизика
                 </a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">
-                  <span data-feather="file-text"></span>
-                  Last quarter
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">
-                  <span data-feather="file-text"></span>
-                  Social engagement
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">
-                  <span data-feather="file-text"></span>
-                  Year-end sale
-                </a>
-              </li>
+
+              <div id="astrophysics" class="list-group collapse show">
+
+                 <li class="nav-item my-collapsible-item">
+                   <a class="nav-link" href="#astrophysics-popov" data-toggle="collapse">
+                     <i data-feather="chevron-right"></i> С.Б. Попов
+                   </a>
+                 </li>
+
+                 <div id="astrophysics-popov" class="list-group collapse">
+
+                    <li class="nav-item">
+                      <a class="nav-link {{ page.astrophysics-popov-active }}" href="science/popov/index.html">
+                        <span data-feather="youtube"></span>
+                        ВШЭ, 2020
+                      </a>
+                    </li>
+
+                 </div> 
+
+                 <li class="nav-item my-collapsible-item">
+                   <a class="nav-link" href="#astrophysics-verkhodanov" data-toggle="collapse">
+                     <i data-feather="chevron-right"></i> О.В. Верходанов
+                   </a>
+                 </li>
+
+                 <div id="astrophysics-verkhodanov" class="list-group collapse">
+
+                    <li class="nav-item">
+                      <a class="nav-link {{ page.astrophysics-verkhodanov-active }}" href="science/verkhodanov/index.html">
+                        <span data-feather="youtube"></span>
+                        Космология
+                      </a>
+                    </li>
+
+                 </div> 
+
+              </div> 
+
             </ul>
           </div>
         </nav>

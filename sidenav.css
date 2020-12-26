@@ -67,3 +67,7 @@
 .list-group > .nav-item {
   padding-left: 20px;
 }
+
+.list-group > .list-group > .nav-item {
+  padding-left: 40px;
+}
