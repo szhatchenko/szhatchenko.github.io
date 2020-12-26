@@ -59,8 +59,7 @@ https://stackoverflow.com/questions/29063244/consistent-styling-for-nested-lists
 
               <li class="nav-item my-collapsible-item">
                 <a class="nav-link" href="#travels" data-toggle="collapse">
-                  <span data-feather="chevron-down"></span>
-                  Путешествия
+                  <i data-feather="chevron-down"></i> Путешествия
                 </a>
               </li>
 
@@ -87,8 +86,7 @@ https://stackoverflow.com/questions/29063244/consistent-styling-for-nested-lists
 
               <li class="nav-item my-collapsible-item">
                 <a class="nav-link" href="#thailand" data-toggle="collapse">
-                  <span data-feather="chevron-down"></span>
-                  Таиланд
+                  <i data-feather="chevron-down"></i> Таиланд
                 </a>
               </li>
 
@@ -193,19 +191,29 @@ https://stackoverflow.com/questions/29063244/consistent-styling-for-nested-lists
   $(function() {
           
     $('.my-collapsible-item').on('click', function() {
+      var href = $('.nav-link', this)[ 0 ].hash;
       var down = $('.feather.feather-chevron-down', this);
       var right = $('.feather.feather-chevron-right', this);
       if( down )
       {
           down.replaceWith( feather.icons[ "chevron-right" ].toSvg() );
+          {% comment %} 
+          Без следующей строчки коллапса не происходит, если нажимать на шеврон. Сам шеврон при этом меняется 
+          {% endcomment %}
+          $( href ).collapse('hide');
       }
       
       if( right )
       {
           right.replaceWith( feather.icons[ "chevron-down" ].toSvg() );
-      }  
-
-      //$('.feather', this).toggleClass('feather-chevron-right').toggleClass('feather-chevron-down');
+          {% comment %} 
+          Без следующей строчки коллапса не происходит, если нажимать на шеврон. Сам шеврон при этом меняется 
+          {% endcomment %}
+          $( href ).collapse('show');
+      }
+      {% comment %}   
+      $('.feather', this).toggleClass('feather-chevron-right').toggleClass('feather-chevron-down');
+      {% endcomment %}
     });
 
   });
