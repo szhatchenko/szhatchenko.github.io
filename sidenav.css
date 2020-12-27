@@ -27,7 +27,7 @@
   position: relative;
   top: 0;
   /*height: calc(100vh - 48px);*/
-  height: calc(100vh - 0px);
+  height: 100vh;
   padding-top: .5rem;
   overflow-x: hidden;
   overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
@@ -38,6 +38,28 @@
     position: -webkit-sticky;
     position: sticky;
   }
+}
+
+
+@media (max-width: 991px) {
+
+  .my-page-title-big {
+     display: none; 
+  }
+
+  [role="main"] {
+     padding-top: 54px; /* Space for fixed navbar */
+     z-index: 1;
+  }
+
+  .my-mobile-header {
+     position: fixed;
+     top: 0;
+     height: 54px; 
+     width: 100vw;
+     z-index: 2;
+  }
+
 }
 
 .sidebar .nav-link {
