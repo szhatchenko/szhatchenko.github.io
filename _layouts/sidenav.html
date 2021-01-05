@@ -225,6 +225,8 @@ https://stackoverflow.com/questions/29063244/consistent-styling-for-nested-lists
   $(function() {
 
    $('#sidebarCollapse').on('click', function () {
+       $(".nav-link").addClass("disabled");
+
        // fade in the overlay
        $('.overlay').addClass('active');
 
@@ -236,6 +238,7 @@ https://stackoverflow.com/questions/29063244/consistent-styling-for-nested-lists
        $('.sidebar').addClass('active');
        $('#dismiss').addClass('active');
 
+       $(".nav-link").removeClass("disabled");
     });
 
     $('#dismiss, .overlay').on('click', function () {
