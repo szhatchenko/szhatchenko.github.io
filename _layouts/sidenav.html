@@ -46,7 +46,7 @@ https://stackoverflow.com/questions/29063244/consistent-styling-for-nested-lists
 <body>
 
     <nav class="my-mobile-header navbar d-lg-none bg-light pr-3">
-       <span class="text-right col-1 pb-1"><button type="button" class="btn btn-secondary">&#9776;</button></span>
+       <span class="text-right col-1 pb-1"><button type="button" id="sidebarCollapse" class="btn btn-secondary">&#9776;</button></span>
        <span class="text-right col-11"><h4>{{ page.short-title | default: page.title }}</h4></span>
     </nav>
 
@@ -54,6 +54,11 @@ https://stackoverflow.com/questions/29063244/consistent-styling-for-nested-lists
       <div class="row">
         <nav class="col-lg-3 col-xl-2 d-none d-lg-block bg-light sidebar">
           <div class="sidebar-sticky">
+
+             <div id="dismiss">
+                <a class="d-flex align-items-center text-muted" href="#"><i data-feather="x-square"></i></a>
+            </div>
+
             <ul class="nav flex-column">
 
               <li class="nav-item">
@@ -209,6 +214,8 @@ https://stackoverflow.com/questions/29063244/consistent-styling-for-nested-lists
           </div>
         </main>
 
+        <div class="overlay"></div>
+
       </div>
     </div>
 
@@ -216,6 +223,32 @@ https://stackoverflow.com/questions/29063244/consistent-styling-for-nested-lists
   feather.replace()
 
   $(function() {
+
+   $('#sidebarCollapse').on('click', function () {
+       // open sidebar
+       $('.sidebar').removeClass('d-none');
+
+       $('.sidebar').addClass('d-sm-block');
+       $('.sidebar').addClass('col-sm-5');
+       $('.sidebar').addClass('active');
+       $('#dismiss').addClass('active');
+
+       // fade in the overlay
+       $('.overlay').addClass('active');
+    });
+
+    $('#dismiss, .overlay').on('click', function () {
+        // hide sidebar
+        $('#dismiss').removeClass('active');
+        $('.sidebar').removeClass('active');
+        $('.sidebar').removeClass('d-sm-block');
+        $('.sidebar').removeClass('col-sm-5');
+
+        $('.sidebar').addClass('d-none');
+
+        // hide overlay
+        $('.overlay').removeClass('active');
+    });
           
     $('.my-collapsible-item').on('click', function() {
       var href = $('.nav-link', this)[ 0 ].hash;
