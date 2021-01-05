@@ -45,12 +45,9 @@ https://stackoverflow.com/questions/29063244/consistent-styling-for-nested-lists
 </head>
 <body>
 
-    <nav class="my-mobile-header navbar d-lg-none bg-light pr-3">
-       <span class="text-left col-1">
-          <button  id="sidebarCollapse" type="button" class="btn btn-secondary">&#9776;</button>
-          <!--a class="align-items-left" href="#"><i data-feather="menu"></i></a-->
-       </span>
-       <span class="text-right col-11"><h4>{{ page.short-title | default: page.title }}</h4></span>
+    <nav class="my-mobile-header navbar d-lg-none bg-light">
+       <button id="sidebarCollapse" type="button" class="btn btn-secondary">&#9776;</button>
+       <span class="text-right"><h4>{{ page.short-title | default: page.title }}&nbsp;&nbsp;</h4></span>
     </nav>
 
     <div class="container-fluid">
