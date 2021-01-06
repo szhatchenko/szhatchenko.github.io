@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html>
+<head>
+{% comment %} 
+https://getbootstrap.com/docs/4.1/examples/dashboard/
+https://stackoverflow.com/questions/29063244/consistent-styling-for-nested-lists-with-bootstrap
+{% endcomment %}
+  <title>{{ page.title }}</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <script>
+    function docReady( fn ) 
+    {
+        // see if DOM is already available
+        if( document.readyState === "complete" || document.readyState === "interactive" ) 
+        {
+            // call on next available tick
+            setTimeout( fn, 1 );
+        } 
+        else 
+        {
+            document.addEventListener( "DOMContentLoaded", fn );
+        }
+    } 
+  </script>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+
+  {% comment %} 
+  <script data-ad-client="ca-pub-5567993287917010" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  {% endcomment %}
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-9NVP81HESV"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-9NVP81HESV');
+  </script>
+
+  <style>
+   .jumbotron {
+      padding-top: 3%; 
+      padding-bottom: 3%;
+      margin-bottom: 2rem;
+      background-color: lightgray;
+      border-radius: .3rem;  
+    }
+   blockquote { padding-left: 1%; padding-right: 1%; } 
+  </style>
+
+  <!-- Custom styles for this template -->
+  <link href="sidenav.css" rel="stylesheet">
+
+  <!-- Icons -->
+  <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
+
+</head>
+<body>
+
+    <nav class="my-mobile-header navbar d-lg-none bg-light clearfix">
+       <button id="sidebarCollapse" type="button" class="btn btn-secondary float-start">&#9776;</button>
+       <span class="float-end"><h4>{{ page.short-title | default: page.title }}</h4></span>
+    </nav>
+
+    <div class="container-fluid">
+      <div class="row">
+        <nav class="col-lg-3 col-xl-2 d-none d-lg-block bg-light sidebar">
+          <div class="sidebar-sticky">
+
+             <div id="dismiss">
+                <a class="d-flex align-items-center text-muted" href="#"><i data-feather="x-square"></i></a>
+            </div>
+
+            <ul class="nav flex-column">
+
+              <li class="nav-item">
+                <a class="nav-link {{ page.index-active }}" href="index.html">
+                  <span data-feather="map"></span>
+                  Начало
+                </a>
+              </li>
+
+              <li class="nav-item my-collapsible-item">
+                <a class="nav-link" href="#travels" data-bs-toggle="collapse">
+                  <i data-feather="chevron-down"></i> Путешествия
+                </a>
+              </li>
+
+              <div id="travels" class="list-group collapse show">
+                  <li class="nav-item">
+                    <a class="nav-link {{ page.indonesia2011sn-active }}" href="indonesia2011sn.html">
+                      <span data-feather="camera"></span>
+                      Тана Тораджа
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link {{ page.indonesia2013sn-active }}" href="indonesia2013sn.html">
+                      <span data-feather="eye"></span>
+                      Батаки Суматры
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link {{ page.roundtheworld2014sn-active }}" href="roundtheworld2014sn.html">
+                      <span data-feather="globe"></span>
+                      Кругосветка 2014
+                    </a>
+                  </li>
+              </div> 
+
+              <li class="nav-item my-collapsible-item">
+                <a class="nav-link" href="#thailand" data-bs-toggle="collapse">
+                  <i data-feather="chevron-down"></i> Таиланд
+                </a>
+              </li>
+
+              <div id="thailand" class="list-group collapse show">
+
+                 <li class="nav-item">
+                   <a class="nav-link {{ page.chinatown-walk2009sn-active }}" href="chinatown-walk2009sn.html">
+                     <span data-feather="users"></span>
+                     Чайнатаун
+                   </a>
+                 </li>
+
+                 <li class="nav-item">
+                   <a class="nav-link {{ page.kanchanaburi2010sn-active }}" href="kanchanaburi2010sn.html">
+                     <span data-feather="navigation-2"></span>
+                     Канчанабури
+                   </a>
+                 </li>
+
+                 <li class="nav-item">
+                   <a class="nav-link {{ page.bangkok-walk2010sn-active }}" href="bangkok-walk2010sn.html">
+                     <span data-feather="image"></span>
+                     Бангкок
+                   </a>
+                 </li>
+
+                 <li class="nav-item">
+                   <a class="nav-link {{ page.newyear2011sn-active }}" href="newyear2011sn.html">
+                     <span data-feather="camera"></span>
+                     Новый год 2011
+                   </a>
+                 </li>
+
+              </div> 
+
+            </ul>
+
+            <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+              <span>Интересные ссылки</span>
+              <a class="d-flex align-items-center text-muted" href="#">
+                <span data-feather="bookmark"></span>
+              </a>
+            </h6>
+            <ul class="nav flex-column mb-2">
+
+              <li class="nav-item my-collapsible-item">
+                <a class="nav-link" href="#astrophysics" data-bs-toggle="collapse">
+                  <i data-feather="chevron-down"></i> Астрофизика
+                </a>
+              </li>
+
+              <div id="astrophysics" class="list-group collapse show">
+
+                 <li class="nav-item my-collapsible-item">
+                   <a class="nav-link" href="#astrophysics-popov" data-bs-toggle="collapse">
+                     <i data-feather="chevron-right"></i> С.Б. Попов
+                   </a>
+                 </li>
+
+                 <div id="astrophysics-popov" class="list-group collapse">
+
+                    <li class="nav-item">
+                      <a class="nav-link {{ page.astrophysics-popov-active }}" href="science/popov/index.html">
+                        <span data-feather="youtube"></span>
+                        ВШЭ, 2020
+                      </a>
+                    </li>
+
+                 </div> 
+
+                 <li class="nav-item my-collapsible-item">
+                   <a class="nav-link" href="#astrophysics-verkhodanov" data-bs-toggle="collapse">
+                     <i data-feather="chevron-right"></i> О.В. Верходанов
+                   </a>
+                 </li>
+
+                 <div id="astrophysics-verkhodanov" class="list-group collapse">
+
+                    <li class="nav-item">
+                      <a class="nav-link {{ page.astrophysics-verkhodanov-active }}" href="science/verkhodanov/index.html">
+                        <span data-feather="youtube"></span>
+                        Космология
+                      </a>
+                    </li>
+
+                 </div> 
+
+              </div> 
+
+            </ul>
+          </div>
+        </nav>
+
+        <main role="main" class="col-md-12 col-lg-9 col-xl-10 px-4 ms-sm-auto">
+          <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+
+              <div class="container">
+
+              {% if page.category == "travel" %}
+
+                <div class="my-page-title-big jumbotron text-center well">
+                  <h1>{{ page.title }}</h1>
+                </div>  
+                {{ content }}
+
+              {% else %}
+
+                {{ content }}
+
+              {% endif %}
+
+               </div>
+
+          </div>
+        </main>
+
+        <div class="overlay"></div>
+
+      </div>
+    </div>
+
+<script>
+  feather.replace();
+      
+  docReady( function() 
+  {
+      document.querySelector( '#sidebarCollapse' ).addEventListener( "click", function()
+      {
+          document.querySelectorAll( '.nav-link' ).forEach( function( el ) { el.classList.add( "disabled" ); });
+          // fade in the overlay
+          document.querySelectorAll( '.overlay' ).forEach( function( el ) { el.classList.add( 'active' ); });
+
+          var sidebar = document.querySelector( '.sidebar' );
+          sidebar.classList.remove( 'd-none' );
+          sidebar.classList.add( 'd-sm-block', 'col-sm-4', 'active' );
+
+          document.querySelector( '#dismiss' ).classList.add('active');
+
+          document.querySelectorAll( '.nav-link' ).forEach( function( el ) { el.classList.remove( "disabled" ); });
+      });
+
+      document.querySelectorAll( '#dismiss, .overlay' ).forEach( function( control )
+      { 
+          control.addEventListener( "click", function()
+          {
+              // hide overlay
+              document.querySelectorAll( '.overlay' ).forEach( function( el ) { el.classList.remove( 'active' ); });
+              document.querySelector( '#dismiss' ).classList.remove('active');
+
+              var sidebar = document.querySelector( '.sidebar' );
+              sidebar.classList.remove( 'd-sm-block', 'col-sm-4', 'active' );
+              sidebar.classList.add( 'd-none' );
+          });
+      });
+
+      document.querySelectorAll( '.my-collapsible-item' ).forEach( function( control )
+      { 
+          control.addEventListener( "click", function( e )
+          {
+              var down = this.querySelector( '.feather.feather-chevron-down' );
+              var right = this.querySelector( '.feather.feather-chevron-right' );
+
+              if( down )
+              {
+                  var newIcon = document.createElement( 'span' ); 
+                  newIcon.innerHTML = feather.icons[ "chevron-right" ].toSvg();
+                  down.replaceWith( newIcon.firstChild );
+              }
+              
+              if( right )
+              {
+                  var newIcon = document.createElement( 'span' ); 
+                  newIcon.innerHTML = feather.icons[ "chevron-down" ].toSvg();
+                  right.replaceWith( newIcon.firstChild );
+              }
+          });
+      });
+  });
+
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+</body>
+</html>
