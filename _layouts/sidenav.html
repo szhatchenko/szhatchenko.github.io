@@ -9,6 +9,22 @@ https://stackoverflow.com/questions/29063244/consistent-styling-for-nested-lists
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+  <script>
+    function docReady( fn ) 
+    {
+        // see if DOM is already available
+        if( document.readyState === "complete" || document.readyState === "interactive" ) 
+        {
+            // call on next available tick
+            setTimeout( fn, 1 );
+        } 
+        else 
+        {
+            document.addEventListener( "DOMContentLoaded", fn );
+        }
+    } 
+  </script>
+
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
@@ -220,66 +236,64 @@ https://stackoverflow.com/questions/29063244/consistent-styling-for-nested-lists
     </div>
 
 <script>
-  feather.replace()
-
-  $(function() {
-
-   $('#sidebarCollapse').on('click', function () {
-       $(".nav-link").addClass("disabled");
-
-       // fade in the overlay
-       $('.overlay').addClass('active');
-
-       // open sidebar
-       $('.sidebar').removeClass('d-none');
-
-       $('.sidebar').addClass('d-sm-block');
-       $('.sidebar').addClass('col-sm-4');
-       $('.sidebar').addClass('active');
-       $('#dismiss').addClass('active');
-
-       $(".nav-link").removeClass("disabled");
-    });
-
-    $('#dismiss, .overlay').on('click', function () {
-        // hide overlay
-        $('.overlay').removeClass('active');
-
-        // hide sidebar
-        $('#dismiss').removeClass('active');
-        $('.sidebar').removeClass('active');
-        $('.sidebar').removeClass('d-sm-block');
-        $('.sidebar').removeClass('col-sm-4');
-
-        $('.sidebar').addClass('d-none');
-    });
-          
-    $('.my-collapsible-item').on('click', function() {
-      var href = $('.nav-link', this)[ 0 ].hash;
-      var down = $('.feather.feather-chevron-down', this);
-      var right = $('.feather.feather-chevron-right', this);
-      if( down )
-      {
-          down.replaceWith( feather.icons[ "chevron-right" ].toSvg() );
-          {% comment %} 
-          Без следующей строчки коллапса не происходит, если нажимать на шеврон. Сам шеврон при этом меняется 
-          {% endcomment %}
-          $( href ).collapse('hide');
-      }
+  docReady( function() 
+  {
+      feather.replace();
       
-      if( right )
+      document.querySelector( '#sidebarCollapse' ).addEventListener( "click", function()
       {
-          right.replaceWith( feather.icons[ "chevron-down" ].toSvg() );
-          {% comment %} 
-          Без следующей строчки коллапса не происходит, если нажимать на шеврон. Сам шеврон при этом меняется 
-          {% endcomment %}
-          $( href ).collapse('show');
-      }
-      {% comment %}   
-      $('.feather', this).toggleClass('feather-chevron-right').toggleClass('feather-chevron-down');
-      {% endcomment %}
-    });
+          document.querySelectorAll( '.nav-link' ).forEach( function( el ) { el.classList.add( "disabled" ); });
+          // fade in the overlay
+          document.querySelectorAll( '.overlay' ).forEach( function( el ) { el.classList.add( 'active' ); });
 
+          var sidebar = document.querySelector( '.sidebar' );
+          sidebar.classList.remove( 'd-none' );
+          sidebar.classList.add( 'd-sm-block', 'col-sm-4', 'active' );
+
+          document.querySelector( '#dismiss' ).classList.add('active');
+
+          document.querySelectorAll( '.nav-link' ).forEach( function( el ) { el.classList.remove( "disabled" ); });
+      });
+
+      document.querySelectorAll( '#dismiss, .overlay' ).forEach( function( control )
+      { 
+          control.addEventListener( "click", function()
+          {
+              // hide overlay
+              document.querySelectorAll( '.overlay' ).forEach( function( el ) { el.classList.remove( 'active' ); });
+              document.querySelector( '#dismiss' ).classList.remove('active');
+
+              var sidebar = document.querySelector( '.sidebar' );
+              sidebar.classList.remove( 'd-sm-block', 'col-sm-4', 'active' );
+              sidebar.classList.add( 'd-none' );
+          });
+      });
+
+      $('.my-collapsible-item').on('click', function() {
+        var href = $('.nav-link', this)[ 0 ].hash;
+        var down = $('.feather.feather-chevron-down', this);
+        var right = $('.feather.feather-chevron-right', this);
+        if( down )
+        {
+            down.replaceWith( feather.icons[ "chevron-right" ].toSvg() );
+            {% comment %} 
+            Без следующей строчки коллапса не происходит, если нажимать на шеврон. Сам шеврон при этом меняется 
+            {% endcomment %}
+            $( href ).collapse('hide');
+        }
+        
+        if( right )
+        {
+            right.replaceWith( feather.icons[ "chevron-down" ].toSvg() );
+            {% comment %} 
+            Без следующей строчки коллапса не происходит, если нажимать на шеврон. Сам шеврон при этом меняется 
+            {% endcomment %}
+            $( href ).collapse('show');
+        }
+        {% comment %}   
+        $('.feather', this).toggleClass('feather-chevron-right').toggleClass('feather-chevron-down');
+        {% endcomment %}
+      });
   });
 
 </script>
