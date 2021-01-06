@@ -271,28 +271,39 @@ https://stackoverflow.com/questions/29063244/consistent-styling-for-nested-lists
 
       document.querySelectorAll( '.my-collapsible-item' ).forEach( function( control )
       { 
-          control.addEventListener( "click", function()
+          control.addEventListener( "click", function( e )
           {
-              var href = this.querySelector( '.nav-link' ).hash;
               var down = this.querySelector( '.feather.feather-chevron-down' );
               var right = this.querySelector( '.feather.feather-chevron-right' );
 
               if( down )
               {
-                  down.innerHTML = feather.icons[ "chevron-right" ].toSvg();
-                  {% comment %} 
-                  Без следующей строчки коллапса не происходит, если нажимать на шеврон. Сам шеврон при этом меняется 
-                  {% endcomment %}
-                  href.collapse('hide');
+                  var newIcon = document.createElement( 'span' ); 
+                  newIcon.innerHTML = feather.icons[ "chevron-right" ].toSvg();
+                  down.replaceWith( newIcon.firstChild );
+
+                  {% comment %} Без следующего кода коллапса не происходит, если нажимать на шеврон. Сам шеврон при этом меняется {% endcomment %}
+                  //$( $('.nav-link', this)[ 0 ].hash ).collapse('hide'); 
+                  if( e.srcElement.nodeName == "svg" )
+                  {
+                      var collapsible = document.querySelector( this.querySelector( '.nav-link' ).hash );
+                      new bootstrap.Collapse( collapsible, { hide: true } );
+                  }
               }
               
               if( right )
               {
-                  right.innerHTML = feather.icons[ "chevron-down" ].toSvg();
-                  {% comment %} 
-                  Без следующей строчки коллапса не происходит, если нажимать на шеврон. Сам шеврон при этом меняется 
-                  {% endcomment %}
-                  href.collapse('show');
+                  var newIcon = document.createElement( 'span' ); 
+                  newIcon.innerHTML = feather.icons[ "chevron-down" ].toSvg();
+                  right.replaceWith( newIcon.firstChild );
+
+                  {% comment %} Без следующего кода коллапса не происходит, если нажимать на шеврон. Сам шеврон при этом меняется {% endcomment %}
+                  //$( $('.nav-link', this)[ 0 ].hash ).collapse('show'); 
+                  if( e.srcElement.nodeName == "svg" )
+                  {
+                      var collapsible = document.querySelector( this.querySelector( '.nav-link' ).hash );
+                      new bootstrap.Collapse( collapsible, { show: true } );
+                  }
               }
           });
       });
