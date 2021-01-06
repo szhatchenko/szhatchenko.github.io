@@ -288,6 +288,7 @@ https://stackoverflow.com/questions/29063244/consistent-styling-for-nested-lists
                   {
                       var collapsible = document.querySelector( this.querySelector( '.nav-link' ).hash );
                       new bootstrap.Collapse( collapsible, { hide: true } );
+                      document.location.hash = "";  
                   }
               }
               
@@ -303,6 +304,7 @@ https://stackoverflow.com/questions/29063244/consistent-styling-for-nested-lists
                   {
                       var collapsible = document.querySelector( this.querySelector( '.nav-link' ).hash );
                       new bootstrap.Collapse( collapsible, { show: true } );
+                      document.location.hash = "";  
                   }
               }
           });
