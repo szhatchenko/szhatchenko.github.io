@@ -283,13 +283,15 @@ https://stackoverflow.com/questions/29063244/consistent-styling-for-nested-lists
                   down.replaceWith( newIcon.firstChild );
 
                   {% comment %} Без следующего кода коллапса не происходит, если нажимать на шеврон. Сам шеврон при этом меняется {% endcomment %}
-                  //$( $('.nav-link', this)[ 0 ].hash ).collapse('hide'); 
+                  $( $('.nav-link', this)[ 0 ].hash ).collapse('hide'); 
+                  /*
                   if( e.srcElement.nodeName == "svg" )
                   {
                       var collapsible = document.querySelector( this.querySelector( '.nav-link' ).hash );
                       new bootstrap.Collapse( collapsible, { hide: true } );
                       document.location.hash = "";  
                   }
+                  */
               }
               
               if( right )
@@ -299,13 +301,15 @@ https://stackoverflow.com/questions/29063244/consistent-styling-for-nested-lists
                   right.replaceWith( newIcon.firstChild );
 
                   {% comment %} Без следующего кода коллапса не происходит, если нажимать на шеврон. Сам шеврон при этом меняется {% endcomment %}
-                  //$( $('.nav-link', this)[ 0 ].hash ).collapse('show'); 
+                  $( $('.nav-link', this)[ 0 ].hash ).collapse('show'); 
+                  /* 
                   if( e.srcElement.nodeName == "svg" )
                   {
                       var collapsible = document.querySelector( this.querySelector( '.nav-link' ).hash );
                       new bootstrap.Collapse( collapsible, { show: true } );
                       document.location.hash = "";  
                   }
+                  */   
               }
           });
       });
