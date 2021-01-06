@@ -269,30 +269,32 @@ https://stackoverflow.com/questions/29063244/consistent-styling-for-nested-lists
           });
       });
 
-      $('.my-collapsible-item').on('click', function() {
-        var href = $('.nav-link', this)[ 0 ].hash;
-        var down = $('.feather.feather-chevron-down', this);
-        var right = $('.feather.feather-chevron-right', this);
-        if( down )
-        {
-            down.replaceWith( feather.icons[ "chevron-right" ].toSvg() );
-            {% comment %} 
-            Без следующей строчки коллапса не происходит, если нажимать на шеврон. Сам шеврон при этом меняется 
-            {% endcomment %}
-            $( href ).collapse('hide');
-        }
-        
-        if( right )
-        {
-            right.replaceWith( feather.icons[ "chevron-down" ].toSvg() );
-            {% comment %} 
-            Без следующей строчки коллапса не происходит, если нажимать на шеврон. Сам шеврон при этом меняется 
-            {% endcomment %}
-            $( href ).collapse('show');
-        }
-        {% comment %}   
-        $('.feather', this).toggleClass('feather-chevron-right').toggleClass('feather-chevron-down');
-        {% endcomment %}
+      document.querySelectorAll( '.my-collapsible-item' ).forEach( function( control )
+      { 
+          control.addEventListener( "click", function()
+          {
+              var href = this.querySelector( '.nav-link' ).hash;
+              var down = this.querySelector( '.feather.feather-chevron-down' );
+              var right = this.querySelector( '.feather.feather-chevron-right' );
+
+              if( down )
+              {
+                  down.innerHTML = feather.icons[ "chevron-right" ].toSvg();
+                  {% comment %} 
+                  Без следующей строчки коллапса не происходит, если нажимать на шеврон. Сам шеврон при этом меняется 
+                  {% endcomment %}
+                  href.collapse('hide');
+              }
+              
+              if( right )
+              {
+                  right.innerHTML = feather.icons[ "chevron-down" ].toSvg();
+                  {% comment %} 
+                  Без следующей строчки коллапса не происходит, если нажимать на шеврон. Сам шеврон при этом меняется 
+                  {% endcomment %}
+                  href.collapse('show');
+              }
+          });
       });
   });
 
