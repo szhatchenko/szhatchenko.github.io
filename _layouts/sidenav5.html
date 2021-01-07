@@ -264,6 +264,11 @@ https://stackoverflow.com/questions/29063244/consistent-styling-for-nested-lists
 
     function loadPageWithProgress()
     {
+        if( document.querySelector( '#dismiss' ).classList.indexOf('active') != -1 )
+        {
+            document.querySelector( "#dismiss" ).click();
+        }  
+
         var progressBar = 
 '<div class="progress"> \
   <div class="progress-bar progress-bar-striped progress-bar-animated" \
