@@ -154,6 +154,21 @@ https://stackoverflow.com/questions/29063244/consistent-styling-for-nested-lists
 
               </div> 
 
+              <li class="nav-item my-collapsible-item">
+                <a class="nav-link" href="#experiments" data-bs-toggle="collapse">
+                  <i data-feather="chevron-down"></i> Эксперименты
+                </a>
+              </li>
+
+              <div id="experiments" class="list-group collapse show">
+                  <li class="nav-item">
+                    <a class="nav-link" href="javascript:loadPageWithProgress()">
+                      <span data-feather="download"></span>
+                      Загрузка изображения
+                    </a>
+                  </li>
+              </div> 
+
             </ul>
 
             <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
@@ -239,6 +254,52 @@ https://stackoverflow.com/questions/29063244/consistent-styling-for-nested-lists
 
       </div>
     </div>
+
+<script>
+
+    {% comment %} 
+    // http://christopher5106.github.io/web/2015/12/13/HTML5-file-image-upload-and-resizing-javascript-with-progress-bar.html
+    // https://learn.javascript.ru/xmlhttprequest   
+    {% endcomment %}
+
+    function loadPageWithProgress()
+    {
+        var progressBar = 
+'<div class="progress"> \
+  <div class="progress-bar progress-bar-striped progress-bar-animated" \
+      role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div> \
+</div>';
+
+       document.querySelector( "#mainContent" ).innerHTML = progressBar;
+
+       var xhr = new XMLHttpRequest();
+       xhr.open("GET", "https://szhatchenko.github.io/misc/DSC03405.JPG?" + new Date().getTime());
+       xhr.responseType = "blob"; 
+       xhr.origin = location.href; 
+       xhr.onprogress = function (e) 
+       {
+           if( e.lengthComputable ) 
+           {
+               var percentage = Math.round( e.loaded * 100 / e.total );
+               var progressBar = document.querySelector( ".progress-bar" );
+               progressBar.style.width = "" + percentage  + "%";
+               progressBar.setAttribute( "aria-valuenow", percentage );
+           }
+       }
+       xhr.onloadstart = function (e) 
+       {
+           console.log("start")
+       }
+       xhr.onloadend = function (e) 
+       {
+           console.log("end")
+           var imgSrc = URL.createObjectURL( xhr.response );
+           var img = '<img class="img-fluid d-block mx-auto" src="' + imgSrc + '" />';
+           document.querySelector( "#mainContent" ).innerHTML = img;
+       }
+       xhr.send();
+    }
+</script>
 
 <script>
   feather.replace();
