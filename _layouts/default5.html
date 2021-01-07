@@ -6,12 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <!-- Bootstrap CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css">
-
-  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-  <!--script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script-->
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
 
   {% comment %} 
   <script data-ad-client="ca-pub-5567993287917010" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
@@ -31,6 +26,8 @@
     .jumbotron {
       padding-top: 3%; 
       padding-bottom: 3%;
+      padding-left: 3%; 
+      padding-right: 3%;
       margin-bottom: 2rem;
       background-color: lightgray;
       border-radius: .3rem;  
@@ -40,7 +37,18 @@
 </head>
 <body>
 
+<div class="container">
+  <div class="jumbotron text-center">
+    <h1>{{ page.title }}</h1>
+  </div>
+</div>
+
+<div class="container">
+
 {{ content }}
 
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
 </body>
 </html>
