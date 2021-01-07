@@ -7,7 +7,7 @@ https://stackoverflow.com/questions/29063244/consistent-styling-for-nested-lists
 {% endcomment %}
   <title>{{ page.title }}</title>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <script>
     function docReady( fn ) 
@@ -46,6 +46,8 @@ https://stackoverflow.com/questions/29063244/consistent-styling-for-nested-lists
    .jumbotron {
       padding-top: 3%; 
       padding-bottom: 3%;
+      padding-left: 3%; 
+      padding-right: 3%;
       margin-bottom: 2rem;
       background-color: lightgray;
       border-radius: .3rem;  
@@ -93,19 +95,19 @@ https://stackoverflow.com/questions/29063244/consistent-styling-for-nested-lists
 
               <div id="travels" class="list-group collapse show">
                   <li class="nav-item">
-                    <a class="nav-link {{ page.indonesia2011sn-active }}" href="indonesia2011sn5.html">
+                    <a class="nav-link {{ page.indonesia2011sn-active }}" href="/indonesia2011sn5.html">
                       <span data-feather="camera"></span>
                       Тана Тораджа
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link {{ page.indonesia2013sn-active }}" href="indonesia2013sn5.html">
+                    <a class="nav-link {{ page.indonesia2013sn-active }}" href="/indonesia2013sn5.html">
                       <span data-feather="eye"></span>
                       Батаки Суматры
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link {{ page.roundtheworld2014sn-active }}" href="roundtheworld2014sn5.html">
+                    <a class="nav-link {{ page.roundtheworld2014sn-active }}" href="/roundtheworld2014sn5.html">
                       <span data-feather="globe"></span>
                       Кругосветка 2014
                     </a>
@@ -121,28 +123,28 @@ https://stackoverflow.com/questions/29063244/consistent-styling-for-nested-lists
               <div id="thailand" class="list-group collapse show">
 
                  <li class="nav-item">
-                   <a class="nav-link {{ page.chinatown-walk2009sn-active }}" href="chinatown-walk2009sn5.html">
+                   <a class="nav-link {{ page.chinatown-walk2009sn-active }}" href="/chinatown-walk2009sn5.html">
                      <span data-feather="users"></span>
                      Чайнатаун
                    </a>
                  </li>
 
                  <li class="nav-item">
-                   <a class="nav-link {{ page.kanchanaburi2010sn-active }}" href="kanchanaburi2010sn5.html">
+                   <a class="nav-link {{ page.kanchanaburi2010sn-active }}" href="/kanchanaburi2010sn5.html">
                      <span data-feather="navigation-2"></span>
                      Канчанабури
                    </a>
                  </li>
 
                  <li class="nav-item">
-                   <a class="nav-link {{ page.bangkok-walk2010sn-active }}" href="bangkok-walk2010sn5.html">
+                   <a class="nav-link {{ page.bangkok-walk2010sn-active }}" href="/bangkok-walk2010sn5.html">
                      <span data-feather="image"></span>
                      Бангкок
                    </a>
                  </li>
 
                  <li class="nav-item">
-                   <a class="nav-link {{ page.newyear2011sn-active }}" href="newyear2011sn5.html">
+                   <a class="nav-link {{ page.newyear2011sn-active }}" href="/newyear2011sn5.html">
                      <span data-feather="camera"></span>
                      Новый год 2011
                    </a>
@@ -177,7 +179,7 @@ https://stackoverflow.com/questions/29063244/consistent-styling-for-nested-lists
                  <div id="astrophysics-popov" class="list-group collapse">
 
                     <li class="nav-item">
-                      <a class="nav-link {{ page.astrophysics-popov-active }}" href="science/popov/index.html">
+                      <a class="nav-link {{ page.astrophysics-popov-active }}" href="/science/popov/index.html">
                         <span data-feather="youtube"></span>
                         ВШЭ, 2020
                       </a>
@@ -194,7 +196,7 @@ https://stackoverflow.com/questions/29063244/consistent-styling-for-nested-lists
                  <div id="astrophysics-verkhodanov" class="list-group collapse">
 
                     <li class="nav-item">
-                      <a class="nav-link {{ page.astrophysics-verkhodanov-active }}" href="science/verkhodanov/index.html">
+                      <a class="nav-link {{ page.astrophysics-verkhodanov-active }}" href="/science/verkhodanov/index.html">
                         <span data-feather="youtube"></span>
                         Космология
                       </a>
@@ -213,7 +215,7 @@ https://stackoverflow.com/questions/29063244/consistent-styling-for-nested-lists
 
               <div class="container">
 
-              {% if page.category == "travel" %}
+              {% if page.category == "travel" or page.category == "science" %}
 
                 <div class="my-page-title-big jumbotron text-center well">
                   <h1>{{ page.title }}</h1>
