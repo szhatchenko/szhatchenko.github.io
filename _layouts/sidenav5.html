@@ -275,7 +275,6 @@ https://stackoverflow.com/questions/29063244/consistent-styling-for-nested-lists
        var xhr = new XMLHttpRequest();
        xhr.open("GET", "https://szhatchenko.github.io/misc/DSC03405.JPG?" + new Date().getTime());
        xhr.responseType = "blob"; 
-       xhr.origin = location.href; 
        xhr.onprogress = function (e) 
        {
            if( e.lengthComputable ) 
@@ -285,18 +284,30 @@ https://stackoverflow.com/questions/29063244/consistent-styling-for-nested-lists
                progressBar.style.width = "" + percentage  + "%";
                progressBar.setAttribute( "aria-valuenow", percentage );
            }
-       }
-       xhr.onloadstart = function (e) 
+       };
+       xhr.onloadstart = function( e ) 
        {
-           console.log("start")
-       }
-       xhr.onloadend = function (e) 
+           //console.log("start")
+       };
+       xhr.onloadend = function( e ) 
        {
-           console.log("end")
-           var imgSrc = URL.createObjectURL( xhr.response );
-           var img = '<img class="img-fluid d-block mx-auto" src="' + imgSrc + '" />';
-           document.querySelector( "#mainContent" ).innerHTML = img;
-       }
+           //console.log("end")
+           if( xhr.status == 200 )
+           {
+               var imgSrc = URL.createObjectURL( xhr.response );
+               var img = '<img class="col-lg-9 img-fluid d-block mx-auto" src="' + imgSrc + '" />';
+               document.querySelector( "#mainContent" ).innerHTML = img;
+           }
+           else
+           {
+               var text = "Ошибка " + xhr.status + " при загрузке " + xhr.responseURL;
+               document.querySelector( "#mainContent" ).innerHTML = '<div class="alert alert-danger" role="alert">' + text + '</div>';
+           }  
+       };
+       //xhr.onerror = function( e ) 
+       //{
+       //    console.log( e );
+       //};
        xhr.send();
     }
 </script>
