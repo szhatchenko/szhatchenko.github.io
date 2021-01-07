@@ -67,7 +67,7 @@ https://stackoverflow.com/questions/29063244/consistent-styling-for-nested-lists
     <nav class="my-mobile-header navbar d-lg-none bg-light clearfix">
        <div class="container">
           <button id="sidebarCollapse" type="button" class="btn btn-secondary float-start">&#9776;</button>
-          <span class="float-end"><h4>{{ page.short-title | default: page.title }}&nbsp;</h4></span>
+          <span class="float-end"><h4><span id="mobileHeaderTitle">{{ page.short-title | default: page.title }}</span>&nbsp;</h4></span>
        </div>
     </nav>
 
@@ -162,7 +162,7 @@ https://stackoverflow.com/questions/29063244/consistent-styling-for-nested-lists
 
               <div id="experiments" class="list-group collapse show">
                   <li class="nav-item">
-                    <a class="nav-link" href="javascript:loadPageWithProgress()">
+                    <a class="nav-link" onclick="loadPageWithProgress( this ); return false;" href="">
                       <span data-feather="download"></span>
                       Загрузка изображения
                     </a>
@@ -262,12 +262,16 @@ https://stackoverflow.com/questions/29063244/consistent-styling-for-nested-lists
     // https://learn.javascript.ru/xmlhttprequest   
     {% endcomment %}
 
-    function loadPageWithProgress()
+    function loadPageWithProgress( aEl )
     {
         if( document.querySelector( '#dismiss' ).classList.contains('active') )
         {
             document.querySelector( "#dismiss" ).click();
-        }  
+        }
+        
+        document.querySelector( '#mobileHeaderTitle' ).innerText = "Загрузка изображения";
+        document.querySelectorAll( '.nav-link' ).forEach( function( el ) { el.classList.remove( "active" ); });
+        aEl.classList.add( "active" );
 
         var progressBar = 
 '<div class="progress"> \
