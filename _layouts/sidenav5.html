@@ -264,7 +264,7 @@ https://stackoverflow.com/questions/29063244/consistent-styling-for-nested-lists
 
     function loadPageWithProgress()
     {
-        if( document.querySelector( '#dismiss' ).classList.indexOf('active') != -1 )
+        if( document.querySelector( '#dismiss' ).classList.contains('active') )
         {
             document.querySelector( "#dismiss" ).click();
         }  
