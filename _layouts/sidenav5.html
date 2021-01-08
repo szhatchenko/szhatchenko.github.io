@@ -162,7 +162,7 @@ https://stackoverflow.com/questions/29063244/consistent-styling-for-nested-lists
 
               <div id="experiments" class="list-group collapse show">
                   <li class="nav-item">
-                    <a class="nav-link" onclick="loadPageWithProgress( this ); return false;" href="">
+                    <a class="nav-link" onclick="loadPageWithProgress( this, { url: 'https://szhatchenko.github.io/misc/DSC03405.JPG?' + new Date().getTime(), title: 'Загрузка изображения', type: 'blob' } ); return false;" href="">
                       <span data-feather="download"></span>
                       Загрузка изображения
                     </a>
@@ -196,7 +196,7 @@ https://stackoverflow.com/questions/29063244/consistent-styling-for-nested-lists
                  <div id="astrophysics-popov" class="list-group collapse">
 
                     <li class="nav-item">
-                      <a class="nav-link {{ page.astrophysics-popov-active }}" href="/science/popov/index.html">
+                      <a class="nav-link {{ page.astrophysics-popov-active }}" href="loadPageWithProgress( this, { url: 'https://szhatchenko.github.io/science/popov/hse2020.html', title: 'ВШЭ, 2020 - С.Б. Попов', type: 'text' } ); return false;" href="">
                         <span data-feather="youtube"></span>
                         ВШЭ, 2020
                       </a>
@@ -259,17 +259,17 @@ https://stackoverflow.com/questions/29063244/consistent-styling-for-nested-lists
 
     {% comment %} 
     // http://christopher5106.github.io/web/2015/12/13/HTML5-file-image-upload-and-resizing-javascript-with-progress-bar.html
-    // https://learn.javascript.ru/xmlhttprequest   
+    // https://learn.javascript.ru/xmlhttprequest
     {% endcomment %}
 
-    function loadPageWithProgress( aEl )
+    function loadPageWithProgress( aEl, params )
     {
         if( document.querySelector( '#dismiss' ).classList.contains('active') )
         {
             document.querySelector( "#dismiss" ).click();
         }
         
-        document.querySelector( '#mobileHeaderTitle' ).innerText = "Загрузка изображения";
+        document.querySelector( '#mobileHeaderTitle' ).innerText = params.title;
         document.querySelectorAll( '.nav-link' ).forEach( function( el ) { el.classList.remove( "active" ); });
         aEl.classList.add( "active" );
 
@@ -282,8 +282,8 @@ https://stackoverflow.com/questions/29063244/consistent-styling-for-nested-lists
        document.querySelector( "#mainContent" ).innerHTML = progressBar;
 
        var xhr = new XMLHttpRequest();
-       xhr.open("GET", "https://szhatchenko.github.io/misc/DSC03405.JPG?" + new Date().getTime());
-       xhr.responseType = "blob"; 
+       xhr.open( "GET", params.url );
+       xhr.responseType = params.type; 
        xhr.onprogress = function (e) 
        {
            if( e.lengthComputable ) 
@@ -303,9 +303,17 @@ https://stackoverflow.com/questions/29063244/consistent-styling-for-nested-lists
            //console.log("end")
            if( xhr.status == 200 )
            {
-               var imgSrc = URL.createObjectURL( xhr.response );
-               var img = '<img class="col-lg-9 img-fluid d-block mx-auto" src="' + imgSrc + '" />';
-               document.querySelector( "#mainContent" ).innerHTML = img;
+               var html = null;
+               if( params.type == 'blob' ) 
+               {
+                   var imgSrc = URL.createObjectURL( xhr.response );
+                   html = '<img class="col-lg-9 img-fluid d-block mx-auto" src="' + imgSrc + '" />';
+               }
+               else
+               {
+                   html = xhr.response;
+               } 
+               document.querySelector( "#mainContent" ).innerHTML = html;
            }
            else
            {
