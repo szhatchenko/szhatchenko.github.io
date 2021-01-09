@@ -78,6 +78,12 @@ https://stackoverflow.com/questions/29063244/consistent-styling-for-nested-lists
         <nav class="col-lg-3 col-xl-2 d-none d-lg-block bg-light sidebar">
           <div class="sidebar-sticky">
 
+             <div id="searchDiv">
+                <div class="container-fluid">
+                   <input class="form-control" id="searchInput" type="text" placeholder="Search...">
+                </div> 
+            </div>
+
              <div id="dismiss">
                 <a class="d-flex align-items-center text-muted" href="#"><i data-feather="x-square"></i></a>
             </div>
@@ -411,6 +417,20 @@ https://stackoverflow.com/questions/29063244/consistent-styling-for-nested-lists
                   newIcon.innerHTML = feather.icons[ "chevron-down" ].toSvg();
                   right.replaceWith( newIcon.firstChild );
               }
+          });
+      });
+
+      document.querySelectorAll( '#searchInput' ).forEach( function( control )
+      { 
+          control.addEventListener( "keyup", function()
+          {
+              var value = this.value.toLowerCase();
+              Array.prototype.filter.call( document.querySelectorAll( "li.nav-item" ), function( el ) 
+              { 
+                  var cmpText = el.innerText.trim().toLowerCase();
+                  el.style.display = cmpText.indexOf( value ) > -1 ? "block" : "none";
+                  console.log( el.innerText.trim() )
+              });
           });
       });
   });
