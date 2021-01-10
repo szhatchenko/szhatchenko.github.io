@@ -319,7 +319,8 @@ https://stackoverflow.com/questions/29063244/consistent-styling-for-nested-lists
         {
             document.querySelector( "#dismiss" ).click();
         }
-        
+
+        document.title = params.title;         
         document.querySelector( '#mobileHeaderTitle' ).innerText = params.title;
         document.querySelectorAll( '.nav-link' ).forEach( function( el ) { el.classList.remove( "active" ); });
         aEl.classList.add( "active" );
