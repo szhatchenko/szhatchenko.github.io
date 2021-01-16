@@ -449,10 +449,6 @@ https://stackoverflow.com/questions/29063244/consistent-styling-for-nested-lists
       { 
           control.addEventListener( "click", function( e )
           {
-              alert( this ); 
-              alert( this.querySelector ); 
-              alert( this.querySelector( '.feather.feather-chevron-down' ) ); 
-              alert( this.querySelector( '.feather-chevron-down' ) ); 
               var down = this.querySelector( '.feather.feather-chevron-down' );
               var right = this.querySelector( '.feather.feather-chevron-right' );
 
@@ -460,6 +456,7 @@ https://stackoverflow.com/questions/29063244/consistent-styling-for-nested-lists
               {
                   var newIcon = document.createElement( 'span' ); 
                   newIcon.innerHTML = feather.icons[ "chevron-right" ].toSvg();
+                  alert( newIcon.firstChild  ); 
                   down.replaceWith( newIcon.firstChild );
               }
               
@@ -467,6 +464,7 @@ https://stackoverflow.com/questions/29063244/consistent-styling-for-nested-lists
               {
                   var newIcon = document.createElement( 'span' ); 
                   newIcon.innerHTML = feather.icons[ "chevron-down" ].toSvg();
+                  alert( newIcon.firstChild  ); 
                   right.replaceWith( newIcon.firstChild );
               }
           });
