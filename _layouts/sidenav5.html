@@ -72,7 +72,7 @@ https://stackoverflow.com/questions/29063244/consistent-styling-for-nested-lists
 
     <nav class="my-mobile-header navbar d-lg-none bg-light clearfix">
        <div class="container">
-          <button id="sidebarCollapse" type="button" class="btn btn-secondary float-start">&#9776;</button>
+          <button id="sidebarCollapse" type="button" class="btn btn-light float-start fs-5">&#9776;</button>
           <span class="float-end"><h4><span id="mobileHeaderTitle">{{ page.short-title | default: page.title }}</span>&nbsp;</h4></span>
        </div>
     </nav>
@@ -390,7 +390,9 @@ https://stackoverflow.com/questions/29063244/consistent-styling-for-nested-lists
       
   docReady( function() 
   {
-      document.querySelector( '#sidebarCollapse' ).addEventListener( "click", function()
+      var iOS = navigator.userAgent.match( /iPhone|iPad|iPod/i ); 
+      var CLICK_EVENT = iOS ? "touchstart" | "click"  
+      document.querySelector( '#sidebarCollapse' ).addEventListener( CLICK_EVENT, function()
       {
           document.querySelectorAll( '.nav-link' ).forEach( function( el ) { el.classList.add( "disabled" ); });
           // fade in the overlay
@@ -407,7 +409,7 @@ https://stackoverflow.com/questions/29063244/consistent-styling-for-nested-lists
 
       document.querySelectorAll( '#dismiss, .overlay' ).forEach( function( control )
       { 
-          control.addEventListener( "click", function()
+          control.addEventListener( CLICK_EVENT, function()
           {
               // hide overlay
               document.querySelectorAll( '.overlay' ).forEach( function( el ) { el.classList.remove( 'active' ); });
@@ -421,7 +423,7 @@ https://stackoverflow.com/questions/29063244/consistent-styling-for-nested-lists
 
       document.querySelectorAll( '.my-collapsible-item' ).forEach( function( control )
       { 
-          control.addEventListener( "click", function( e )
+          control.addEventListener( CLICK_EVENT, function( e )
           {
               var down = this.querySelector( '.feather.feather-chevron-down' );
               var right = this.querySelector( '.feather.feather-chevron-right' );
