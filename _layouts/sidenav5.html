@@ -445,7 +445,7 @@ https://stackoverflow.com/questions/29063244/consistent-styling-for-nested-lists
           });
       });
 
-      be$( '.my-collapsible-item', function( control )
+      document.querySelectorAll( '.my-collapsible-item' ).forEach( function( control )
       { 
           control.addEventListener( "click", function( e )
           {
@@ -465,8 +465,14 @@ https://stackoverflow.com/questions/29063244/consistent-styling-for-nested-lists
                   newIcon.innerHTML = feather.icons[ "chevron-down" ].toSvg();
                   right.replaceWith( newIcon.firstChild );
               }
+          });
+      });
 
 /*
+      be$( '.my-collapsible-item', function( control )
+      { 
+          control.addEventListener( "click", function( e )
+          {
               be$( '.feather.feather-chevron-down', this, function( down )
               { 
                   var newIcon = document.createElement( 'span' ); 
@@ -480,9 +486,9 @@ https://stackoverflow.com/questions/29063244/consistent-styling-for-nested-lists
                   newIcon.innerHTML = feather.icons[ "chevron-down" ].toSvg();
                   right.replaceWith( newIcon.firstChild );
               });
-*/
           });
       });
+*/
 
       be$( '#searchInput', function( control )
       { 
