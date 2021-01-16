@@ -387,14 +387,16 @@ https://stackoverflow.com/questions/29063244/consistent-styling-for-nested-lists
 
 <script>
   feather.replace();
+
+  /* Tribute to old iPhones */
+  if( window.NodeList && !NodeList.prototype.forEach ) 
+  {
+      NodeList.prototype.forEach = Array.prototype.forEach;
+  }
       
   docReady( function() 
   {
-      var iOS = navigator.userAgent.match(/iPhone|iPad|iPod/i); 
-      var CLICK_EVENT = iOS ? "touchstart" : "click";
-      CLICK_EVENT = "click";
-
-      document.querySelector( '#sidebarCollapse' ).addEventListener( CLICK_EVENT, function()
+      document.querySelector( '#sidebarCollapse' ).addEventListener( "click", function()
       {
           alert( "click 1" );  
           alert( document.querySelectorAll( '.nav-link' ) );  
@@ -420,7 +422,7 @@ https://stackoverflow.com/questions/29063244/consistent-styling-for-nested-lists
 
       document.querySelectorAll( '#dismiss, .overlay' ).forEach( function( control )
       { 
-          control.addEventListener( CLICK_EVENT, function()
+          control.addEventListener( "click", function()
           {
               // hide overlay
               document.querySelectorAll( '.overlay' ).forEach( function( el ) { el.classList.remove( 'active' ); });
@@ -436,7 +438,7 @@ https://stackoverflow.com/questions/29063244/consistent-styling-for-nested-lists
 
       document.querySelectorAll( '.my-collapsible-item' ).forEach( function( control )
       { 
-          control.addEventListener( CLICK_EVENT, function( e )
+          control.addEventListener( "click", function( e )
           {
               var down = this.querySelector( '.feather.feather-chevron-down' );
               var right = this.querySelector( '.feather.feather-chevron-right' );
