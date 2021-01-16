@@ -391,7 +391,8 @@ https://stackoverflow.com/questions/29063244/consistent-styling-for-nested-lists
   docReady( function() 
   {
       var iOS = navigator.userAgent.match( /iPhone|iPad|iPod/i ); 
-      var CLICK_EVENT = iOS ? "touchstart" | "click"  
+      var CLICK_EVENT = iOS ? "touchstart" : "click";
+
       document.querySelector( '#sidebarCollapse' ).addEventListener( CLICK_EVENT, function()
       {
           document.querySelectorAll( '.nav-link' ).forEach( function( el ) { el.classList.add( "disabled" ); });
