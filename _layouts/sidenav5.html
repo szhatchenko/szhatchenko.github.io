@@ -398,26 +398,17 @@ https://stackoverflow.com/questions/29063244/consistent-styling-for-nested-lists
   {
       document.querySelector( '#sidebarCollapse' ).addEventListener( "click", function()
       {
-          alert( "click 1" );  
-          alert( document.querySelectorAll( '.nav-link' ) );  
           document.querySelectorAll( '.nav-link' ).forEach( function( el ) { el.classList.add( "disabled" ); });
-          alert( "click 2" );  
           // fade in the overlay
           document.querySelectorAll( '.overlay' ).forEach( function( el ) { el.classList.add( 'active' ); });
-          alert( "click 3" );  
 
           var sidebar = document.querySelector( '.sidebar' );
-          alert( "click 4" );  
           sidebar.classList.remove( 'd-none' );
-          alert( "click 5" );  
           sidebar.classList.add( 'd-sm-block', 'col-sm-4', 'active' );
 
-          alert( "click 6" );  
           document.querySelector( '#dismiss' ).classList.add('active');
 
-          alert( "click 7" );  
           document.querySelectorAll( '.nav-link' ).forEach( function( el ) { el.classList.remove( "disabled" ); });
-          alert( "click 8" );  
       });
 
       document.querySelectorAll( '#dismiss, .overlay' ).forEach( function( control )
