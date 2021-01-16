@@ -11,19 +11,37 @@ https://stackoverflow.com/questions/29063244/consistent-styling-for-nested-lists
   <meta name="description" content="{{ page.description | default: page.title }}" />
 
   <script>
-    function docReady( fn ) 
-    {
-        // see if DOM is already available
-        if( document.readyState === "complete" || document.readyState === "interactive" ) 
-        {
-            // call on next available tick
-            setTimeout( fn, 1 );
-        } 
-        else 
-        {
-            document.addEventListener( "DOMContentLoaded", fn );
-        }
-    } 
+
+  /* Tribute to old iPhones */
+  if( window.NodeList && !NodeList.prototype.forEach ) 
+  {
+      NodeList.prototype.forEach = Array.prototype.forEach;
+  }      
+
+  function beReady( fn ) 
+  {
+      // see if DOM is already available
+      if( document.readyState === "complete" || document.readyState === "interactive" ) 
+      {
+          // call on next available tick
+          setTimeout( fn, 1 );
+      } 
+      else 
+      {
+          document.addEventListener( "DOMContentLoaded", fn );
+      }
+  } 
+
+  function be$( term, base, fn ) 
+  {
+      if( typeof( base ) == "function" && !fn )
+      {
+          fn = base;
+          base = document; 
+      } 
+
+      base.querySelectorAll( term ).forEach( fn );
+  } 
   </script>
 
   <!-- Bootstrap CSS -->
@@ -388,46 +406,46 @@ https://stackoverflow.com/questions/29063244/consistent-styling-for-nested-lists
 <script>
   feather.replace();
 
-  /* Tribute to old iPhones */
-  if( window.NodeList && !NodeList.prototype.forEach ) 
+  beReady( function() 
   {
-      NodeList.prototype.forEach = Array.prototype.forEach;
-  }
-      
-  docReady( function() 
-  {
-      document.querySelector( '#sidebarCollapse' ).addEventListener( "click", function()
-      {
-          document.querySelectorAll( '.nav-link' ).forEach( function( el ) { el.classList.add( "disabled" ); });
-          // fade in the overlay
-          document.querySelectorAll( '.overlay' ).forEach( function( el ) { el.classList.add( 'active' ); });
+      be$( '#sidebarCollapse', function( control )
+      { 
+          control.addEventListener( "click", function()
+          {
+              be$( '.nav-link', function( el ) { el.classList.add( "disabled" ); });
+              // fade in the overlay
+              be$( '.overlay', function( el ) { el.classList.add( 'active' ); });
 
-          var sidebar = document.querySelector( '.sidebar' );
-          sidebar.classList.remove( 'd-none' );
-          sidebar.classList.add( 'd-sm-block', 'col-sm-4', 'active' );
+              be$( '.sidebar', function( sidebar )
+              {
+                  sidebar.classList.remove( 'd-none' );
+                  sidebar.classList.add( 'd-sm-block', 'col-sm-4', 'active' );
+              });
 
-          document.querySelector( '#dismiss' ).classList.add('active');
-
-          document.querySelectorAll( '.nav-link' ).forEach( function( el ) { el.classList.remove( "disabled" ); });
+              be$( '#dismiss', function( el ) { el.classList.add( 'active' ); });
+              be$( '.nav-link', function( el ) { el.classList.remove( "disabled" ); });
+          });
       });
 
-      document.querySelectorAll( '#dismiss, .overlay' ).forEach( function( control )
+      be$( '#dismiss, .overlay', function( control )
       { 
           control.addEventListener( "click", function()
           {
               // hide overlay
-              document.querySelectorAll( '.overlay' ).forEach( function( el ) { el.classList.remove( 'active' ); });
-              document.querySelector( '#dismiss' ).classList.remove('active');
+              be$( '.overlay', function( el ) { el.classList.remove( 'active' ); });
+              be$( '#dismiss', function( el ) { el.classList.remove( 'active' ); });
 
-              var sidebar = document.querySelector( '.sidebar' );
-              sidebar.classList.remove( 'd-sm-block', 'col-sm-4', 'active' );
-              sidebar.classList.add( 'd-none' );
+              be$( '.sidebar', function( sidebar )
+              {
+                  sidebar.classList.remove( 'd-sm-block', 'col-sm-4', 'active' );
+                  sidebar.classList.add( 'd-none' );
+              });
 
               return false;
           });
       });
 
-      document.querySelectorAll( '.my-collapsible-item' ).forEach( function( control )
+      be$( '.my-collapsible-item', function( control )
       { 
           control.addEventListener( "click", function( e )
           {
@@ -447,10 +465,26 @@ https://stackoverflow.com/questions/29063244/consistent-styling-for-nested-lists
                   newIcon.innerHTML = feather.icons[ "chevron-down" ].toSvg();
                   right.replaceWith( newIcon.firstChild );
               }
+
+/*
+              be$( '.feather.feather-chevron-down', this, function( down )
+              { 
+                  var newIcon = document.createElement( 'span' ); 
+                  newIcon.innerHTML = feather.icons[ "chevron-right" ].toSvg();
+                  down.replaceWith( newIcon.firstChild );
+              });
+
+              be$( '.feather.feather-chevron-right', this, function( right )
+              { 
+                  var newIcon = document.createElement( 'span' ); 
+                  newIcon.innerHTML = feather.icons[ "chevron-down" ].toSvg();
+                  right.replaceWith( newIcon.firstChild );
+              });
+*/
           });
       });
 
-      document.querySelectorAll( '#searchInput' ).forEach( function( control )
+      be$( '#searchInput', function( control )
       { 
           control.addEventListener( "keyup", function()
           {
