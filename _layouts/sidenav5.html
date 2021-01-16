@@ -91,7 +91,7 @@ https://stackoverflow.com/questions/29063244/consistent-styling-for-nested-lists
             {% endcomment %} 
 
              <div id="dismiss">
-                <a class="d-flex align-items-center text-muted" href="#"><i data-feather="x-square"></i></a>
+                <a class="d-flex align-items-center text-muted" href=""><i data-feather="x-square"></i></a>
             </div>
 
             <ul class="nav flex-column">
@@ -420,6 +420,8 @@ https://stackoverflow.com/questions/29063244/consistent-styling-for-nested-lists
               var sidebar = document.querySelector( '.sidebar' );
               sidebar.classList.remove( 'd-sm-block', 'col-sm-4', 'active' );
               sidebar.classList.add( 'd-none' );
+
+              return false;
           });
       });
 
