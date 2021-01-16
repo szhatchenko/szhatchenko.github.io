@@ -392,6 +392,7 @@ https://stackoverflow.com/questions/29063244/consistent-styling-for-nested-lists
   {
       var iOS = navigator.userAgent.match(/iPhone|iPad|iPod/i); 
       var CLICK_EVENT = iOS ? "touchstart" : "click";
+      CLICK_EVENT = "click";
 
       document.querySelector( '#sidebarCollapse' ).addEventListener( CLICK_EVENT, function()
       {
