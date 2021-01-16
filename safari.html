@@ -1,0 +1,21 @@
+<html>
+<body>
+<p>
+<a href="" id="link1">click</a><br/><br/>
+<a href="" id="link2">touchstart</a>
+</p>
+
+<script>
+      document.querySelector( '#link1' ).addEventListener( "click", function()
+      {
+           alert( "click" );
+      });
+      document.querySelector( '#link2' ).addEventListener( "touchstart", function()
+      {
+           alert( "touchstart" );
+      });
+      document.write( "<p>You can test now</p>" );
+</script>
+
+</body>
+</html>
