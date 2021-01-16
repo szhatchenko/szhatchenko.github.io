@@ -397,6 +397,7 @@ https://stackoverflow.com/questions/29063244/consistent-styling-for-nested-lists
       document.querySelector( '#sidebarCollapse' ).addEventListener( CLICK_EVENT, function()
       {
           alert( "click 1" );  
+          alert( document.querySelectorAll( '.nav-link' ) );  
           document.querySelectorAll( '.nav-link' ).forEach( function( el ) { el.classList.add( "disabled" ); });
           alert( "click 2" );  
           // fade in the overlay
