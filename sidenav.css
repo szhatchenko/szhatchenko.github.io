@@ -113,6 +113,10 @@
     display: block;
 }
 
+#sidebarCollapse {
+    cursor: pointer;
+}
+
 .overlay {
     display: none;
     position: fixed;
