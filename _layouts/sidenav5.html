@@ -32,15 +32,16 @@ https://stackoverflow.com/questions/29063244/consistent-styling-for-nested-lists
       }
   } 
 
-  function be$( term, base, fn ) 
+  function be$( term, base_or_fn ) 
   {
-      if( typeof( base ) == "function" && !fn )
+      if( typeof( base_or_fn ) == "function" )
       {
-          fn = base;
-          base = document; 
+          var all = document.querySelectorAll( term ); 
+          all.forEach( base_or_fn );
+          return all;
       } 
 
-      base.querySelectorAll( term ).forEach( fn );
+      return ( base_or_fn || document ).querySelectorAll( term );
   } 
   </script>
 
@@ -445,42 +446,21 @@ https://stackoverflow.com/questions/29063244/consistent-styling-for-nested-lists
           });
       });
 
-      document.querySelectorAll( '.my-collapsible-item' ).forEach( function( control )
-      { 
-          control.addEventListener( "click", function( e )
-          {
-              var down = this.querySelector( '.feather.feather-chevron-down' );
-              var right = this.querySelector( '.feather.feather-chevron-right' );
-
-              if( down )
-              {
-                  var newIcon = document.createElement( 'span' ); 
-                  newIcon.innerHTML = feather.icons[ "chevron-right" ].toSvg();
-                  down.replaceWith( newIcon.firstChild );
-              }
-              
-              if( right )
-              {
-                  var newIcon = document.createElement( 'span' ); 
-                  newIcon.innerHTML = feather.icons[ "chevron-down" ].toSvg();
-                  right.replaceWith( newIcon.firstChild );
-              }
-          });
-      });
-
-/*
       be$( '.my-collapsible-item', function( control )
       { 
           control.addEventListener( "click", function( e )
           {
-              be$( '.feather.feather-chevron-down', this, function( down )
+              var downAll = be$( '.feather.feather-chevron-down', this );
+              var rightAll = be$( '.feather.feather-chevron-right', this );
+
+              downAll.forEach( function( down )
               { 
                   var newIcon = document.createElement( 'span' ); 
                   newIcon.innerHTML = feather.icons[ "chevron-right" ].toSvg();
                   down.replaceWith( newIcon.firstChild );
               });
 
-              be$( '.feather.feather-chevron-right', this, function( right )
+              rightAll.forEach( function( right )
               { 
                   var newIcon = document.createElement( 'span' ); 
                   newIcon.innerHTML = feather.icons[ "chevron-down" ].toSvg();
@@ -488,7 +468,6 @@ https://stackoverflow.com/questions/29063244/consistent-styling-for-nested-lists
               });
           });
       });
-*/
 
       be$( '#searchInput', function( control )
       { 
