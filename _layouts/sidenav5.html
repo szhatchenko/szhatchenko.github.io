@@ -457,6 +457,8 @@ https://stackoverflow.com/questions/29063244/consistent-styling-for-nested-lists
               { 
                   var newIcon = document.createElement( 'span' ); 
                   newIcon.innerHTML = feather.icons[ "chevron-right" ].toSvg();
+                  alert( down );
+                  alert( down.replaceWith );
                   down.replaceWith( newIcon.firstChild );
               });
 
@@ -464,6 +466,8 @@ https://stackoverflow.com/questions/29063244/consistent-styling-for-nested-lists
               { 
                   var newIcon = document.createElement( 'span' ); 
                   newIcon.innerHTML = feather.icons[ "chevron-down" ].toSvg();
+                  alert( right );
+                  alert( right.replaceWith );
                   right.replaceWith( newIcon.firstChild );
               });
           });
