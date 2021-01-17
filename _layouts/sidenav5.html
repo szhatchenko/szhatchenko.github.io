@@ -457,18 +457,20 @@ https://stackoverflow.com/questions/29063244/consistent-styling-for-nested-lists
               { 
                   var newIcon = document.createElement( 'span' ); 
                   newIcon.innerHTML = feather.icons[ "chevron-right" ].toSvg();
-                  alert( down );
-                  alert( down.replaceWith );
-                  down.replaceWith( newIcon.firstChild );
+                  var parent = down.parentNode;
+                  parent.insertBefore( newIcon.firstChild, down ); 
+                  parent.removeChild( down );   
+                  //down.replaceWith( newIcon.firstChild );
               });
 
               rightAll.forEach( function( right )
               { 
                   var newIcon = document.createElement( 'span' ); 
                   newIcon.innerHTML = feather.icons[ "chevron-down" ].toSvg();
-                  alert( right );
-                  alert( right.replaceWith );
-                  right.replaceWith( newIcon.firstChild );
+                  var parent = right.parentNode;
+                  parent.insertBefore( newIcon.firstChild, right ); 
+                  parent.removeChild( right );   
+                  //right.replaceWith( newIcon.firstChild );
               });
           });
       });
