@@ -55,13 +55,15 @@ function loadPageWithProgress( aEl, params )
     xhr.responseType = params.type; 
     xhr.onprogress = function (e) 
     {
-        if( e.lengthComputable ) 
+        var total = e.lengthComputable ? e.total : 2000;
+        var percentage = Math.round( e.loaded * 100 / total );
+        if( percentage > 100 )
         {
-            var percentage = Math.round( e.loaded * 100 / e.total );
-            var progressBar = document.querySelector( ".progress-bar" );
-            progressBar.style.width = "" + percentage  + "%";
-            progressBar.setAttribute( "aria-valuenow", percentage );
+            percentage = 100;
         }
+        var progressBar = document.querySelector( ".progress-bar" );
+        progressBar.style.width = "" + percentage  + "%";
+        progressBar.setAttribute( "aria-valuenow", percentage );
     };
     xhr.onloadstart = function( e ) 
     {
