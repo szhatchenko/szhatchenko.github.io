@@ -50,6 +50,8 @@ function loadPageWithProgress( aEl, params )
 
     document.querySelector( "#mainContent" ).innerHTML = progressBar;
 
+    console.log( params.url );
+
     var xhr = new XMLHttpRequest();
     xhr.open( "GET", params.url );
     xhr.responseType = params.type; 
@@ -72,6 +74,7 @@ function loadPageWithProgress( aEl, params )
     };
     xhr.onloadend = function( e ) 
     {
+        console.log( "onloadend" );
         //console.log("end")
         if( xhr.status == 200 )
         {
