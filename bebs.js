@@ -50,17 +50,12 @@ function loadPageWithProgress( aEl, params )
 
     document.querySelector( "#mainContent" ).innerHTML = progressBar;
 
-    console.log( params.url );
-
     var xhr = new XMLHttpRequest();
     xhr.open( "GET", params.url );
     xhr.responseType = params.type; 
     xhr.onprogress = function (e) 
     {
-        console.log( "onprogress: e.lengthComputable = " + e.lengthComputable );
-        console.log( "onprogress: e.total = " + e.total );
-        console.log( "onprogress: e.loaded = " + e.loaded );
-        var total = e.lengthComputable ? e.total : 2000;
+        var total = e.lengthComputable ? e.total : 5000;
         var percentage = Math.round( e.loaded * 100 / total );
         if( percentage > 100 )
         {
@@ -72,12 +67,11 @@ function loadPageWithProgress( aEl, params )
     };
     xhr.onloadstart = function( e ) 
     {
-        //console.log("start")
+        //console.log( "onloadstart" );
     };
     xhr.onloadend = function( e ) 
     {
-        console.log( "onloadend" );
-        //console.log("end")
+        //console.log( "onloadend" );
         if( xhr.status == 200 )
         {
             var html = null;
