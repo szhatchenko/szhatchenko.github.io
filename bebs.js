@@ -55,6 +55,7 @@ function loadPageWithProgress( aEl, params )
     xhr.responseType = params.type; 
     xhr.onprogress = function (e) 
     {
+        console.log( "onprogress: e.loaded = " + e.loaded );
         var total = e.lengthComputable ? e.total : 2000;
         var percentage = Math.round( e.loaded * 100 / total );
         if( percentage > 100 )
