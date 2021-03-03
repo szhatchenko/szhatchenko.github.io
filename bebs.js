@@ -65,15 +65,16 @@ function loadPageWithProgress( aEl, params )
         {
             percentage = 100;
         }
-        var progressBar = document.querySelector( ".progress-bar" );
-        progressBar.style.width = "" + percentage  + "%";
-        progressBar.setAttribute( "aria-valuenow", percentage );
+        var pbar = document.querySelector( ".progress-bar" );
+        pbar.style.width = "" + percentage  + "%";
+        pbar.setAttribute( "aria-valuenow", percentage );
     };
     xhr.onloadstart = function( e ) 
     {
         console.log( "onloadstart" );
-        progressBar.style.width = "50%";
-        progressBar.setAttribute( "aria-valuenow", 50 );
+        var pbar = document.querySelector( ".progress-bar" );
+        pbar.style.width = "50%";
+        pbar.setAttribute( "aria-valuenow", 50 );
     };
     xhr.onloadend = function( e ) 
     {
