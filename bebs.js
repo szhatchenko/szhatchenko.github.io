@@ -83,7 +83,7 @@ function loadPageWithProgress( aEl, params )
         var percentage = null; 
         if( this.readyState == 1 )
         {
-            //percentage = 50;
+            percentage = 50;
         }
         if( this.readyState == 2 )
         {
@@ -106,6 +106,9 @@ function loadPageWithProgress( aEl, params )
     xhr.onloadend = function( e ) 
     {
         //console.log( "onloadend" );
+        var pbar = document.querySelector( ".progress-bar" );
+        pbar.style.width = "100%";
+        pbar.setAttribute( "aria-valuenow", 100 );
         if( xhr.status == 200 )
         {
             var html = null;
