@@ -88,11 +88,12 @@ function loadPageWithProgress( aEl, params )
         if( this.readyState == 2 )
         {
             //console.log( "readyState == 2" );
-            percentage = 50;
+            percentage = 20;
         }
         if( this.readyState == 3 )
         {
             //console.log( "readyState == 3" );
+            percentage = 50;
         }
         if( percentage )
         {
