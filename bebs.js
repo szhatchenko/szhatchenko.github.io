@@ -65,21 +65,37 @@ function loadPageWithProgress( aEl, params )
             percentage = 100;
         }
         console.log( "  percentage = " + percentage );
+        if( percentage < 20 )
+        {
+            return;  
+        }
         var pbar = document.querySelector( ".progress-bar" );
         pbar.style.width = "" + percentage  + "%";
         pbar.setAttribute( "aria-valuenow", percentage );
     };
     xhr.onloadstart = function( e ) 
     {
-        console.log( "onloadstart" );
-        var pbar = document.querySelector( ".progress-bar" );
-        //console.log( pbar ); 
-        pbar.style.width = "50%";
-        pbar.setAttribute( "aria-valuenow", 50 );
+        //console.log( "onloadstart" );
     };
     xhr.onreadystatechange = function( e ) 
     {
-        console.log( "onreadystatechange = " + this.readyState );
+        var pbar = document.querySelector( ".progress-bar" );
+        var percentage = null; 
+        if( this.readyState == 1 )
+        {
+            percentage = 10;
+        }
+        if( this.readyState == 2 )
+        {
+            percentage = 20;
+        }
+        if( percentage )
+        {
+            pbar.style.width = "" + percentage  + "%";
+            pbar.setAttribute( "aria-valuenow", percentage );
+        }
+
+        //console.log( "onreadystatechange = " + this.readyState );
     };
     xhr.onloadend = function( e ) 
     {
