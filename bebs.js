@@ -54,7 +54,6 @@ function loadPageWithProgress( aEl, params )
     console.log( params.url );
 
     var xhr = new XMLHttpRequest();
-    xhr.open( "GET", params.url );
     xhr.responseType = params.type; 
     xhr.onprogress = function (e) 
     {
@@ -109,6 +108,9 @@ function loadPageWithProgress( aEl, params )
     //{
     //    console.log( e );
     //};
+
+    xhr.open( "GET", params.url );
+
     xhr.send();
 }
 
