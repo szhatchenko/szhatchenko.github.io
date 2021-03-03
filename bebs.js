@@ -88,6 +88,14 @@ function loadPageWithProgress( aEl, params )
         if( this.readyState == 2 )
         {
             percentage = 20;
+            setTimeout( function()
+            {
+               var pbar_ = document.querySelector( ".progress-bar" );
+               if( pbar_ )
+               {
+                   console.log( "aria-valuenow = " + pbar_.getAttribute( "aria-valuenow" ) );
+               }    
+            }, 1000 );
         }
         if( percentage )
         {
