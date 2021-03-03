@@ -87,9 +87,11 @@ function loadPageWithProgress( aEl, params )
         }
         if( this.readyState == 2 )
         {
+            console.log( "readyState == 2" );
             percentage = 20;
             setTimeout( function()
             {
+               console.log( "timeout 1000" );
                var pbar_ = document.querySelector( ".progress-bar" );
                if( pbar_ )
                {
