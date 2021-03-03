@@ -73,6 +73,7 @@ function loadPageWithProgress( aEl, params )
     {
         console.log( "onloadstart" );
         var pbar = document.querySelector( ".progress-bar" );
+        console.log( pbar ); 
         pbar.style.width = "50%";
         pbar.setAttribute( "aria-valuenow", 50 );
     };
