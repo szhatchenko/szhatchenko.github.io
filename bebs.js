@@ -91,13 +91,13 @@ function loadPageWithProgress( aEl, params )
             percentage = 20;
             setTimeout( function()
             {
-               console.log( "timeout 1000" );
+               console.log( "timeout 500" );
                var pbar_ = document.querySelector( ".progress-bar" );
                if( pbar_ )
                {
                    console.log( "aria-valuenow = " + pbar_.getAttribute( "aria-valuenow" ) );
                }    
-            }, 1000 );
+            }, 500 );
         }
         if( percentage )
         {
