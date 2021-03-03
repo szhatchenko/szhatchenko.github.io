@@ -72,6 +72,8 @@ function loadPageWithProgress( aEl, params )
     xhr.onloadstart = function( e ) 
     {
         console.log( "onloadstart" );
+        progressBar.style.width = "50%";
+        progressBar.setAttribute( "aria-valuenow", 50 );
     };
     xhr.onloadend = function( e ) 
     {
