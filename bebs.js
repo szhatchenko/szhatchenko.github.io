@@ -80,7 +80,7 @@ function loadPageWithProgress( aEl, params )
     };
     xhr.onreadystatechange = function( e ) 
     {
-        console.log( "onreadystatechange" );
+        console.log( "onreadystatechange = " + this.readyState );
     };
     xhr.onloadend = function( e ) 
     {
