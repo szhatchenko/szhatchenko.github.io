@@ -78,6 +78,10 @@ function loadPageWithProgress( aEl, params )
         pbar.style.width = "50%";
         pbar.setAttribute( "aria-valuenow", 50 );
     };
+    xhr.onreadystatechange = function( e ) 
+    {
+        console.log( "onreadystatechange" );
+    };
     xhr.onloadend = function( e ) 
     {
         console.log( "onloadend" );
