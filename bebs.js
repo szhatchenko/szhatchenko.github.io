@@ -65,7 +65,7 @@ function loadPageWithProgress( aEl, params )
             percentage = 100;
         }
         //console.log( "  percentage = " + percentage );
-        if( percentage < 20 )
+        if( percentage < 50 )
         {
             return;  
         }
