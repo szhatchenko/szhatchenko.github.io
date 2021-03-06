@@ -121,7 +121,35 @@ function loadPageWithProgress( aEl, params )
             {
                 html = xhr.response;
             } 
-            document.querySelector( "#mainContent" ).innerHTML = html;
+
+            //document.querySelector( "#mainContent" ).innerHTML = html;
+
+            var mainContent = document.querySelector( "#mainContent" );
+            mainContent.innerHTML = ""; 
+                
+            var container = document.createElement( "div" );
+            container.innerHTML = html;
+            // cache a reference to all the scripts in the container
+            var scripts = container.querySelectorAll( "script" );
+            // get all child elements and clone them in the target element
+            var nodes = container.childNodes;
+            for( var i = 0; i < nodes.length; i++ )
+            {
+                mainContent.appendChild( nodes[ i ].cloneNode( true ) );
+            }
+            // force the found scripts to execute...
+            for( var i = 0; i < scripts.length; i++)
+            {
+                var script = document.createElement( "script" );
+                script.type = scripts[ i ].type || "text/javascript";
+                if( scripts[ i ].hasAttribute( "src" ) )
+                {
+                    script.src = scripts[ i ].src;
+                } 
+                script.innerHTML = scripts[ i ].innerHTML;
+                document.head.appendChild(script);
+                document.head.removeChild(script);
+            }
         }
         else
         {
