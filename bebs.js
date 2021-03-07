@@ -167,22 +167,29 @@ function loadPageWithProgress( aEl, params )
 
     if( params.form )
     {
-        var formPI = params.form;  
-        if( validate( formPI ) && disableExecButtons() )
+        var form = params.form;  
+        if( form.id == "formPropertyInspector" && validate( form ) )
         {
             var formData = new FormData();
             for( var i = 0; i < formPI.elements.length; i++ )
             {
                 var input = formPI.elements[ i ];
-                //console.log( "" + input.name + "=" + input.value );
-                if( input.name )
+                if( !input.name )
                 {
-                    formData.append( input.name, input.value);
+                    continue;
                 }
+                if( input.name.startsWith( "_internal_" ) )
+                {
+                    continue;
+                }
+                formData.append( input.name, input.value );
             }
             xhr.open( "POST", params.url ); 
             xhr.send( formData );
-        }    
+        }
+        else
+        {
+        }
     }
     else
     {
