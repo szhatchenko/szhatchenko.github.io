@@ -45,6 +45,7 @@ function loadPageWithProgress( aEl, params )
         if( form.id == "formPropertyInspector" && validate( form ) )
         {
             formData = new FormData();
+            formData.append( params.execOp, "Execute" );
             for( var i = 0; i < form.elements.length; i++ )
             {
                 var input = form.elements[ i ];
