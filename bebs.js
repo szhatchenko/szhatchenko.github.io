@@ -172,6 +172,7 @@ function loadPageWithProgress( aEl, params )
         {
             var formData = new FormData( formPI );
             formData.append( "_internal_Execute_hidden", "Execute" );
+            console.log( formData );
             xhr.open( "POST", params.url ); 
             xhr.send( formData );
         }    
