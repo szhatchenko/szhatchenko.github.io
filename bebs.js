@@ -166,11 +166,19 @@ function loadPageWithProgress( aEl, params )
     //};
 
     var formPI = document.getElementById( "formPropertyInspector" );
+    console.log( formPI );
     if( formPI )
     {
         if( validate( formPI ) && disableExecButtons() )
         {
-            var formData = new FormData( formPI );
+            var formData = new FormData();
+            for( var input in formPI.elements )
+            {
+                if( input.name && input.value )
+                {
+                    formData.append( input.name, input.value);
+                }
+            }
             formData.append( "_internal_Execute_hidden", "Execute" );
             console.log( formData );
             xhr.open( "POST", params.url ); 
