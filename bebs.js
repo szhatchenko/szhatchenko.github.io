@@ -174,14 +174,12 @@ function loadPageWithProgress( aEl, params )
             for( var i = 0; i < formPI.elements.length; i++ )
             {
                 var input = formPI.elements[ i ];
-                console.log( "" + input.name + "=" + input.value );
-                if( input.name && input.value )
+                //console.log( "" + input.name + "=" + input.value );
+                if( input.name )
                 {
                     formData.append( input.name, input.value);
                 }
             }
-            formData.append( "_internal_Execute_hidden", "Execute" );
-            console.log( formData );
             xhr.open( "POST", params.url ); 
             xhr.send( formData );
         }    
