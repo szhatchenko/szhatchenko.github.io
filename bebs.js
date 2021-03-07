@@ -162,9 +162,22 @@ function loadPageWithProgress( aEl, params )
     //    console.log( e );
     //};
 
-    xhr.open( "GET", params.url );
-
-    xhr.send();
+    var formPI = document.getElementById( "formPropertyInspector" );
+    if( formPI )
+    {
+        if( validate( formPI ) && disableExecButtons() )
+        {
+            var formData = new FormData( formPI );
+            formData.append( "_internal_Execute_hidden", "Execute" );
+            xhr.open( "POST", params.url ); 
+            xhr.send( formData );
+        }    
+    }
+    else
+    {
+        xhr.open( "GET", params.url ); 
+        xhr.send();
+    }
 }
 
 
