@@ -68,7 +68,8 @@ function loadPageWithProgress( aEl, params )
         else
         {
             formData = new FormData();
-            formData.append( params.execOp, "1" );
+            formData.append( params.execOp, "1" );          
+            console.log( "" + params.execOp + "=1" ); 
             for( var i = 0; i < form.elements.length; i++ )
             {
                 var input = form.elements[ i ];
@@ -86,6 +87,7 @@ function loadPageWithProgress( aEl, params )
                     value = String( input.checked );
                 }
                 formData.append( input.name, value );
+                console.log( "" + input.name + "=" + value ); 
             }
         }
 
@@ -93,6 +95,8 @@ function loadPageWithProgress( aEl, params )
         {
             return; 
         }  
+
+        debugger; 
     }
 
     document.title = params.title;         
