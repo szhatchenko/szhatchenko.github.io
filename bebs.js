@@ -165,10 +165,9 @@ function loadPageWithProgress( aEl, params )
     //    console.log( e );
     //};
 
-    var formPI = document.getElementById( "formPropertyInspector" );
-    console.log( formPI );
-    if( formPI )
+    if( params.form )
     {
+        var formPI = params.form;  
         if( validate( formPI ) && disableExecButtons() )
         {
             var formData = new FormData();
