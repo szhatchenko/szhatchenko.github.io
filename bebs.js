@@ -41,6 +41,7 @@ function loadPageWithProgress( aEl, params )
     if( params.form )
     {
         var form = params.form; 
+        console.log( "form.id = " + form.id ); 
         if( form.id == "formPropertyInspector" && validate( form ) )
         {
             formData = new FormData();
