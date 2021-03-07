@@ -67,6 +67,26 @@ function loadPageWithProgress( aEl, params )
         }
         else
         {
+            formData = new FormData();
+            formData.append( params.execOp, "1" );
+            for( var i = 0; i < form.elements.length; i++ )
+            {
+                var input = form.elements[ i ];
+                if( !input.name )
+                {
+                    continue;
+                }
+                if( input.name.startsWith( "_op_" ) )
+                {
+                    continue;
+                }
+                var value = input.value;  
+                if( input.type == "checkbox" )
+                {
+                    value = String( input.checked );
+                }
+                formData.append( input.name, value );
+            }
         }
 
         if( !formData )
