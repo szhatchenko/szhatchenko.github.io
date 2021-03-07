@@ -39,8 +39,11 @@ function loadPageWithProgress( aEl, params )
 
     document.title = params.title;         
     document.querySelector( '#mobileHeaderTitle' ).innerText = params.title;
-    document.querySelectorAll( '.nav-link' ).forEach( function( el ) { el.classList.remove( "active" ); });
-    aEl.classList.add( "active" );
+    if( aEl )
+    {  
+        document.querySelectorAll( '.nav-link' ).forEach( function( el ) { el.classList.remove( "active" ); });
+        aEl.classList.add( "active" );
+    }  
 
     var progressBar = 
 '<div class="progress"> \
