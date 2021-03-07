@@ -37,6 +37,37 @@ function loadPageWithProgress( aEl, params )
         document.querySelector( "#dismiss" ).click();
     }
 
+    var formData = null;
+    if( params.form )
+    {
+        var form = params.form; 
+        if( form.id == "formPropertyInspector" && validate( form ) )
+        {
+            formData = new FormData();
+            for( var i = 0; i < formPI.elements.length; i++ )
+            {
+                var input = formPI.elements[ i ];
+                if( !input.name )
+                {
+                    continue;
+                }
+                if( input.name.startsWith( "_internal_" ) )
+                {
+                    continue;
+                }
+                formData.append( input.name, input.value );
+            }
+        }
+        else
+        {
+        }
+
+        if( !formData )
+        {
+            return; 
+        }  
+    }
+
     document.title = params.title;         
     document.querySelector( '#mobileHeaderTitle' ).innerText = params.title;
     if( aEl )
@@ -165,31 +196,10 @@ function loadPageWithProgress( aEl, params )
     //    console.log( e );
     //};
 
-    if( params.form )
+    if( formData )
     {
-        var form = params.form;  
-        if( form.id == "formPropertyInspector" && validate( form ) )
-        {
-            var formData = new FormData();
-            for( var i = 0; i < formPI.elements.length; i++ )
-            {
-                var input = formPI.elements[ i ];
-                if( !input.name )
-                {
-                    continue;
-                }
-                if( input.name.startsWith( "_internal_" ) )
-                {
-                    continue;
-                }
-                formData.append( input.name, input.value );
-            }
-            xhr.open( "POST", params.url ); 
-            xhr.send( formData );
-        }
-        else
-        {
-        }
+        xhr.open( "POST", params.url ); 
+        xhr.send( formData );
     }
     else
     {
