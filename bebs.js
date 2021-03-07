@@ -57,7 +57,12 @@ function loadPageWithProgress( aEl, params )
                 {
                     continue;
                 }
-                formData.append( input.name, input.value );
+                var value = input.value;  
+                if( input.type == "checkbox" )
+                {
+                    value = String( input.checked );
+                }
+                formData.append( input.name, value );
             }
         }
         else
