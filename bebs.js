@@ -65,7 +65,7 @@ function loadPageWithProgress( aEl, params )
                 formData.append( input.name, value );
             }
         }
-        else
+        else if( form.id == "rForm" )
         {
             formData = new FormData();
             formData.append( params.execOp, "1" );          
@@ -93,7 +93,7 @@ function loadPageWithProgress( aEl, params )
 
         if( !formData )
         {
-            return; 
+            return false; 
         }  
 
         //debugger; 
@@ -237,6 +237,8 @@ function loadPageWithProgress( aEl, params )
         xhr.open( "GET", params.url ); 
         xhr.send();
     }
+
+    return true;
 }
 
 
