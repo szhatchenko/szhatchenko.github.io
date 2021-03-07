@@ -171,8 +171,10 @@ function loadPageWithProgress( aEl, params )
         if( validate( formPI ) && disableExecButtons() )
         {
             var formData = new FormData();
-            for( var input in formPI.elements )
+            for( var i = 0; i < formPI.elements.length; i++ )
             {
+                var input = formPI.elements[ i ];
+                console.log( "" + input.name + "=" + input.value );
                 if( input.name && input.value )
                 {
                     formData.append( input.name, input.value);
