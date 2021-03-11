@@ -84,7 +84,12 @@ function loadPageWithProgress( aEl, params )
                 var value = input.value;  
                 if( input.type == "checkbox" )
                 {
-                    value = String( input.checked );
+                    if( !input.checked )
+                    {
+                        continue; 
+                    }
+
+                    value = input.name.startsWith( "_rec_" ) ? "1" : String( input.checked );
                 }
                 formData.append( input.name, value );
                 //console.log( "" + input.name + "=" + value ); 
