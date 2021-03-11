@@ -201,13 +201,9 @@ function loadPageWithProgress( aEl, params )
             for( var i = 0; i < nodes.length; i++ )
             {
                 var node = nodes[ i ].cloneNode( true );
-                if( node.nodeName != "SCRIPT" && node.nodeName != "#text" )
+                if( node.querySelectorAll && node.nodeName != "SCRIPT" && node.nodeName != "#text" )
                 {
                     //console.log( 'node.nodeName = ' + node.nodeName );
-                    if( !node.querySelectorAll )
-                    {
-                       console.log( node );
-                    } 
                     var links = node.querySelectorAll( "a" );
                     links.forEach( function( link )
                     {  
