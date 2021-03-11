@@ -201,6 +201,7 @@ function loadPageWithProgress( aEl, params )
             for( var i = 0; i < nodes.length; i++ )
             {
                 var node = nodes[ i ].cloneNode( true );
+                console.log( node );
                 if( node.nodeName == "A" && !node.onclick )
                 {
                     node.onclick = function()
