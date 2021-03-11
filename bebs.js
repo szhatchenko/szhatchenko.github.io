@@ -244,6 +244,18 @@ function loadPageWithProgress( aEl, params )
                 document.head.appendChild(script);
                 document.head.removeChild(script);
             }
+
+            var documentTitle = container.querySelector( "#documentTitle" );
+            var documentMobileTitle = container.querySelector( "#documentMobileTitle" );
+            if( documentTitle )
+            {  
+                document.title = documentTitle.innerText;
+            }
+            if( documentMobileTitle )
+            {  
+                document.querySelector( '#mobileHeaderTitle' ).innerText = documentMobileTitle.innerText;
+            }
+
         }
         else
         {
