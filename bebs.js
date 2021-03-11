@@ -69,7 +69,7 @@ function loadPageWithProgress( aEl, params )
         {
             formData = new FormData();
             formData.append( params.execOp, "1" );          
-            console.log( "" + params.execOp + "=1" ); 
+            //console.log( "" + params.execOp + "=1" ); 
             for( var i = 0; i < form.elements.length; i++ )
             {
                 var input = form.elements[ i ];
