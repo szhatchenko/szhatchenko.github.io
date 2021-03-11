@@ -204,6 +204,10 @@ function loadPageWithProgress( aEl, params )
                 if( node.nodeName != "SCRIPT" && node.nodeName != "#text" )
                 {
                     //console.log( 'node.nodeName = ' + node.nodeName );
+                    if( !node.querySelectorAll )
+                    {
+                       console.log( node );
+                    } 
                     var links = node.querySelectorAll( "a" );
                     links.forEach( function( link )
                     {  
