@@ -87,7 +87,7 @@ function loadPageWithProgress( aEl, params )
                     value = String( input.checked );
                 }
                 formData.append( input.name, value );
-                console.log( "" + input.name + "=" + value ); 
+                //console.log( "" + input.name + "=" + value ); 
             }
         }
 
