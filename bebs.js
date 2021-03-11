@@ -203,13 +203,13 @@ function loadPageWithProgress( aEl, params )
                 var node = nodes[ i ].cloneNode( true );
                 if( node.nodeName != "SCRIPT" && node.nodeName != "#text" )
                 {
-                    console.log( 'node.nodeName = ' + node.nodeName );
+                    //console.log( 'node.nodeName = ' + node.nodeName );
                     var links = node.querySelectorAll( "a" );
                     links.forEach( function( link )
                     {  
                         if( link.onclick )
                         {
-                            console.log( "Skipped '" + link.href + "' becaose of " + link.onclick  );
+                            console.log( "Skipped '" + link.href + "' because of " + link.onclick  );
                             return; 
                         }
 
@@ -225,7 +225,7 @@ function loadPageWithProgress( aEl, params )
                             return false;
                         };
 
-                        console.log( "Captured '" + link.href + "'" );
+                        //console.log( "Captured '" + link.href + "'" );
                     });
                 }
 
