@@ -200,7 +200,25 @@ function loadPageWithProgress( aEl, params )
             var nodes = container.childNodes;
             for( var i = 0; i < nodes.length; i++ )
             {
-                mainContent.appendChild( nodes[ i ].cloneNode( true ) );
+                var node = nodes[ i ].cloneNode( true );
+                if( node.nodeName == "A" && !node.onclick )
+                {
+                    node.onclick = function()
+                    {
+                        loadPageWithProgress( null, 
+                        { 
+                          url: this.href, 
+                          title: this.innerText, 
+                          type: 'text'
+                        }); 
+
+                        return false;
+                    };
+
+                    console.log( "Captured '" + node.href + "'" );
+                }
+
+                mainContent.appendChild( node );
             }
             // force the found scripts to execute...
             for( var i = 0; i < scripts.length; i++)
