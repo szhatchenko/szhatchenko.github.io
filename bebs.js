@@ -201,22 +201,32 @@ function loadPageWithProgress( aEl, params )
             for( var i = 0; i < nodes.length; i++ )
             {
                 var node = nodes[ i ].cloneNode( true );
-                console.log( node );
-                if( node.nodeName == "A" && !node.onclick )
+                if( node.nodeName != "SCRIPT" && node.nodeName != "#text" )
                 {
-                    node.onclick = function()
-                    {
-                        loadPageWithProgress( null, 
-                        { 
-                          url: this.href, 
-                          title: this.innerText, 
-                          type: 'text'
-                        }); 
+                    console.log( 'node.nodeName = ' + node.nodeName );
+                    var links = node.querySelectorAll( "a" );
+                    links.forEach( function( link )
+                    {  
+                        if( link.onclick )
+                        {
+                            console.log( "Skipped '" + link.href + "' becaose of " + link.onclick  );
+                            return; 
+                        }
 
-                        return false;
-                    };
+                        link.onclick = function()
+                        {
+                            loadPageWithProgress( null, 
+                            { 
+                              url: this.href, 
+                              title: this.innerText, 
+                              type: 'text'
+                            }); 
 
-                    console.log( "Captured '" + node.href + "'" );
+                            return false;
+                        };
+
+                        console.log( "Captured '" + link.href + "'" );
+                    });
                 }
 
                 mainContent.appendChild( node );
