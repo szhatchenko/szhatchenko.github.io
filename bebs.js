@@ -112,7 +112,7 @@ function beShowPage( html )
                       url: this.href, 
                       title: this.innerText, 
                       type: 'text'
-                    }); 
+                    }, /*bNoHistory*/ this.id == "refreshLink" ); 
 
                     return false;
                 };
@@ -178,7 +178,7 @@ function paramsAreEqual( obj1, obj2 )
     return true;
 }
 
-function loadPageWithProgress( aEl, params )
+function loadPageWithProgress( aEl, params, bNoHistory )
 {
     if( document.querySelector( '#dismiss' ).classList.contains('active') )
     {
@@ -348,9 +348,15 @@ function loadPageWithProgress( aEl, params )
 
             beShowPage( html );
 
-            params.title = document.title;
+            if( bNoHistory )
+            {
+            }
+            else
+            {
+                params.title = document.title;
 
-            beSaveHistory( { menuLink: aEl, params: params, content: html } );
+                beSaveHistory( { menuLink: aEl, params: params, content: html } );
+            }   
         }
         else
         {
