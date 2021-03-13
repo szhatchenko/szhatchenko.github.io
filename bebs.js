@@ -45,6 +45,7 @@ function beGoBack()
     if( isQueryShown )
     {
         window.beHistory.pop(); // remove ouselves
+        last = window.beHistory[ window.beHistory.length - 1 ];  
         beShowPage( last.content );
     }
     else if( isOpExecuted )
