@@ -45,16 +45,20 @@ function beGoBack()
     if( isQueryShown )
     {
         window.beHistory.pop(); // remove ouselves
-        last = window.beHistory[ window.beHistory.length - 1 ];  
+        last = window.beHistory.pop();  
         beShowPage( last.content );
+        beSaveHistory( last );   
     }
     else if( isOpExecuted )
     {
+        last = window.beHistory.pop();  
         loadPageWithProgress( last.menuLink, last.params );
     }
     else // Cancel button in Form
     {   
+        last = window.beHistory.pop();  
         beShowPage( last.content );
+        beSaveHistory( last );   
     }
 
     return false;
@@ -108,6 +112,21 @@ function beGoBack_old()
 
     return false;
 }
+
+function beSaveHistory( visit )
+{
+    var prev = window.beHistory.length > 0  ? window.beHistory[ window.beHistory.length - 1 ] : null;
+    var bSave = !prev;
+    if( !bSave && ( prev.aEl != visit.aEl || !paramsAreEqual( visit.params, prev.params ) ) )
+    {
+        bSave = true;
+    }
+    if( bSave && !params.form )
+    { 
+        window.beHistory.push( visit );
+    }
+}
+
 
 function beShowPage( html )
 {
@@ -381,16 +400,7 @@ function loadPageWithProgress( aEl, params )
 
             beShowPage( html );
 
-            var prev = window.beHistory.length > 0  ? window.beHistory[ window.beHistory.length - 1 ] : null;
-            var bSaveHistory = !prev;
-            if( !bSaveHistory && ( prev.aEl != aEl || !paramsAreEqual( params, prev.params ) ) )
-            {
-                bSaveHistory = true;
-            }
-            if( bSaveHistory && !params.form )
-            { 
-                window.beHistory.push( { menuLink: aEl, params: params, content: html } );
-            }
+            beSaveHistory( { menuLink: aEl, params: params, content: html } );
         }
         else
         {
