@@ -178,7 +178,7 @@ function beShowPage( html )
 
     be$( ".goBackLink", mainContent ).forEach( function( backControl )
     {
-        var bHasHistory = window.beHistory && window.beHistory.length > 1;
+        var bHasHistory = window.beHistory && window.beHistory.length > 0;
         backControl.style.display = bHasHistory ? "" : "none";
         backControl.onclick = beGoBack;
     }); 
@@ -374,6 +374,8 @@ function loadPageWithProgress( aEl, params )
                 html = xhr.response;
             } 
 
+            beShowPage( html );
+
             var prev = window.beHistory.length > 0  ? window.beHistory[ window.beHistory.length - 1 ] : null;
             var bSaveHistory = !prev;
             if( !bSaveHistory && ( prev.aEl != aEl || !paramsAreEqual( params, prev.params ) ) )
@@ -384,8 +386,6 @@ function loadPageWithProgress( aEl, params )
             { 
                 window.beHistory.push( { menuLink: aEl, params: params, content: html } );
             }
-
-            beShowPage( html );
         }
         else
         {
