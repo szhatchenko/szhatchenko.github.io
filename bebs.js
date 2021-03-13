@@ -30,6 +30,107 @@ function be$( term, base_or_fn )
     return ( base_or_fn || document ).querySelectorAll( term );
 } 
 
+function beGoBack()
+{
+   var html = window.beHistory ? window.beHistory.pop() : null;
+   if( html )
+   {
+       beShowPage( html, false );
+   }
+}
+
+function beShowPage( html, bSaveHistory )
+{
+    //document.querySelector( "#mainContent" ).innerHTML = html;
+
+    var mainContent = document.querySelector( "#mainContent" );    
+
+    if( bSaveHistory )
+    {
+        if( !window.beHistory )
+        {
+            window.beHistory = [];  
+        }
+        window.beHistory.push( mainContent.innerHTML );
+    }
+
+    mainContent.innerHTML = ""; 
+        
+    var container = document.createElement( "div" );
+    container.innerHTML = html;
+    // cache a reference to all the scripts in the container
+    var scripts = container.querySelectorAll( "script" );
+    // get all child elements and clone them in the target element
+    var nodes = container.childNodes;
+    for( var i = 0; i < nodes.length; i++ )
+    {
+        var node = nodes[ i ].cloneNode( true );
+        if( node.querySelectorAll && node.nodeName != "SCRIPT" && node.nodeName != "#text" )
+        {
+            //console.log( 'node.nodeName = ' + node.nodeName );
+            var links = node.querySelectorAll( "a" );
+            links.forEach( function( link )
+            {  
+                if( link.onclick )
+                {
+                    console.log( "Skipped '" + link.href + "' because of " + link.onclick  );
+                    return; 
+                }
+
+                link.onclick = function()
+                {
+                    loadPageWithProgress( null, 
+                    { 
+                      url: this.href, 
+                      title: this.innerText, 
+                      type: 'text'
+                    }); 
+
+                    return false;
+                };
+
+                //console.log( "Captured '" + link.href + "'" );
+            });
+        }
+
+        mainContent.appendChild( node );
+    }
+    // force the found scripts to execute...
+    for( var i = 0; i < scripts.length; i++)
+    {
+        var script = document.createElement( "script" );
+        script.type = scripts[ i ].type || "text/javascript";
+        if( scripts[ i ].hasAttribute( "src" ) )
+        {
+            script.src = scripts[ i ].src;
+        } 
+        script.innerHTML = scripts[ i ].innerHTML;
+        document.head.appendChild(script);
+        document.head.removeChild(script);
+    }
+
+    var documentTitle = container.querySelector( "#documentTitle" );
+    var documentMobileTitle = container.querySelector( "#documentMobileTitle" );
+    if( documentTitle )
+    {  
+        document.title = documentTitle.innerText;
+    }
+    if( documentMobileTitle )
+    {  
+        document.querySelector( '#mobileHeaderTitle' ).innerText = documentMobileTitle.innerText;
+    }
+
+    if( window.beHistory && window.beHistory.length > 0 )
+    {
+        var backControl = mainContent.querySelector( "#backLink" ) || mainContent.querySelector( "#cancelButton" );
+        if( backControl )
+        {
+            backControl.style.display = "";
+            backControl.onclick = beGoBack;
+        } 
+    }
+}
+
 function loadPageWithProgress( aEl, params )
 {
     if( document.querySelector( '#dismiss' ).classList.contains('active') )
@@ -192,75 +293,7 @@ function loadPageWithProgress( aEl, params )
                 html = xhr.response;
             } 
 
-            //document.querySelector( "#mainContent" ).innerHTML = html;
-
-            var mainContent = document.querySelector( "#mainContent" );
-            mainContent.innerHTML = ""; 
-                
-            var container = document.createElement( "div" );
-            container.innerHTML = html;
-            // cache a reference to all the scripts in the container
-            var scripts = container.querySelectorAll( "script" );
-            // get all child elements and clone them in the target element
-            var nodes = container.childNodes;
-            for( var i = 0; i < nodes.length; i++ )
-            {
-                var node = nodes[ i ].cloneNode( true );
-                if( node.querySelectorAll && node.nodeName != "SCRIPT" && node.nodeName != "#text" )
-                {
-                    //console.log( 'node.nodeName = ' + node.nodeName );
-                    var links = node.querySelectorAll( "a" );
-                    links.forEach( function( link )
-                    {  
-                        if( link.onclick )
-                        {
-                            console.log( "Skipped '" + link.href + "' because of " + link.onclick  );
-                            return; 
-                        }
-
-                        link.onclick = function()
-                        {
-                            loadPageWithProgress( null, 
-                            { 
-                              url: this.href, 
-                              title: this.innerText, 
-                              type: 'text'
-                            }); 
-
-                            return false;
-                        };
-
-                        //console.log( "Captured '" + link.href + "'" );
-                    });
-                }
-
-                mainContent.appendChild( node );
-            }
-            // force the found scripts to execute...
-            for( var i = 0; i < scripts.length; i++)
-            {
-                var script = document.createElement( "script" );
-                script.type = scripts[ i ].type || "text/javascript";
-                if( scripts[ i ].hasAttribute( "src" ) )
-                {
-                    script.src = scripts[ i ].src;
-                } 
-                script.innerHTML = scripts[ i ].innerHTML;
-                document.head.appendChild(script);
-                document.head.removeChild(script);
-            }
-
-            var documentTitle = container.querySelector( "#documentTitle" );
-            var documentMobileTitle = container.querySelector( "#documentMobileTitle" );
-            if( documentTitle )
-            {  
-                document.title = documentTitle.innerText;
-            }
-            if( documentMobileTitle )
-            {  
-                document.querySelector( '#mobileHeaderTitle' ).innerText = documentMobileTitle.innerText;
-            }
-
+            beShowPage( html, true );
         }
         else
         {
