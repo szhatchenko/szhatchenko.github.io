@@ -39,7 +39,12 @@ function beGoBack()
 
     window.beHistory.pop(); // remove ouselves
 
-    var visit = window.beHistory.pop();
+    if( window.beHistory.length < 1 ) // shouldn't happen
+    {
+        return;
+    }
+
+    var visit = window.beHistory[ window.beHistory.length - 1 ];
     console.log( "beGoBack()" );
     console.log( visit );
     var isOpExecuted = false;
