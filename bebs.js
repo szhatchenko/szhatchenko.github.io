@@ -45,27 +45,27 @@ function beGoBack()
     }
 
     var visit = window.beHistory[ window.beHistory.length - 1 ];
-    console.log( "beGoBack()" );
-    console.log( visit );
+    //console.log( "beGoBack()" );
+    //console.log( visit );
     var isOpExecuted = false;
     if( visit )
     {
         isOpExecuted = document.querySelector( "#mainContent #backLink" ) != null;
-        console.log( "isOpExecuted = " + isOpExecuted );
+        //console.log( "isOpExecuted = " + isOpExecuted );
         if( isOpExecuted )
         {
             for( ; visit && visit.params.form; visit = window.beHistory.pop() )
             {
-                console.log( "----------" );
-                console.log( visit );
+                //console.log( "----------" );
+                //console.log( visit );
             } 
         }
     }
 
     if( visit )
     {        
-        console.log( "$$$$$$$$$$$$$$$$$$$$" );
-        console.log( visit );
+        //console.log( "$$$$$$$$$$$$$$$$$$$$" );
+        //console.log( visit );
         if( isOpExecuted )
         {          
             loadPageWithProgress( visit.menuLink, visit.params );
@@ -104,7 +104,7 @@ function beShowPage( html )
             {  
                 if( link.onclick )
                 {
-                    console.log( "Skipped '" + link.href + "' because of " + link.onclick  );
+                    //console.log( "Skipped '" + link.href + "' because of " + link.onclick  );
                     return; 
                 }
 
@@ -270,7 +270,7 @@ function loadPageWithProgress( aEl, params )
 </div>';
 
     var mainContent = document.querySelector( "#mainContent" );  
-    if( !window.beHistory )
+    if( !window.beHistory || aEl )
     {
         window.beHistory = [];  
     }
