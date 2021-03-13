@@ -120,15 +120,12 @@ function beShowPage( html, bSaveHistory )
         document.querySelector( '#mobileHeaderTitle' ).innerText = documentMobileTitle.innerText;
     }
 
-    if( window.beHistory && window.beHistory.length > 0 )
+    be$( ".goBackLink", mainContent ).forEach( function( backControl )
     {
-        var backControl = mainContent.querySelector( "#backLink" ) || mainContent.querySelector( "#cancelButton" );
-        if( backControl )
-        {
-            backControl.style.display = "";
-            backControl.onclick = beGoBack;
-        } 
-    }
+        var bHasHistory = window.beHistory && window.beHistory.length > 0;
+        backControl.style.display = bHasHistory ? "" : "none";
+        backControl.onclick = beGoBack;
+    }); 
 }
 
 function loadPageWithProgress( aEl, params )
