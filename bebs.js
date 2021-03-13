@@ -121,7 +121,7 @@ function beSaveHistory( visit )
     {
         bSave = true;
     }
-    if( bSave && !params.form )
+    if( bSave && !visit.params.form )
     { 
         window.beHistory.push( visit );
     }
