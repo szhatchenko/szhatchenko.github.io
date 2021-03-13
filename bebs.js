@@ -33,16 +33,18 @@ function be$( term, base_or_fn )
 function beGoBack()
 {
    var visit = window.beHistory ? window.beHistory.pop() : null;
+   console.log( "beGoBack()" );
+   console.log( visit );
    var isOpExecuted = false;
    if( visit )
    {
-       isOpExecuted = 
-          document.querySelector( "#mainContent #backLink" ) &&
-          visit.content.indexOf( 'id=\"formPropertyInspector\"' ) > 0;
-      if( isOpExecuted )
-      {
-          visit = window.beHistory.pop();
-      }
+       isOpExecuted = document.querySelector( "#mainContent #backLink" );
+       if( isOpExecuted )
+       {
+           for( visit = window.beHistory.pop(); visit && visit.params.form; visit = window.beHistory.pop() )
+           {
+           } 
+       }
    }
 
    if( visit )
@@ -140,7 +142,7 @@ function beShowPage( html )
     }); 
 }
 
-function objectsAreEqual( obj1, obj2 )
+function paramsAreEqual( obj1, obj2 )
 {
     var keys1 = Object.keys( obj1 );
     var keys2 = Object.keys( obj2 );
