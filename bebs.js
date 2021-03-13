@@ -334,7 +334,7 @@ function loadPageWithProgress( aEl, params )
 
             var prev = window.beHistory.length > 0  ? window.beHistory[ window.beHistory.length - 1 ] : null;
             var bSaveHistory = !prev;
-            if( !bSaveHistory && ( prev.aEl != aEl || !objectsAreEqual( params, prev.params ) ) )
+            if( !bSaveHistory && ( prev.aEl != aEl || !paramsAreEqual( params, prev.params ) ) )
             {
                 bSaveHistory = true;
             }
