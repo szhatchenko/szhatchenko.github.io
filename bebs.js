@@ -32,37 +32,44 @@ function be$( term, base_or_fn )
 
 function beGoBack()
 {
-   var visit = window.beHistory ? window.beHistory.pop() : null;
-   console.log( "beGoBack()" );
-   console.log( visit );
-   var isOpExecuted = false;
-   if( visit )
-   {
-       isOpExecuted = document.querySelector( "#mainContent #backLink" );
-       console.log( "isOpExecuted = " + isOpExecuted );
-       if( isOpExecuted )
-       {
-           for( ; visit && visit.params.form; visit = window.beHistory.pop() )
-           {
-               console.log( "----------" );
-               console.log( visit );
-           } 
-       }
-   }
+    if( !window.beHistory )
+    {
+        return;
+    }
 
-   if( visit )
-   {        
-       if( isOpExecuted )
-       {          
-           loadPageWithProgress( visit.menuLink, visit.params );
-       }
-       else
-       {   
-           beShowPage( visit.content );
-       }
-   }
+    window.beHistory.pop(); // remove ouselves
 
-   return false;
+    var visit = window.beHistory.pop();
+    console.log( "beGoBack()" );
+    console.log( visit );
+    var isOpExecuted = false;
+    if( visit )
+    {
+        isOpExecuted = document.querySelector( "#mainContent #backLink" );
+        console.log( "isOpExecuted = " + isOpExecuted );
+        if( isOpExecuted )
+        {
+            for( ; visit && visit.params.form; visit = window.beHistory.pop() )
+            {
+                console.log( "----------" );
+                console.log( visit );
+            } 
+        }
+    }
+
+    if( visit )
+    {        
+        if( isOpExecuted )
+        {          
+            loadPageWithProgress( visit.menuLink, visit.params );
+        }
+        else
+        {   
+            beShowPage( visit.content );
+        }
+    }
+
+    return false;
 }
 
 function beShowPage( html )
