@@ -112,7 +112,7 @@ function beShowPage( html )
                       url: this.href, 
                       title: this.innerText, 
                       type: 'text'
-                    }, /*bNoHistory*/ this.id == "refreshLink" ); 
+                    }, /*bRefreshPage*/ this.id == "refreshLink" ); 
 
                     return false;
                 };
@@ -178,7 +178,7 @@ function paramsAreEqual( obj1, obj2 )
     return true;
 }
 
-function loadPageWithProgress( aEl, params, bNoHistory )
+function loadPageWithProgress( aEl, params, bRefreshPage )
 {
     if( document.querySelector( '#dismiss' ).classList.contains('active') )
     {
@@ -346,17 +346,17 @@ function loadPageWithProgress( aEl, params, bNoHistory )
                 html = xhr.response;
             } 
 
+            var visit = { menuLink: aEl, params: params, content: html };
+            if( bRefreshPage )
+            {
+               visit = window.beHistory.pop();
+            }
+
             beShowPage( html );
 
-            if( bNoHistory )
-            {
-            }
-            else
-            {
-                params.title = document.title;
+            visit.params.title = document.title;
 
-                beSaveHistory( { menuLink: aEl, params: params, content: html } );
-            }   
+            beSaveHistory( visit );
         }
         else
         {
