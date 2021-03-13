@@ -32,24 +32,28 @@ function be$( term, base_or_fn )
 
 function beGoBack()
 {
-    if( !window.beHistory )
+    if( !window.beHistory || window.beHistory.length < 1 )
     {
         return;
     }
 
-    var visit = window.beHistory.pop();
-      
-    if( visit )
-    {        
-        var isOpExecuted = document.querySelector( "#mainContent #backLink" ) != null;
-        if( isOpExecuted )
-        {          
-            loadPageWithProgress( visit.menuLink, visit.params );
-        }
-        else
-        {   
-            beShowPage( visit.content );
-        }
+    var isOpExecuted = document.querySelector( "#mainContent #operationBackLink" ) != null;
+    var isQueryShown = document.querySelector( "#mainContent #queryBackLink" ) != null;
+
+    var last = window.beHistory[ window.beHistory.length - 1 ];
+
+    if( isQueryShown )
+    {
+        window.beHistory.pop(); // remove ouselves
+        beShowPage( last.content );
+    }
+    else if( isOpExecuted )
+    {
+        loadPageWithProgress( last.menuLink, last.params );
+    }
+    else // Cancel button in Form
+    {   
+        beShowPage( last.content );
     }
 
     return false;
