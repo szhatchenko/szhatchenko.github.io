@@ -32,10 +32,29 @@ function be$( term, base_or_fn )
 
 function beGoBack()
 {
-   var html = window.beHistory ? window.beHistory.pop() : null;
-   if( html )
+   var visit = window.beHistory ? window.beHistory.pop() : null;
+   var isOpExecuted = false;
+   if( visit )
    {
-       beShowPage( html );
+       isOpExecuted = 
+          document.querySelector( "#mainContent #backLink" ) &&
+          visit.content.indexOf( 'id=\"formPropertyInspector\"' ) > 0;
+      if( isOpExecuted )
+      {
+          visit = window.beHistory.pop();
+      }
+   }
+
+   if( visit )
+   {        
+       if( isOpExecuted )
+       {          
+           loadPageWithProgress( visit.menuLink, visit.params );
+       }
+       else
+       {   
+           beShowPage( visit.content );
+       }
    }
 
    return false;
@@ -45,7 +64,7 @@ function beShowPage( html )
 {
     //document.querySelector( "#mainContent" ).innerHTML = html;
 
-    var mainContent = document.querySelector( "#mainContent" );    
+    var mainContent = document.querySelector( "#mainContent" );
 
     mainContent.innerHTML = ""; 
         
@@ -115,10 +134,32 @@ function beShowPage( html )
 
     be$( ".goBackLink", mainContent ).forEach( function( backControl )
     {
-        var bHasHistory = window.beHistory && window.beHistory.length > 0;
+        var bHasHistory = window.beHistory && window.beHistory.length > 1;
         backControl.style.display = bHasHistory ? "" : "none";
         backControl.onclick = beGoBack;
     }); 
+}
+
+function objectsAreEqual( obj1, obj2 )
+{
+    var keys1 = Object.keys( obj1 );
+    var keys2 = Object.keys( obj2 );
+
+    if( keys1.length !== keys2.length ) 
+    {
+        return false;
+    }
+
+    for( var i in keys1 ) 
+    {
+       var key = keys1[ i ];
+       if( obj1[ key ] !== obj2[ key ] ) 
+       {
+           return false;
+       }
+    }
+
+    return true;
 }
 
 function loadPageWithProgress( aEl, params )
@@ -214,10 +255,6 @@ function loadPageWithProgress( aEl, params )
     {
         window.beHistory = [];  
     }
-    if( mainContent.innerText && mainContent.innerText.trim().length > 0 )
-    {
-        window.beHistory.push( mainContent.innerHTML );
-    } 
 
     mainContent.innerHTML = progressBar;
 
@@ -293,7 +330,19 @@ function loadPageWithProgress( aEl, params )
                 html = xhr.response;
             } 
 
-            beShowPage( html, true );
+
+            var prev = window.beHistory.length > 0  ? window.beHistory[ window.beHistory.length - 1 ] : null;
+            var bSaveHistory = !prev;
+            if( !bSaveHistory && ( prev.aEl != aEl || !objectsAreEqual( params, prev.params ) )
+            {
+                bSaveHistory = true;
+            }
+            if( bSaveHistory )
+            { 
+                window.beHistory.push( { menuLink: aEl, params: params, content: html } );
+            }
+
+            beShowPage( html );
         }
         else
         {
