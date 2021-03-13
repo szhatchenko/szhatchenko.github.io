@@ -45,7 +45,7 @@ function beGoBack()
     var isOpExecuted = false;
     if( visit )
     {
-        isOpExecuted = document.querySelector( "#mainContent #backLink" );
+        isOpExecuted = document.querySelector( "#mainContent #backLink" ) != null;
         console.log( "isOpExecuted = " + isOpExecuted );
         if( isOpExecuted )
         {
@@ -59,6 +59,8 @@ function beGoBack()
 
     if( visit )
     {        
+        console.log( "$$$$$$$$$$$$$$$$$$$$" );
+        console.log( visit );
         if( isOpExecuted )
         {          
             loadPageWithProgress( visit.menuLink, visit.params );
