@@ -348,6 +348,8 @@ function loadPageWithProgress( aEl, params )
 
             beShowPage( html );
 
+            params.title = document.title;
+
             beSaveHistory( { menuLink: aEl, params: params, content: html } );
         }
         else
