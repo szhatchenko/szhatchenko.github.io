@@ -37,6 +37,31 @@ function beGoBack()
         return;
     }
 
+    var visit = window.beHistory.pop();
+      
+    if( visit )
+    {        
+        var isOpExecuted = document.querySelector( "#mainContent #backLink" ) != null;
+        if( isOpExecuted )
+        {          
+            loadPageWithProgress( visit.menuLink, visit.params );
+        }
+        else
+        {   
+            beShowPage( visit.content );
+        }
+    }
+
+    return false;
+}
+
+function beGoBack_old()
+{
+    if( !window.beHistory )
+    {
+        return;
+    }
+
     window.beHistory.pop(); // remove ouselves
 
     if( window.beHistory.length < 1 ) // shouldn't happen
@@ -355,7 +380,7 @@ function loadPageWithProgress( aEl, params )
             {
                 bSaveHistory = true;
             }
-            if( bSaveHistory )
+            if( bSaveHistory && !params.form )
             { 
                 window.beHistory.push( { menuLink: aEl, params: params, content: html } );
             }
