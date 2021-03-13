@@ -37,6 +37,8 @@ function beGoBack()
    {
        beShowPage( html );
    }
+
+   return false;
 }
 
 function beShowPage( html )
