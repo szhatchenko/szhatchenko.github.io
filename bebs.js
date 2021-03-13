@@ -35,24 +35,15 @@ function beGoBack()
    var html = window.beHistory ? window.beHistory.pop() : null;
    if( html )
    {
-       beShowPage( html, false );
+       beShowPage( html );
    }
 }
 
-function beShowPage( html, bSaveHistory )
+function beShowPage( html )
 {
     //document.querySelector( "#mainContent" ).innerHTML = html;
 
     var mainContent = document.querySelector( "#mainContent" );    
-
-    if( bSaveHistory )
-    {
-        if( !window.beHistory )
-        {
-            window.beHistory = [];  
-        }
-        window.beHistory.push( mainContent.innerHTML );
-    }
 
     mainContent.innerHTML = ""; 
         
@@ -216,7 +207,17 @@ function loadPageWithProgress( aEl, params )
   role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div> \
 </div>';
 
-    document.querySelector( "#mainContent" ).innerHTML = progressBar;
+    var mainContent = document.querySelector( "#mainContent" );  
+    if( !window.beHistory )
+    {
+        window.beHistory = [];  
+    }
+    if( mainContent.innerText && mainContent.innerText.trim().length > 0 )
+    {
+        window.beHistory.push( mainContent.innerHTML );
+    } 
+
+    mainContent.innerHTML = progressBar;
 
     //console.log( "----------------------------------------------------------" );
     //console.log( params.url );
