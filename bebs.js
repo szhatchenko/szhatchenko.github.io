@@ -64,55 +64,6 @@ function beGoBack()
     return false;
 }
 
-function beGoBack_old()
-{
-    if( !window.beHistory )
-    {
-        return;
-    }
-
-    window.beHistory.pop(); // remove ouselves
-
-    if( window.beHistory.length < 1 ) // shouldn't happen
-    {
-        return;
-    }
-
-    var visit = window.beHistory[ window.beHistory.length - 1 ];
-    //console.log( "beGoBack()" );
-    //console.log( visit );
-    var isOpExecuted = false;
-    if( visit )
-    {
-        isOpExecuted = document.querySelector( "#mainContent #backLink" ) != null;
-        //console.log( "isOpExecuted = " + isOpExecuted );
-        if( isOpExecuted )
-        {
-            for( ; visit && visit.params.form; visit = window.beHistory.pop() )
-            {
-                //console.log( "----------" );
-                //console.log( visit );
-            } 
-        }
-    }
-
-    if( visit )
-    {        
-        //console.log( "$$$$$$$$$$$$$$$$$$$$" );
-        //console.log( visit );
-        if( isOpExecuted )
-        {          
-            loadPageWithProgress( visit.menuLink, visit.params );
-        }
-        else
-        {   
-            beShowPage( visit.content );
-        }
-    }
-
-    return false;
-}
-
 function beSaveHistory( visit )
 {
     var prev = window.beHistory.length > 0  ? window.beHistory[ window.beHistory.length - 1 ] : null;
@@ -127,11 +78,8 @@ function beSaveHistory( visit )
     }
 }
 
-
 function beShowPage( html )
 {
-    //document.querySelector( "#mainContent" ).innerHTML = html;
-
     var mainContent = document.querySelector( "#mainContent" );
 
     mainContent.innerHTML = ""; 
