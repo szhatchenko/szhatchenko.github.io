@@ -39,10 +39,13 @@ function beGoBack()
    if( visit )
    {
        isOpExecuted = document.querySelector( "#mainContent #backLink" );
+       console.log( "isOpExecuted = " + isOpExecuted );
        if( isOpExecuted )
        {
-           for( visit = window.beHistory.pop(); visit && visit.params.form; visit = window.beHistory.pop() )
+           for( ; visit && visit.params.form; visit = window.beHistory.pop() )
            {
+               console.log( "----------" );
+               console.log( visit );
            } 
        }
    }
