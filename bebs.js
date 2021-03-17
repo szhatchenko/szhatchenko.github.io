@@ -78,6 +78,31 @@ function beSaveHistory( visit )
     }
 }
 
+function beFixLinks4Bootstrap( div )
+{
+    var links = div.querySelectorAll( "a" );
+    links.forEach( function( link )
+    {  
+        if( link.onclick )
+        {
+            //console.log( "Skipped '" + link.href + "' because of " + link.onclick  );
+            return; 
+        }
+
+        link.onclick = function()
+        {
+            loadPageWithProgress( null, 
+            { 
+              url: this.href, 
+              title: this.innerText, 
+              type: 'text'
+            }, /*bRefreshPage*/ this.id == "refreshLink" ); 
+
+            return false;
+        };
+    });
+}
+
 function beShowPage( html )
 {
     var mainContent = document.querySelector( "#mainContent" );
