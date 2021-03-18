@@ -206,7 +206,7 @@ function beShowPage( html )
             window.removeEventListener( "load", toRemoveFromOnLoadList[ i ] );
         }
     }
-    else( onloadAfter && ( !onloadBefore || onloadBefore != onloadAfter ) )
+    else if( onloadAfter && ( !onloadBefore || onloadBefore != onloadAfter ) )
     {
         console.log( "Executing page's window.onload..." );
         if( onloadBefore )
