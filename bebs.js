@@ -109,6 +109,8 @@ function beShowPage( html )
 
     mainContent.innerHTML = ""; 
 
+    console.log( "window.getEventListeners = " + window.getEventListeners );
+
     var nLoadListenersBefore = window.getEventListeners ?
              window.getEventListeners( window )[ "load" ].length : 0;
     console.log( "nLoadListenersBefore = " + nLoadListenersBefore );
