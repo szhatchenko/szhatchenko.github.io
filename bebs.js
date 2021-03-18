@@ -296,7 +296,15 @@ function loadPageWithProgress( aEl, params, bRefreshPage )
                 {
                     value = String( input.checked );
                 }
-                formData.append( input.name, value );
+
+                if( input.type == "file" )
+                {
+                    formData.append( input.name, input.files[ 0 ] );
+                }
+                else
+                {
+                    formData.append( input.name, value );
+                }
             }
         }
         else if( form.id == "rForm" )
