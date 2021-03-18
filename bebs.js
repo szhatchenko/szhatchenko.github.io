@@ -109,14 +109,22 @@ function beShowPage( html )
 
     mainContent.innerHTML = ""; 
 
-    console.log( "window.getEventListeners = " + window.getEventListeners );
-    console.log( window );
-
-    var nLoadListenersBefore = window.getEventListeners ?
-             window.getEventListeners( window )[ "load" ].length : 0;
-    console.log( "nLoadListenersBefore = " + nLoadListenersBefore );
-
+    var origAddEventListener = window.addEventListener;
     var onloadBefore = window.onload; 
+
+    var pageOnloadListeners = [];
+    window.addEventListener = function( type, listener, options )
+    {
+        if( type === "load" )
+        {
+            pageOnloadListeners.push( listener );
+        }
+        else
+        {
+            origAddEventListener( type, listener, options );
+        }
+    };
+    console.log( "Installed custom addEventListener." );
         
     var container = document.createElement( "div" );
     container.innerHTML = html;
@@ -159,18 +167,26 @@ function beShowPage( html )
     }
 
     // force the found scripts to execute...
-    for( var i = 0; i < scripts.length; i++)
-    {
-        var script = document.createElement( "script" );
-        script.type = scripts[ i ].type || "text/javascript";
-        if( scripts[ i ].hasAttribute( "src" ) )
+    try
+    { 
+        for( var i = 0; i < scripts.length; i++)
         {
-            script.src = scripts[ i ].src;
-        } 
-        script.innerHTML = scripts[ i ].innerHTML;
-        document.head.appendChild(script);
-        document.head.removeChild(script);
+            var script = document.createElement( "script" );
+            script.type = scripts[ i ].type || "text/javascript";
+            if( scripts[ i ].hasAttribute( "src" ) )
+            {
+                script.src = scripts[ i ].src;
+            } 
+            script.innerHTML = scripts[ i ].innerHTML;
+            document.head.appendChild(script);
+            document.head.removeChild(script);
+        }
     }
+    finally
+    {
+        window.addEventListener = origAddEventListener;
+        console.log( "Reverted to original addEventListener." );
+    } 
 
     var documentTitle = container.querySelector( "#documentTitle" );
     var documentMobileTitle = container.querySelector( "#documentMobileTitle" );
@@ -192,24 +208,15 @@ function beShowPage( html )
 
     var nLoadListenersAfter = window.getEventListeners ?
              window.getEventListeners( window )[ "load" ].length : 0;
-    console.log( "nLoadListenersAfter = " + nLoadListenersAfter );
 
     var onloadAfter = window.onload; 
 
-    if( nLoadListenersAfter != nLoadListenersBefore )
+    if( pageOnloadListeners.length > 0 )
     {
-        var currentListOfOnloadListeners = window.getEventListeners( window )[ "load" ]; 
-        var toRemoveFromOnLoadList = [];  
-        for( var onLoadCurrentListener = nLoadListenersBefore; onLoadCurrentListener < nLoadListenersAfter++; onLoadCurrentListener++ )
+        for( var onLoadCurrentListener = 0; onLoadCurrentListener < pageOnloadListeners.length; onLoadCurrentListener++ )
         {
             console.log( "Executing page's listener #" + onLoadCurrentListener + "..." );
-            toRemoveFromOnLoadList.push( currentListOfOnloadListeners[ onLoadCurrentListener ] );
-            currentListOfOnloadListeners[ onLoadCurrentListener ]();
-        }
-        for( var i = 0; i < toRemoveFromOnLoadList.length; i++ )
-        {
-            console.log( "Removing page's listener #" + ( currentListOfOnloadListeners.length - 1 ) + "..." );
-            window.removeEventListener( "load", toRemoveFromOnLoadList[ i ] );
+            pageOnloadListeners[ onLoadCurrentListener ]();
         }
     }
     else if( onloadAfter && ( !onloadBefore || onloadBefore != onloadAfter ) )
