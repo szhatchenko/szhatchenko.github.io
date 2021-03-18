@@ -109,10 +109,8 @@ function beShowPage( html )
 
     mainContent.innerHTML = ""; 
 
-    console.log( "typeof( getEventListeners ) === function = " + ( typeof( getEventListeners ) === "function" ) );
-
-    var nLoadListenersBefore = typeof( getEventListeners ) === "function" ?
-             getEventListeners( window )[ "load" ].length : 0;
+    var nLoadListenersBefore = window.getEventListeners ?
+             window.getEventListeners( window )[ "load" ].length : 0;
     console.log( "nLoadListenersBefore = " + nLoadListenersBefore );
 
     var onloadBefore = window.onload; 
@@ -189,15 +187,15 @@ function beShowPage( html )
         backControl.onclick = beGoBack;
     }); 
 
-    var nLoadListenersAfter = typeof( getEventListeners ) === "function" ?
-             getEventListeners( window )[ "load" ].length : 0;
+    var nLoadListenersAfter = window.getEventListeners ?
+             window.getEventListeners( window )[ "load" ].length : 0;
     console.log( "nLoadListenersAfter = " + nLoadListenersAfter );
 
     var onloadAfter = window.onload; 
 
     if( nLoadListenersAfter != nLoadListenersBefore )
     {
-        var currentListOfOnloadListeners = getEventListeners( window )[ "load" ]; 
+        var currentListOfOnloadListeners = window.getEventListeners( window )[ "load" ]; 
         var toRemoveFromOnLoadList = [];  
         for( var onLoadCurrentListener = nLoadListenersBefore; onLoadCurrentListener < nLoadListenersAfter++; onLoadCurrentListener++ )
         {
