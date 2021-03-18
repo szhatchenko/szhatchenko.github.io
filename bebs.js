@@ -215,7 +215,15 @@ function beShowPage( html )
     {
         for( var onLoadCurrentListener = 0; onLoadCurrentListener < pageOnloadListeners.length; onLoadCurrentListener++ )
         {
-            console.log( "Executing page's listener #" + onLoadCurrentListener + "..." );
+            if( pageOnloadListeners[ onLoadCurrentListener ].name )
+            {
+                console.log( "Executing page's listener #" + onLoadCurrentListener + " (" + 
+                    pageOnloadListeners[ onLoadCurrentListener ].name + ")..." );
+            }
+            else
+            { 
+                console.log( "Executing page's listener #" + onLoadCurrentListener + "..." );
+            }
             pageOnloadListeners[ onLoadCurrentListener ]();
         }
     }
