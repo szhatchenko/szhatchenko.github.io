@@ -217,8 +217,8 @@ function beShowPage( html )
         {
             if( pageOnloadListeners[ onLoadCurrentListener ].name )
             {
-                console.log( "Executing page's listener #" + onLoadCurrentListener + " (" + 
-                    pageOnloadListeners[ onLoadCurrentListener ].name + ")..." );
+                console.log( "Executing page's listener #" + onLoadCurrentListener + " [" + 
+                    pageOnloadListeners[ onLoadCurrentListener ].name + "]..." );
             }
             else
             { 
