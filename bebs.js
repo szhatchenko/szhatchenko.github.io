@@ -109,8 +109,11 @@ function beShowPage( html )
 
     mainContent.innerHTML = ""; 
 
+    console.log( "typeof( getEventListeners ) === function = " + ( typeof( getEventListeners ) === "function" ) );
+
     var nLoadListenersBefore = typeof( getEventListeners ) === "function" ?
              getEventListeners( window )[ "load" ].length : 0;
+    console.log( "nLoadListenersBefore = " + nLoadListenersBefore );
 
     var onloadBefore = window.onload; 
         
@@ -188,6 +191,8 @@ function beShowPage( html )
 
     var nLoadListenersAfter = typeof( getEventListeners ) === "function" ?
              getEventListeners( window )[ "load" ].length : 0;
+    console.log( "nLoadListenersAfter = " + nLoadListenersAfter );
+
     var onloadAfter = window.onload; 
 
     if( nLoadListenersAfter != nLoadListenersBefore )
