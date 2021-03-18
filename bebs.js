@@ -108,6 +108,11 @@ function beShowPage( html )
     var mainContent = document.querySelector( "#mainContent" );
 
     mainContent.innerHTML = ""; 
+
+    var nLoadListenersBefore = typeof( getEventListeners ) === "function" ?
+             getEventListeners( window )[ "load" ].length : 0;
+
+    var onloadBefore = window.onload; 
         
     var container = document.createElement( "div" );
     container.innerHTML = html;
@@ -148,6 +153,7 @@ function beShowPage( html )
 
         mainContent.appendChild( node );
     }
+
     // force the found scripts to execute...
     for( var i = 0; i < scripts.length; i++)
     {
@@ -179,6 +185,40 @@ function beShowPage( html )
         backControl.style.display = bHasHistory ? "" : "none";
         backControl.onclick = beGoBack;
     }); 
+
+    var nLoadListenersAfter = typeof( getEventListeners ) === "function" ?
+             getEventListeners( window )[ "load" ].length : 0;
+    var onloadAfter = window.onload; 
+
+    if( nLoadListenersAfter != nLoadListenersBefore )
+    {
+        var currentListOfOnloadListeners = getEventListeners( window )[ "load" ]; 
+        var toRemoveFromOnLoadList = [];  
+        for( var onLoadCurrentListener = nLoadListenersBefore; onLoadCurrentListener < nLoadListenersAfter++; onLoadCurrentListener++ )
+        {
+            console.log( "Executing page's listener #" + onLoadCurrentListener + "..." );
+            toRemoveFromOnLoadList.push( currentListOfOnloadListeners[ onLoadCurrentListener ] );
+            currentListOfOnloadListeners[ onLoadCurrentListener ]();
+        }
+        for( var i = 0; i < toRemoveFromOnLoadList.length; i++ )
+        {
+            console.log( "Removing page's listener #" + ( currentListOfOnloadListeners.length - 1 ) + "..." );
+            window.removeEventListener( "load", toRemoveFromOnLoadList[ i ] );
+        }
+    }
+    else( onloadAfter && ( !onloadBefore || onloadBefore != onloadAfter ) )
+    {
+        console.log( "Executing page's window.onload..." );
+        if( onloadBefore )
+        {
+            window.onload = onloadBefore;
+        }
+        else
+        {
+            window.onload = null;
+        }   
+        onloadAfter();  
+    }     
 }
 
 function paramsAreEqual( obj1, obj2 )
