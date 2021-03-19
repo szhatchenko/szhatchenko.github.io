@@ -72,7 +72,7 @@ function beSaveHistory( visit )
     {
         bSave = true;
     }
-    if( bSave && !visit.params.form )
+    if( bSave && !visit.params.form && !visit.params.isOperation )
     { 
         window.beHistory.push( visit );
     }
@@ -93,9 +93,10 @@ function beFixLinks4Bootstrap( div )
         {
             loadPageWithProgress( null, 
             { 
-              url: this.href, 
-              title: this.innerText, 
-              type: 'text'
+                url: this.href, 
+                title: this.innerText,
+                isOperation: this.classList.contains( "operationLink" ),
+                type: 'text'
             }, /*bRefreshPage*/ this.id == "refreshLink" ); 
 
             return false;
@@ -137,30 +138,7 @@ function beShowPage( html )
         var node = nodes[ i ].cloneNode( true );
         if( node.querySelectorAll && node.nodeName != "SCRIPT" && node.nodeName != "#text" )
         {
-            //console.log( 'node.nodeName = ' + node.nodeName );
-            var links = node.querySelectorAll( "a" );
-            links.forEach( function( link )
-            {  
-                if( link.onclick )
-                {
-                    //console.log( "Skipped '" + link.href + "' because of " + link.onclick  );
-                    return; 
-                }
-
-                link.onclick = function()
-                {
-                    loadPageWithProgress( null, 
-                    { 
-                      url: this.href, 
-                      title: this.innerText, 
-                      type: 'text'
-                    }, /*bRefreshPage*/ this.id == "refreshLink" ); 
-
-                    return false;
-                };
-
-                //console.log( "Captured '" + link.href + "'" );
-            });
+            beFixLinks4Bootstrap( node );
         }
 
         mainContent.appendChild( node );
