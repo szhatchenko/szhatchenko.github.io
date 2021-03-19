@@ -131,8 +131,10 @@ function beShowPage( html )
     console.log( "Installed custom addEventListener." );
         
     var container = document.createElement( "div" );
-    var isQuery = container.querySelector( "#queryTitleContainer" ) != null;  
     container.innerHTML = html;
+
+    var isQuery = container.querySelector( "#queryTitleContainer" ) != null;  
+
     // cache a reference to all the scripts in the container
     var scripts = container.querySelectorAll( "script" );
     // get all child elements and clone them in the target element
