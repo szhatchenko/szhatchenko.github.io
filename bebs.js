@@ -46,7 +46,7 @@ function beGoBack()
     {
         window.beHistory.pop(); // remove ouselves
         last = window.beHistory.pop();  
-        beShowPage( last.content );
+        beShowPage( last.content, last );
         beSaveHistoryIfNeeded( last );
     }
     else if( isOpExecuted )
@@ -57,7 +57,7 @@ function beGoBack()
     else // Cancel button in Form
     {   
         last = window.beHistory.pop();  
-        beShowPage( last.content );
+        beShowPage( last.content, last );
         beSaveHistoryIfNeeded( last );   
     }
 
@@ -66,13 +66,37 @@ function beGoBack()
 
 function beSaveHistoryIfNeeded( visit )
 {
-    if( !visit.params.isQuery )
+    if( !visit.params.historyKeyLink )
     {
         return;
     }
+
+    var bFound = false; 
+    for( var i = 0; i < window.beHistory.length; i++ )
+    {
+        var hist = window.beHistory[ i ];
+        if( hist.params.historyKeyLink == visit.params.historyKeyLink )
+        {
+            if( hist.menuLink && !visit.menuLink )
+            {
+                visit.menuLink = hist.menuLink;
+            }
+            window.beHistory[ i ] = visit;
+            window.beHistory = window.beHistory.slice( 0, i + 1 );
+            bFound = true;
+            break;
+        }
+    }
+
+    if( !bFound )
+    { 
+        window.beHistory.push( visit );
+    }
+
+/*
     var prev = window.beHistory.length > 0  ? window.beHistory[ window.beHistory.length - 1 ] : null;
     var bSave = !prev;
-    if( !bSave && ( prev.aEl != visit.aEl || !paramsAreEqual( visit.params, prev.params ) ) )
+    if( !bSave && ( prev.menuLink != visit.menuLink || !paramsAreEqual( visit.params, prev.params ) ) )
     {
         bSave = true;
     }
@@ -80,6 +104,7 @@ function beSaveHistoryIfNeeded( visit )
     { 
         window.beHistory.push( visit );
     }
+*/
 }
 
 function beFixLinks4Bootstrap( div )
@@ -107,7 +132,7 @@ function beFixLinks4Bootstrap( div )
     });
 }
 
-function beShowPage( html )
+function beShowPage( html, visit )
 {
     var mainContent = document.querySelector( "#mainContent" );
 
@@ -133,7 +158,13 @@ function beShowPage( html )
     var container = document.createElement( "div" );
     container.innerHTML = html;
 
-    var isQuery = container.querySelector( "#queryTitleContainer" ) != null;  
+    var isQuery = container.querySelector( "#queryTitleContainer" ) != null;        
+    var historyKeyLink = isQuery ? container.querySelector( "#historyKeyLink" ).href : null;  
+
+    if( isQuery )
+    {
+        visit.params.historyKeyLink = historyKeyLink;
+    } 
 
     // cache a reference to all the scripts in the container
     var scripts = container.querySelectorAll( "script" );
@@ -177,6 +208,7 @@ function beShowPage( html )
     if( documentTitle )
     {  
         document.title = documentTitle.innerText;
+        visit.params.title = document.title;
     }
     if( documentMobileTitle )
     {  
@@ -432,13 +464,7 @@ function loadPageWithProgress( aEl, params, bRefreshPage )
                visit = window.beHistory.pop();
             }
 
-            var isQuery = beShowPage( html );
-
-            visit.params.title = document.title;
-            if( isQuery )
-            {
-                visit.params.isQuery = isQuery;
-            } 
+            beShowPage( html, visit );
 
             beSaveHistoryIfNeeded( visit );
         }
