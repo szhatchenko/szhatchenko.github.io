@@ -47,7 +47,7 @@ function beGoBack()
         window.beHistory.pop(); // remove ouselves
         last = window.beHistory.pop();  
         beShowPage( last.content );
-        beSaveHistory( last );   
+        beSaveHistoryIfNeeded( last );
     }
     else if( isOpExecuted )
     {
@@ -58,21 +58,25 @@ function beGoBack()
     {   
         last = window.beHistory.pop();  
         beShowPage( last.content );
-        beSaveHistory( last );   
+        beSaveHistoryIfNeeded( last );   
     }
 
     return false;
 }
 
-function beSaveHistory( visit )
+function beSaveHistoryIfNeeded( visit )
 {
+    if( !visit.params.isQuery )
+    {
+        return;
+    }
     var prev = window.beHistory.length > 0  ? window.beHistory[ window.beHistory.length - 1 ] : null;
     var bSave = !prev;
     if( !bSave && ( prev.aEl != visit.aEl || !paramsAreEqual( visit.params, prev.params ) ) )
     {
         bSave = true;
     }
-    if( bSave && !visit.params.form && !visit.params.isOperation )
+    if( bSave )
     { 
         window.beHistory.push( visit );
     }
@@ -95,7 +99,6 @@ function beFixLinks4Bootstrap( div )
             { 
                 url: this.href, 
                 title: this.innerText,
-                isOperation: this.classList.contains( "operationLink" ),
                 type: 'text'
             }, /*bRefreshPage*/ this.id == "refreshLink" ); 
 
@@ -133,6 +136,7 @@ function beShowPage( html )
     var scripts = container.querySelectorAll( "script" );
     // get all child elements and clone them in the target element
     var nodes = container.childNodes;
+    var isQuery = false;  
     for( var i = 0; i < nodes.length; i++ )
     {
         var node = nodes[ i ].cloneNode( true );
@@ -142,6 +146,7 @@ function beShowPage( html )
         }
 
         mainContent.appendChild( node );
+        isQuery = isQuery || node.id == "queryTitleContainer";
     }
 
     // force the found scripts to execute...
@@ -217,7 +222,9 @@ function beShowPage( html )
             window.onload = null;
         }   
         onloadAfter();  
-    }     
+    }
+
+    return isQuery; 
 }
 
 function paramsAreEqual( obj1, obj2 )
@@ -424,11 +431,15 @@ function loadPageWithProgress( aEl, params, bRefreshPage )
                visit = window.beHistory.pop();
             }
 
-            beShowPage( html );
+            var isQuery = beShowPage( html );
 
             visit.params.title = document.title;
+            if( isQuery )
+            {
+                visit.params.isQuery = isQuery;
+            } 
 
-            beSaveHistory( visit );
+            beSaveHistoryIfNeeded( visit );
         }
         else
         {
