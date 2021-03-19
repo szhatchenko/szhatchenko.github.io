@@ -114,7 +114,15 @@ function beSaveHistoryIfNeeded( visit )
 
 function beFixLinks4Bootstrap( div )
 {
+    if( !div )
+    {
+        return;  
+    }
     var links = div.querySelectorAll( "a" );
+    if( !links )
+    {
+        return;  
+    }
     links.forEach( function( link )
     {  
         if( link.onclick )
