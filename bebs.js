@@ -66,7 +66,7 @@ function beGoBack()
 
 function beSaveHistoryIfNeeded( visit )
 {
-    if( !visit.params.historyKeyLink )
+    if( !visit.historyKeyLink )
     {
         return;
     }
@@ -75,7 +75,7 @@ function beSaveHistoryIfNeeded( visit )
     for( var i = 0; i < window.beHistory.length; i++ )
     {
         var hist = window.beHistory[ i ];
-        if( hist.params.historyKeyLink == visit.params.historyKeyLink )
+        if( hist.historyKeyLink == visit.historyKeyLink )
         {
             if( hist.menuLink && !visit.menuLink )
             {
@@ -163,7 +163,7 @@ function beShowPage( html, visit )
 
     if( isQuery )
     {
-        visit.params.historyKeyLink = historyKeyLink;
+        visit.historyKeyLink = historyKeyLink;
     } 
 
     // cache a reference to all the scripts in the container
