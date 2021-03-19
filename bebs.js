@@ -71,6 +71,10 @@ function beSaveHistoryIfNeeded( visit )
         return;
     }
 
+    delete visit.params.url;
+    delete visit.params.form;
+    delete visit.params.execOp;
+
     var bFound = false; 
     for( var i = 0; i < window.beHistory.length; i++ )
     {
