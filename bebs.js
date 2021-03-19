@@ -146,7 +146,7 @@ function beShowPage( html )
         }
 
         mainContent.appendChild( node );
-        isQuery = isQuery || node.id == "queryTitleContainer";
+        isQuery = isQuery || node.querySelector( "#queryTitleContainer" ) != null;
     }
 
     // force the found scripts to execute...
