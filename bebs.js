@@ -131,12 +131,12 @@ function beShowPage( html )
     console.log( "Installed custom addEventListener." );
         
     var container = document.createElement( "div" );
+    var isQuery = container.querySelector( "#queryTitleContainer" ) != null;  
     container.innerHTML = html;
     // cache a reference to all the scripts in the container
     var scripts = container.querySelectorAll( "script" );
     // get all child elements and clone them in the target element
     var nodes = container.childNodes;
-    var isQuery = false;  
     for( var i = 0; i < nodes.length; i++ )
     {
         var node = nodes[ i ].cloneNode( true );
@@ -146,7 +146,6 @@ function beShowPage( html )
         }
 
         mainContent.appendChild( node );
-        isQuery = isQuery || node.querySelector( "#queryTitleContainer" ) != null;
     }
 
     // force the found scripts to execute...
