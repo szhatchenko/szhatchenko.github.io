@@ -52,6 +52,7 @@ function beGoBack()
     else if( isOpExecuted )
     {
         last = window.beHistory.pop();  
+        last.params.url = last.historyKeyLink; 
         loadPageWithProgress( last.menuLink, last.params );
     }
     else // Cancel button in Form
