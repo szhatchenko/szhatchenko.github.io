@@ -222,6 +222,13 @@ function beShowPage( html, visit )
     be$( ".goBackLink", mainContent ).forEach( function( backControl )
     {
         var bHasHistory = window.beHistory && window.beHistory.length > 0;
+        if( bHasHistory && isQuery )
+        {
+            if( window.beHistory.length == 1 && historyKeyLink == window.beHistory[ 0 ].historyKeyLink )
+            {
+                bHasHistory = false;
+            }
+        }
         backControl.style.display = bHasHistory ? "" : "none";
         backControl.onclick = beGoBack;
     }); 
