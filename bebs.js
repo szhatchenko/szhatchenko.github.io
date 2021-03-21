@@ -172,9 +172,10 @@ function beShowPage( html, visit )
     container.innerHTML = html;
 
     var isQuery = container.querySelector( "#queryTitleContainer" ) != null;        
-    var historyKeyLink = isQuery ? container.querySelector( "#historyKeyLink" ).href : null;  
+    var historyKeyLink = container.querySelector( "#historyKeyLink" ) ? 
+        container.querySelector( "#historyKeyLink" ).href : null;  
 
-    if( isQuery )
+    if( historyKeyLink )
     {
         visit.historyKeyLink = historyKeyLink;
     } 
