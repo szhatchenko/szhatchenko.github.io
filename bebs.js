@@ -387,31 +387,6 @@ function loadPageWithProgress( aEl, params, bRefreshPage )
         //debugger; 
     }
 
-    document.title = params.title;         
-    document.querySelector( '#mobileHeaderTitle' ).innerText = params.title;
-    if( aEl )
-    {  
-        document.querySelectorAll( '.nav-link' ).forEach( function( el ) { el.classList.remove( "active" ); });
-        aEl.classList.add( "active" );
-    }  
-
-    var progressBar = 
-'<div class="progress"> \
-<div class="progress-bar progress-bar-striped progress-bar-animated" \
-  role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div> \
-</div>';
-
-    var mainContent = document.querySelector( "#mainContent" );  
-    if( !window.beHistory || aEl )
-    {
-        window.beHistory = [];  
-    }
-
-    mainContent.innerHTML = progressBar;
-
-    //console.log( "----------------------------------------------------------" );
-    //console.log( params.url );
-
     var xhr = new XMLHttpRequest();
     xhr.responseType = params.type; 
     xhr.onprogress = function (e) 
@@ -502,10 +477,34 @@ function loadPageWithProgress( aEl, params, bRefreshPage )
     //    console.log( e );
     //};
 
+
+    var progressBar = 
+'<div class="progress"> \
+<div class="progress-bar progress-bar-striped progress-bar-animated" \
+  role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div> \
+</div>';
+
+    var mainContent = document.querySelector( "#mainContent" );  
+
     if( customSend )
     {
         customSend( params.form, function()
         {
+            document.title = params.title;         
+            document.querySelector( '#mobileHeaderTitle' ).innerText = params.title;
+            if( aEl )
+            {  
+                document.querySelectorAll( '.nav-link' ).forEach( function( el ) { el.classList.remove( "active" ); });
+                aEl.classList.add( "active" );
+            }  
+
+            if( !window.beHistory || aEl )
+            {
+                window.beHistory = [];  
+            }
+
+            mainContent.innerHTML = progressBar;
+
             if( formData )
             {
                 xhr.open( "POST", params.url ); 
@@ -520,6 +519,21 @@ function loadPageWithProgress( aEl, params, bRefreshPage )
     }
     else
     {   
+        document.title = params.title;         
+        document.querySelector( '#mobileHeaderTitle' ).innerText = params.title;
+        if( aEl )
+        {  
+            document.querySelectorAll( '.nav-link' ).forEach( function( el ) { el.classList.remove( "active" ); });
+            aEl.classList.add( "active" );
+        }  
+
+        if( !window.beHistory || aEl )
+        {
+            window.beHistory = [];  
+        }
+
+        mainContent.innerHTML = progressBar;
+
         if( formData )
         {
             xhr.open( "POST", params.url ); 
