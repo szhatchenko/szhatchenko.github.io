@@ -310,6 +310,7 @@ function loadPageWithProgress( aEl, params, bRefreshPage )
         document.querySelector( "#dismiss" ).click();
     }
 
+    var customSend = null;
     var formData = null;
     if( params.form )
     {
@@ -317,7 +318,8 @@ function loadPageWithProgress( aEl, params, bRefreshPage )
         //console.log( "form.id = " + form.id ); 
         if( form.id == "formPropertyInspector" && validate( form ) )
         {
-            formData = new FormData();
+            customSend = params.send;  
+            formData = new FormData();            
             formData.append( params.execOp, "Execute" );
             for( var i = 0; i < form.elements.length; i++ )
             {
@@ -500,15 +502,34 @@ function loadPageWithProgress( aEl, params, bRefreshPage )
     //    console.log( e );
     //};
 
-    if( formData )
+    if( customSend )
     {
-        xhr.open( "POST", params.url ); 
-        xhr.send( formData );
+        customSend( params.form, function()
+        {
+            if( formData )
+            {
+                xhr.open( "POST", params.url ); 
+                xhr.send( formData );
+            }
+            else
+            {
+                xhr.open( "GET", params.url ); 
+                xhr.send();
+            }
+        });  
     }
     else
-    {
-        xhr.open( "GET", params.url ); 
-        xhr.send();
+    {   
+        if( formData )
+        {
+            xhr.open( "POST", params.url ); 
+            xhr.send( formData );
+        }
+        else
+        {
+            xhr.open( "GET", params.url ); 
+            xhr.send();
+        }
     }
 
     return true;
