@@ -316,7 +316,36 @@ function loadPageWithProgress( aEl, params, bRefreshPage )
     {
         var form = params.form; 
         //console.log( "form.id = " + form.id ); 
-        if( form.id == "formPropertyInspector" && validate( form ) )
+        if( form.id == "formPropertyInspector" && params.reload )
+        {
+            formData = new FormData();            
+            for( var i = 0; i < form.elements.length; i++ )
+            {
+                var input = form.elements[ i ];
+                if( !input.name )
+                {
+                    continue;
+                }
+                if( input.name.startsWith( "_internal_" ) )
+                {
+                    continue;
+                }
+                var value = input.value;  
+                if( input.type == "checkbox" )
+                {
+                    value = String( input.checked );
+                }
+
+                if( input.type == "file" )
+                {
+                }
+                else
+                {
+                    formData.append( input.name, value );
+                }
+            }
+        }
+        else if( form.id == "formPropertyInspector" && validate( form ) )
         {
             customSend = params.send;  
             formData = new FormData();            
