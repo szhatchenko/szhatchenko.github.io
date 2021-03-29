@@ -287,7 +287,34 @@ function beShowPage( html, visit )
         {
             if( xhr.status == 200 )
             {
-                splitter.innerHTML = xhr.response;
+                var splitop = document.createElement( "div" );
+                splitop.innerHTML = xhr.response;
+
+                // cache a reference to all the scripts in the container
+                var scripts = splitop.querySelectorAll( "script" );
+                // get all child elements and clone them in the target element
+                var nodes = splitop.childNodes;
+                for( var i = 0; i < nodes.length; i++ )
+                {
+                    var node = nodes[ i ].cloneNode( true );
+                    splitter.appendChild( node );
+                }
+
+                // force the found scripts to execute...
+                for( var i = 0; i < scripts.length; i++)
+                {
+                    var script = document.createElement( "script" );
+                    script.type = scripts[ i ].type || "text/javascript";
+                    if( scripts[ i ].hasAttribute( "src" ) )
+                    {
+                        script.src = scripts[ i ].src;
+                    } 
+                    script.innerHTML = scripts[ i ].innerHTML;
+                    document.head.appendChild(script);
+                    document.head.removeChild(script);
+                }
+
+               // splitter.innerHTML = xhr.response;
                 splitter.id = "splitter";
             }   
         }
