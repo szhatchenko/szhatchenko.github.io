@@ -278,7 +278,8 @@ function beShowPage( html, visit )
         onloadAfter();  
     }
 
-    if( document.getElementById( "splitterPlaceholder" ) )
+    var splitter = document.getElementById( "splitterPlaceholder" );
+    if( splitter )
     {
         var xhr = new XMLHttpRequest();
         xhr.responseType = "text"; 
@@ -286,7 +287,6 @@ function beShowPage( html, visit )
         {
             if( xhr.status == 200 )
             {
-                var splitter = document.getElementById( "splitterPlaceholder" );
                 splitter.innerHTML = xhr.response;
                 splitter.id = "splitter";
             }   
