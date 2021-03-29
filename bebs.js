@@ -493,7 +493,7 @@ function loadPageWithProgress( aEl, params, bRefreshPage )
         var percentage = null; 
         if( !params.static && this.readyState == 1 )
         {
-            percentage = 20;
+            percentage = 10;
         }
         if( this.readyState == 2 )
         {
