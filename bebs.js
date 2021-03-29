@@ -323,6 +323,8 @@ function beShowPage( html, visit )
         xhr.send();
     }  
 
+    feather.replace();
+
     return isQuery; 
 }
 
