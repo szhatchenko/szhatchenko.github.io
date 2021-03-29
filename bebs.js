@@ -278,6 +278,24 @@ function beShowPage( html, visit )
         onloadAfter();  
     }
 
+    var slitter = document.querySelector( "#splitterPlaceholder" );
+    if( splitter )
+    {
+        var xhr = new XMLHttpRequest();
+        xhr.responseType = "text"; 
+        xhr.onloadend = function( e ) 
+        {
+            if( xhr.status == 200 )
+            {
+                splitter.innerHTML = xhr.response;
+                splitter.id = "splitter";
+            }   
+        }
+
+        xhr.open( "GET", splitter.getAttribute( "paramFrame" ) ); 
+        xhr.send();
+    }  
+
     return isQuery; 
 }
 
