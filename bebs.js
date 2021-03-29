@@ -286,7 +286,7 @@ function beShowPage( html, visit )
         {
             if( xhr.status == 200 )
             {
-                var slitter = document.getElementById( "splitterPlaceholder" );
+                var splitter = document.getElementById( "splitterPlaceholder" );
                 splitter.innerHTML = xhr.response;
                 splitter.id = "splitter";
             }   
