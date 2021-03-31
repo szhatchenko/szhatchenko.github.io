@@ -479,9 +479,10 @@ function loadPageWithProgress( aEl, params, bRefreshPage )
         //{
         //    return;  
         //}
-        var pbar = document.querySelector( ".progress-bar" );
-        pbar.style.width = "" + percentage  + "%";
-        pbar.setAttribute( "aria-valuenow", percentage );
+        document.querySelectorAll( '.progress-bar' ).forEach( function( pbar ) {     
+            pbar.style.width = "" + percentage  + "%";
+            pbar.setAttribute( "aria-valuenow", percentage );
+        });  
     };
     xhr.onloadstart = function( e ) 
     {
@@ -489,7 +490,6 @@ function loadPageWithProgress( aEl, params, bRefreshPage )
     };
     xhr.onreadystatechange = function( e ) 
     {
-        var pbar = document.querySelector( ".progress-bar" );
         var percentage = null; 
         if( !params.static && this.readyState == 1 )
         {
@@ -507,8 +507,10 @@ function loadPageWithProgress( aEl, params, bRefreshPage )
         }
         if( percentage )
         {
-            pbar.style.width = "" + percentage  + "%";
-            pbar.setAttribute( "aria-valuenow", percentage );
+            document.querySelectorAll( '.progress-bar' ).forEach( function( pbar ) {     
+                pbar.style.width = "" + percentage  + "%";
+                pbar.setAttribute( "aria-valuenow", percentage );
+            });  
         }
 
         //console.log( "onreadystatechange = " + this.readyState );
@@ -517,8 +519,11 @@ function loadPageWithProgress( aEl, params, bRefreshPage )
     {
         //console.log( "onloadend" );
         var pbar = document.querySelector( ".progress-bar" );
-        pbar.style.width = "99%";
-        pbar.setAttribute( "aria-valuenow", 99 );
+        document.querySelectorAll( '.progress-bar' ).forEach( function( pbar ) {     
+            pbar.style.width = "99%";
+            pbar.setAttribute( "aria-valuenow", 99 );
+        });  
+
         if( xhr.status == 200 )
         {
             var html = null;
@@ -555,10 +560,28 @@ function loadPageWithProgress( aEl, params, bRefreshPage )
 
 
     var progressBar = 
-'<div class="progress"> \
+'<span class="align-middle d-none d-xl-block" \
+   style="position: absolute; top: 50%; left: 40%; margin-top: -1.5rem; margin-left: -20%; width: 75%; height: 3rem;">\
+<div class="progress"> \
 <div class="progress-bar progress-bar-striped progress-bar-animated" \
   role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div> \
-</div>';
+</div>\
+</span>\
+\
+<span class="align-middle d-none d-lg-block d-xl-none" \
+   style="position: absolute; top: 50%; left: 50%; margin-top: -1.5rem; margin-left: -20%; width: 65%; height: 3rem;">\
+<div class="progress"> \
+<div class="progress-bar progress-bar-striped progress-bar-animated" \
+  role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div> \
+</div>\
+</span>\
+\
+<div class="spinner-border text-primary d-lg-none d-block" \
+   style="position: absolute; top: 50%; left: 50%; margin-top: -2.5rem; margin-left: -2.5rem; width: 5rem; height: 5rem;" \
+   role="status"> \
+     <span class="visually-hidden">Loading...</span>\
+</div>\
+';
 
     var mainContent = document.querySelector( "#mainContent" );  
 
