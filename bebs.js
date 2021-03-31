@@ -317,7 +317,15 @@ function beShowPage( html, visit )
                         script.src = scripts[ i ].src;
                     } 
                     script.innerHTML = scripts[ i ].innerHTML;
-                    document.head.appendChild(script);
+                    try
+                    {
+                        document.head.appendChild(script);
+                    }
+                    catch( e )
+                    {
+                        console.log( "Page contains a script causing an error:" );
+                        console.log( e );
+                    }
                     document.head.removeChild(script);
                 }
 
