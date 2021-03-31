@@ -261,7 +261,14 @@ function beShowPage( html, visit )
             { 
                 console.log( "Executing page's listener #" + onLoadCurrentListener + "..." );
             }
-            pageOnloadListeners[ onLoadCurrentListener ]();
+            try
+            { 
+                pageOnloadListeners[ onLoadCurrentListener ]();
+            }
+            catch( e )
+            {
+                console.log( e );
+            }  
         }
     }
     else if( onloadAfter && ( !onloadBefore || onloadBefore != onloadAfter ) )
