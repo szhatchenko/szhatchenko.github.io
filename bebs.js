@@ -98,6 +98,33 @@ function beSaveHistoryIfNeeded( visit )
         window.beHistory.push( visit );
     }
 
+    if( document.getElementById( "breadcrumbContent" ) )
+    {
+        var brcontent = ""; 
+        for( var i = 0; i < beHistory.length - 1; i++ )
+        {
+            var hvisit = beHistory[ i ];
+            if( !brcontent )
+            {
+                brcontent = '<nav aria-label="breadcrumb"><ol class="breadcrumb">';
+            }
+            brcontent += '<li class="breadcrumb-item"><a href="#"\
+                   onclick="loadPageWithProgress( null, \
+                   { \
+                       url: \'' + hvisit.historyKeyLink + '\',\
+                       title: \'' + hvisit.params.title + '\',\
+                       type: \'text\' \
+                   } ); return false;">' + hvisit.params.title + '</a></li>';
+        }
+        if( brcontent )
+        {
+            brcontent += '<li class="breadcrumb-item active" aria-current="page">' + visit.params.title + '</li>';
+            brcontent += '</ol></nav>';
+        }  
+
+        document.getElementById( "breadcrumbContent" ).innerHTML = brcontent;
+    }
+
 /*
     var prev = window.beHistory.length > 0  ? window.beHistory[ window.beHistory.length - 1 ] : null;
     var bSave = !prev;
@@ -229,46 +256,20 @@ function beShowPage( html, visit )
         document.querySelector( '#mobileHeaderTitle' ).innerText = documentMobileTitle.innerText;
     }
 
-    var bHasHistory = window.beHistory && window.beHistory.length > 0;
-    if( bHasHistory && isQuery )
-    {
-        if( window.beHistory.length == 1 && historyKeyLink == window.beHistory[ 0 ].historyKeyLink )
-        {
-            bHasHistory = false;
-        }
-    }
-
     be$( ".goBackLink", mainContent ).forEach( function( backControl )
     {
+        var bHasHistory = window.beHistory && window.beHistory.length > 0;
+        if( bHasHistory && isQuery )
+        {
+            if( window.beHistory.length == 1 && historyKeyLink == window.beHistory[ 0 ].historyKeyLink )
+            {
+                bHasHistory = false;
+            }
+        }
+
         backControl.style.display = bHasHistory ? "" : "none";
         backControl.onclick = beGoBack;
     }); 
-
-    if( bHasHistory && document.getElementById( "breadcrumbContent" ) )
-    {
-        var brcontent = ""; 
-        for( var i = 0; i < beHistory.length; i++ )
-        {
-            var hvisit = beHistory[ i ];
-            if( !brcontent )
-            {
-                brcontent = '<nav aria-label="breadcrumb"><ol class="breadcrumb">';
-            }
-            brcontent += '<li class="breadcrumb-item"><a href="#"\
-                   onclick="loadPageWithProgress( null, \
-                   { \
-                       url: \'' + hvisit.historyKeyLink + '\',\
-                       title: \'' + hvisit.params.title + '\',\
-                       type: \'text\' \
-                   } ); return false;">' + hvisit.params.title + '</a></li>';
-        }
-        if( brcontent )
-        {
-            brcontent += '<li class="breadcrumb-item active" aria-current="page">' + document.title + '</li>';
-            brcontent += '</ol></nav>';
-            document.getElementById( "breadcrumbContent" ).innerHTML = brcontent;
-        }  
-    }
 
     var nLoadListenersAfter = window.getEventListeners ?
              window.getEventListeners( window )[ "load" ].length : 0;
