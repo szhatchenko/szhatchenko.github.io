@@ -247,7 +247,7 @@ function beShowPage( html, visit )
     if( bHasHistory && document.getElementById( "breadcrumbContent" ) )
     {
         var brcontent = ""; 
-        for( var i = 0; i < beHistory.length - 1; i++ )
+        for( var i = 0; i < beHistory.length; i++ )
         {
             var hvisit = beHistory[ i ];
             if( !brcontent )
@@ -264,8 +264,7 @@ function beShowPage( html, visit )
         }
         if( brcontent )
         {
-            var lvisit = beHistory[ beHistory.length - 1 ];
-            brcontent += '<li class="breadcrumb-item active" aria-current="page">' + lvisit.params.title + '</li>';
+            brcontent += '<li class="breadcrumb-item active" aria-current="page">' + document.title + '</li>';
             brcontent += '</ol></nav>';
             document.getElementById( "breadcrumbContent" ).innerHTML = brcontent;
         }  
