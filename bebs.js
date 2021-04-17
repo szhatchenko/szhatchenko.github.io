@@ -30,7 +30,7 @@ function be$( term, base_or_fn )
     return ( base_or_fn || document ).querySelectorAll( term );
 } 
 
-function beGoBack()
+function beGoBack( index )
 {
     if( !window.beHistory || window.beHistory.length < 1 )
     {
@@ -42,7 +42,14 @@ function beGoBack()
 
     var last = window.beHistory[ window.beHistory.length - 1 ];
 
-    if( isQueryShown )
+    if( index !== null && index !== undefined )
+    {
+        last = window.beHistory[ index ];  
+        window.beHistory = window.beHistory.slice( 0, index );   
+        beShowPage( last.content, last );
+        beSaveHistoryIfNeeded( last );
+    }
+    else if( isQueryShown )
     {
         window.beHistory.pop(); // remove ouselves
         last = window.beHistory.pop();  
@@ -108,6 +115,10 @@ function beSaveHistoryIfNeeded( visit )
             {
                 brcontent = '<nav aria-label="breadcrumb"><ol class="breadcrumb">';
             }
+
+            brcontent += '<li class="breadcrumb-item"><a href="#"\
+                   onclick="return beGoBack(' + i + ')">' + hvisit.params.title + '</a></li>';
+/*
             brcontent += '<li class="breadcrumb-item"><a href="#"\
                    onclick="loadPageWithProgress( null, \
                    { \
@@ -115,6 +126,7 @@ function beSaveHistoryIfNeeded( visit )
                        title: \'' + hvisit.params.title + '\',\
                        type: \'text\' \
                    } ); return false;">' + hvisit.params.title + '</a></li>';
+*/
         }
         if( brcontent )
         {
