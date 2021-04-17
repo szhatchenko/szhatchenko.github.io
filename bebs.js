@@ -44,7 +44,6 @@ function beGoBack( index )
 
     if( index !== null && index !== undefined )
     {
-        debugger;
         last = window.beHistory[ index ];  
         window.beHistory = window.beHistory.slice( 0, index );   
         beShowPage( last.content, last );
@@ -290,7 +289,7 @@ function beShowPage( html, visit )
         }
 
         backControl.style.display = bHasHistory ? "" : "none";
-        backControl.onclick = beGoBack;
+        backControl.onclick = "return beGoBack()";
     }); 
 
     var nLoadListenersAfter = window.getEventListeners ?
