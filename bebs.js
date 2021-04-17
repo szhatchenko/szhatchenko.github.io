@@ -170,6 +170,15 @@ function beFixLinks4Bootstrap( div )
             return; 
         }
 
+        if( !link.classList.contains( "beLink" ) )
+        {
+            if( !link.target )
+            {
+                link.target = "_new" + Date.now();   
+            }
+            return;  
+        }
+
         link.onclick = function()
         {
             loadPageWithProgress( null, 
