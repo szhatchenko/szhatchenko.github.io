@@ -44,6 +44,7 @@ function beGoBack( index )
 
     if( index !== null && index !== undefined )
     {
+        debugger;
         last = window.beHistory[ index ];  
         window.beHistory = window.beHistory.slice( 0, index );   
         beShowPage( last.content, last );
