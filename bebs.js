@@ -30,7 +30,7 @@ function be$( term, base_or_fn )
     return ( base_or_fn || document ).querySelectorAll( term );
 } 
 
-function beGoBack( index )
+function beGoBack( event, index )
 {
     if( !window.beHistory || window.beHistory.length < 1 )
     {
@@ -117,7 +117,7 @@ function beSaveHistoryIfNeeded( visit )
             }
 
             brcontent += '<li class="breadcrumb-item"><a href="#"\
-                   onclick="return beGoBack(' + i + ')">' + hvisit.params.title + '</a></li>';
+                   onclick="return beGoBack(null,' + i + ')">' + hvisit.params.title + '</a></li>';
 /*
             brcontent += '<li class="breadcrumb-item"><a href="#"\
                    onclick="loadPageWithProgress( null, \
@@ -289,7 +289,7 @@ function beShowPage( html, visit )
         }
 
         backControl.style.display = bHasHistory ? "" : "none";
-        backControl.onclick = "return beGoBack()";
+        backControl.onclick = beGoBack;
     }); 
 
     var nLoadListenersAfter = window.getEventListeners ?
