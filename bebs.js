@@ -712,6 +712,32 @@ function loadPageWithProgress( aEl, params, bRefreshPage )
     return true;
 }
 
+function clickCollapsible( collapsible ) 
+{
+    var downAll = be$( '.feather.feather-chevron-down', collapsible );
+    var rightAll = be$( '.feather.feather-chevron-right', collapsible );
+
+    downAll.forEach( function( down )
+    { 
+        var newIcon = document.createElement( 'span' ); 
+        newIcon.innerHTML = feather.icons[ "chevron-right" ].toSvg();
+        var parent = down.parentNode;
+        parent.insertBefore( newIcon.firstChild, down ); 
+        parent.removeChild( down );   
+        //down.replaceWith( newIcon.firstChild );
+    });
+
+    rightAll.forEach( function( right )
+    { 
+        var newIcon = document.createElement( 'span' ); 
+        newIcon.innerHTML = feather.icons[ "chevron-down" ].toSvg();
+        var parent = right.parentNode;
+        parent.insertBefore( newIcon.firstChild, right ); 
+        parent.removeChild( right );   
+        //right.replaceWith( newIcon.firstChild );
+    });
+}
+
 
 function initSidebar() 
 {
@@ -754,30 +780,9 @@ function initSidebar()
 
     be$( '.my-collapsible-item', function( control )
     { 
-        control.addEventListener( "click", function( e )
+        control.addEventListener( "click", function()
         {
-            var downAll = be$( '.feather.feather-chevron-down', this );
-            var rightAll = be$( '.feather.feather-chevron-right', this );
-
-            downAll.forEach( function( down )
-            { 
-                var newIcon = document.createElement( 'span' ); 
-                newIcon.innerHTML = feather.icons[ "chevron-right" ].toSvg();
-                var parent = down.parentNode;
-                parent.insertBefore( newIcon.firstChild, down ); 
-                parent.removeChild( down );   
-                //down.replaceWith( newIcon.firstChild );
-            });
-
-            rightAll.forEach( function( right )
-            { 
-                var newIcon = document.createElement( 'span' ); 
-                newIcon.innerHTML = feather.icons[ "chevron-down" ].toSvg();
-                var parent = right.parentNode;
-                parent.insertBefore( newIcon.firstChild, right ); 
-                parent.removeChild( right );   
-                //right.replaceWith( newIcon.firstChild );
-            });
+            clickCollapsible( control );
         });
     });
 
@@ -786,11 +791,62 @@ function initSidebar()
         control.addEventListener( "keyup", function()
         {
             var value = this.value.toLowerCase();
+            if( !value )
+            {
+                Array.prototype.filter.call( document.querySelectorAll( "li.nav-item" ), function( el ) 
+                { 
+                    el.style.display = "block";
+                });
+
+                return;
+            }
+
             Array.prototype.filter.call( document.querySelectorAll( "li.nav-item" ), function( el ) 
             { 
+                // first, hide all parent nodes - we will show them later if there are visible children
+                var isCollapsible = el.classList.contains( "my-collapsible-item" ); 
+                if( isCollapsible )
+                {
+                    el.style.display = "none";
+                    return;   
+                }
+
                 var cmpText = el.innerText.trim().toLowerCase();
-                el.style.display = cmpText.indexOf( value ) > -1 ? "block" : "none";
-                console.log( el.innerText.trim() )
+                var isVisible = cmpText.indexOf( value ) != -1;
+                el.style.display = isVisible ? "block" : "none";
+                var group = el.parentNode;
+                if( isVisible )
+                {
+                    // now, show the parent   
+                    while( group && group.id )
+                    {
+                        var groupEl = document.getElementById( group.id ); 
+                        var bMadeShown = false;
+                        if( !groupEl.classList.contains( "show" ) )
+                        {
+                            groupEl.classList.add( "show" );
+                            bMadeShown = true;
+                        }  
+                        var selector = ".nav-link[href='#" + group.id + "']";
+                        var psel = document.querySelector( selector );
+                        if( psel ) 
+                        {   
+                            var collapsible = psel.parentNode;                            
+                            collapsible.style.display = "block";
+                            if( bMadeShown )
+                            {
+                                clickCollapsible( collapsible );
+                            }
+                            // process upper parent
+                            group = collapsible.parentNode; 
+                        }
+                        else
+                        {
+                            group = null;
+                        }
+                    }    
+                }
+                //console.log( el.innerText.trim() )
             });
         });
     });
