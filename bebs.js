@@ -786,6 +786,22 @@ function initSidebar()
         });
     });
 
+    var navItemInitialStates = [];
+    Array.prototype.filter.call( document.querySelectorAll( "li.nav-item" ), function( el ) 
+    { 
+        var isCollapsible = el.classList.contains( "my-collapsible-item" ); 
+        if( !isCollapsible )
+        {
+            return; 
+        }
+
+        var group = document.querySelector( el.children[ 0 ].hash );
+        var collapsible = group.parentNode;                            
+        navItemInitialStates.push( { collapsible: collapsible, group: group, show: group.classList.contains( "show" ) } );  
+    });
+
+    //console.log( navItemInitialStates );
+
     be$( '#searchInput', function( control )
     { 
         control.addEventListener( "keyup", function()
@@ -797,6 +813,20 @@ function initSidebar()
                 { 
                     el.style.display = "block";
                 });
+                for( var i = 0; i < navItemInitialStates.length; i++ )
+                {
+                    var nav = navItemInitialStates[ i ];
+                    if( nav.group.classList.contains( "show" ) && !nav.show )
+                    {
+                        nav.group.classList.remove( "show" )    
+                        clickCollapsible( nav.collapsible );
+                    }
+                    else if( !nav.group.classList.contains( "show" ) && nav.show )
+                    {
+                        nav.group.classList.add( "show" )    
+                        clickCollapsible( nav.collapsible );
+                    }
+                }
 
                 return;
             }
