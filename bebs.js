@@ -812,7 +812,7 @@ function initSidebar()
         navItemInitialStates.push( { collapsible: collapsible, group: group, show: group.classList.contains( "show" ) } );  
     });
 
-    //console.log( navItemInitialStates );
+    console.log( navItemInitialStates );
 
     be$( '#searchInput', function( control )
     { 
@@ -821,6 +821,7 @@ function initSidebar()
             var value = this.value.toLowerCase();
             if( !value )
             {
+                console.log( "--------------------------------------------------------" );
                 Array.prototype.filter.call( document.querySelectorAll( "li.nav-item" ), function( el ) 
                 { 
                     el.style.display = "block";
@@ -833,15 +834,20 @@ function initSidebar()
                         nav.group.classList.remove( "show" )    
                         //clickCollapsible( nav.collapsible, "collapsed" );
                         clickCollapsible( nav.collapsible );
+                        console.log( "hide" );
+                        console.log( nav.collapsible );
                     }
                     else if( !nav.group.classList.contains( "show" ) && nav.show )
                     {
                         nav.group.classList.add( "show" )    
                         //clickCollapsible( nav.collapsible, "shown" );
                         clickCollapsible( nav.collapsible );
+                        console.log( "show" );
+                        console.log( nav.collapsible );
                     }
                 }
 
+                console.log( "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&" );
                 return;
             }
 
