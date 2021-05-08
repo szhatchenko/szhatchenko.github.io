@@ -797,18 +797,6 @@ function initSidebar()
     });
 
     var navItemInitialStates = [];
-    Array.prototype.filter.call( document.querySelectorAll( "li.nav-item" ), function( el ) 
-    { 
-        var isCollapsible = el.classList.contains( "my-collapsible-item" ); 
-        if( !isCollapsible )
-        {
-            return; 
-        }
-
-        var group = document.querySelector( el.children[ 0 ].hash );
-        var collapsible = group.parentNode;                            
-        navItemInitialStates.push( { collapsible: collapsible, group: group, show: group.classList.contains( "show" ) } );  
-    });
 
     //console.log( navItemInitialStates );
 
@@ -816,6 +804,22 @@ function initSidebar()
     { 
         control.addEventListener( "keyup", function()
         {
+            if( navItemInitialStates.length == 0 )
+            {
+                Array.prototype.filter.call( document.querySelectorAll( "li.nav-item" ), function( el ) 
+                { 
+                    var isCollapsible = el.classList.contains( "my-collapsible-item" ); 
+                    if( !isCollapsible )
+                    {
+                        return; 
+                    }
+
+                    var group = document.querySelector( el.children[ 0 ].hash );
+                    var collapsible = group.parentNode;                            
+                    navItemInitialStates.push( { collapsible: collapsible, group: group, show: group.classList.contains( "show" ) } );  
+                });
+            }
+ 
             var value = this.value.toLowerCase();
             if( !value )
             {
@@ -845,6 +849,7 @@ function initSidebar()
                     }
                 }
 
+                navItemInitialStates.length = 0;  
                 //console.log( "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&" );
                 return;
             }
