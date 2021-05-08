@@ -712,10 +712,20 @@ function loadPageWithProgress( aEl, params, bRefreshPage )
     return true;
 }
 
-function clickCollapsible( collapsible ) 
+function clickCollapsible( collapsible, state ) 
 {
     var downAll = be$( '.feather.feather-chevron-down', collapsible );
     var rightAll = be$( '.feather.feather-chevron-right', collapsible );
+
+    // already
+    if( state && state == "collapsed" && rightAll )
+    {
+        return;
+    }
+    if( state && state == "shown" && downAll )
+    {
+        return;
+    }
 
     downAll.forEach( function( down )
     { 
@@ -819,12 +829,12 @@ function initSidebar()
                     if( nav.group.classList.contains( "show" ) && !nav.show )
                     {
                         nav.group.classList.remove( "show" )    
-                        clickCollapsible( nav.collapsible );
+                        clickCollapsible( nav.collapsible, "collapsed" );
                     }
                     else if( !nav.group.classList.contains( "show" ) && nav.show )
                     {
                         nav.group.classList.add( "show" )    
-                        clickCollapsible( nav.collapsible );
+                        clickCollapsible( nav.collapsible, "shown" );
                     }
                 }
 
