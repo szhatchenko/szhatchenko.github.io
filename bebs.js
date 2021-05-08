@@ -712,13 +712,12 @@ function loadPageWithProgress( aEl, params, bRefreshPage )
     return true;
 }
 
-function clickCollapsible( collapsible/*, state*/ ) 
+function clickCollapsible( collapsible, state ) 
 {
     var downAll = be$( '.feather.feather-chevron-down', collapsible );
     var rightAll = be$( '.feather.feather-chevron-right', collapsible );
 
     // already
-    /*
     if( state && state == "collapsed" && rightAll )
     {
         return;
@@ -727,7 +726,6 @@ function clickCollapsible( collapsible/*, state*/ )
     {
         return;
     }
-    */
 
     downAll.forEach( function( down )
     { 
@@ -812,7 +810,7 @@ function initSidebar()
         navItemInitialStates.push( { collapsible: collapsible, group: group, show: group.classList.contains( "show" ) } );  
     });
 
-    console.log( navItemInitialStates );
+    //console.log( navItemInitialStates );
 
     be$( '#searchInput', function( control )
     { 
@@ -821,7 +819,7 @@ function initSidebar()
             var value = this.value.toLowerCase();
             if( !value )
             {
-                console.log( "--------------------------------------------------------" );
+                //console.log( "--------------------------------------------------------" );
                 Array.prototype.filter.call( document.querySelectorAll( "li.nav-item" ), function( el ) 
                 { 
                     el.style.display = "block";
@@ -832,22 +830,22 @@ function initSidebar()
                     if( nav.group.classList.contains( "show" ) && !nav.show )
                     {
                         nav.group.classList.remove( "show" )    
-                        //clickCollapsible( nav.collapsible, "collapsed" );
-                        clickCollapsible( nav.collapsible );
-                        console.log( "hide" );
-                        console.log( nav.collapsible );
+                        clickCollapsible( nav.collapsible, "collapsed" );
+                        //clickCollapsible( nav.collapsible );
+                        //console.log( "hide" );
+                        //console.log( nav.collapsible );
                     }
                     else if( !nav.group.classList.contains( "show" ) && nav.show )
                     {
                         nav.group.classList.add( "show" )    
-                        //clickCollapsible( nav.collapsible, "shown" );
-                        clickCollapsible( nav.collapsible );
-                        console.log( "show" );
-                        console.log( nav.collapsible );
+                        clickCollapsible( nav.collapsible, "shown" );
+                        //clickCollapsible( nav.collapsible );
+                        //console.log( "show" );
+                        //console.log( nav.collapsible );
                     }
                 }
 
-                console.log( "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&" );
+                //console.log( "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&" );
                 return;
             }
 
@@ -885,7 +883,7 @@ function initSidebar()
                             collapsible.style.display = "block";
                             if( bMadeShown )
                             {
-                                clickCollapsible( collapsible );
+                                clickCollapsible( collapsible, "shown" );
                             }
                             // process upper parent
                             group = collapsible.parentNode; 
