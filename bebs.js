@@ -888,7 +888,7 @@ function initSidebar()
                         {   
                             var collapsible = psel.parentNode;                            
                             collapsible.style.display = "block";
-                            if( bMadeShown )
+                            //if( bMadeShown )
                             {
                                 clickCollapsible( collapsible, "shown" );
                             }
