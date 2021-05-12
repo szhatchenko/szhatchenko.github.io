@@ -718,11 +718,11 @@ function clickCollapsible( collapsible, state )
     var rightAll = be$( '.feather.feather-chevron-right', collapsible );
 
     // already
-    if( state && state == "collapsed" && rightAll )
+    if( state && state == "collapsed" && rightAll && rightAll.length > 0 )
     {
         return;
     }
-    if( state && state == "shown" && downAll )
+    if( state && state == "shown" && downAll && downAll.length > 0 )
     {
         return;
     }
@@ -881,14 +881,14 @@ function initSidebar()
                             bMadeShown = true;
                         }  
                         var selector = ".nav-link[href='#" + group.id + "']";
-                        console.log( selector );
+                        //console.log( selector );
                         var psel = document.querySelector( selector );
-                        console.log( psel );
+                        //console.log( psel );
                         if( psel ) 
                         {   
                             var collapsible = psel.parentNode;                            
                             collapsible.style.display = "block";
-                            //if( bMadeShown )
+                            if( bMadeShown )
                             {
                                 clickCollapsible( collapsible, "shown" );
                             }
