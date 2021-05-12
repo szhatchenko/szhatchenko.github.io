@@ -881,7 +881,9 @@ function initSidebar()
                             bMadeShown = true;
                         }  
                         var selector = ".nav-link[href='#" + group.id + "']";
+                        console.log( selector );
                         var psel = document.querySelector( selector );
+                        console.log( psel );
                         if( psel ) 
                         {   
                             var collapsible = psel.parentNode;                            
