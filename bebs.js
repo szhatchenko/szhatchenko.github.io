@@ -815,7 +815,8 @@ function initSidebar()
                     }
 
                     var group = document.querySelector( el.children[ 0 ].hash );
-                    var collapsible = group.parentNode;                            
+                    var collapsible = el;
+                    //var collapsible = group.parentNode;
                     navItemInitialStates.push( { collapsible: collapsible, group: group, show: group.classList.contains( "show" ) } );  
                 });
             }
