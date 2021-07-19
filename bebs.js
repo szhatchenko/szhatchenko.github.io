@@ -311,9 +311,9 @@ function beShowPage( html, visit )
 
          var click = function(e) 
          {
-             if (presstimer ) 
+             if( presstimer ) 
              {
-                 clearTimeout(presstimer);
+                 clearTimeout( presstimer );
                  presstimer = null;
              }
 
@@ -324,12 +324,12 @@ function beShowPage( html, visit )
                  return false;
              }
 
-             alert("press");
+             //alert("press");
          };
 
          var start = function(e) 
          {
-             console.log(e);
+             //console.log(e);
 
              if( e.type === "click" && e.button !== 0 )
              {
@@ -344,7 +344,7 @@ function beShowPage( html, visit )
              {
                  presstimer = setTimeout( function() 
                  {
-                     alert("long click");
+                     //alert("long click");
                      longpress = true;
                  }, 1000);
              }
