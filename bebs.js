@@ -292,6 +292,75 @@ function beShowPage( html, visit )
         backControl.onclick = beGoBack;
     }); 
 
+    be$( ".oddRow, .evenRow", mainContent ).forEach( function( tableRow )
+    {
+         var longpress = false;
+         var presstimer = null;
+         var longtarget = null;
+
+         var cancel = function(e) 
+         {
+             if( presstimer ) 
+             {
+                 clearTimeout( presstimer );
+                 presstimer = null;
+             }
+
+             this.classList.remove( "longpress" );
+         };
+
+         var click = function(e) 
+         {
+             if (presstimer ) 
+             {
+                 clearTimeout(presstimer);
+                 presstimer = null;
+             }
+
+             this.classList.remove("longpress");
+
+             if( longpress ) 
+             {
+                 return false;
+             }
+
+             alert("press");
+         };
+
+         var start = function(e) 
+         {
+             console.log(e);
+
+             if( e.type === "click" && e.button !== 0 )
+             {
+                 return;
+             }
+
+             longpress = false;
+
+             this.classList.add( "longpress" );
+
+             if( !presstimer ) 
+             {
+                 presstimer = setTimeout( function() 
+                 {
+                     alert("long click");
+                     longpress = true;
+                 }, 1000);
+             }
+
+             return false;
+         };
+
+         tableRow.addEventListener("mousedown", start);
+         tableRow.addEventListener("touchstart", start);
+         tableRow.addEventListener("click", click);
+         tableRow.addEventListener("mouseout", cancel);
+         tableRow.addEventListener("touchend", cancel);
+         tableRow.addEventListener("touchleave", cancel);
+         tableRow.addEventListener("touchcancel", cancel);
+    });
+
     var nLoadListenersAfter = window.getEventListeners ?
              window.getEventListeners( window )[ "load" ].length : 0;
 
