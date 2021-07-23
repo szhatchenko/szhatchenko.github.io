@@ -373,11 +373,20 @@ function beShowPage( html, visit )
                      {
                          return;
                      }
+
                      opopup.classList.remove( "d-none" );
                      opopup.classList.add( "d-block" );
                      opopup.style.position = "absolute";
                      opopup.style.left = screenX + 'px';
                      opopup.style.top = screenY + 'px';
+
+                     console.log( "clientX = " + clientX );
+                     console.log( "clientY = " + clientY );
+                     console.log( "screenX = " + screenX );
+                     console.log( "screenY = " + screenY );
+                     console.log( "pageX = " + pageX );
+                     console.log( "pageY = " + pageY );
+
                  }, 1000);
              }
 
