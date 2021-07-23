@@ -376,8 +376,8 @@ function beShowPage( html, visit )
                      opopup.classList.remove( "d-none" );
                      opopup.classList.add( "d-block" );
                      opopup.style.position = "absolute";
-                     opopup.style.left = clientX + 'px';
-                     opopup.style.top = clientY + 'px';
+                     opopup.style.left = screenX + 'px';
+                     opopup.style.top = screenY + 'px';
                  }, 1000);
              }
 
