@@ -310,7 +310,8 @@ function beShowPage( html, visit )
              var opopup = document.getElementById( "operationsPopup" );
              if( opopup )
              {
-                 opopup.style.display = "none";
+                 opopup.classList.remove( "d-block" );
+                 opopup.classList.add( "d-none" );
              }
          };
 
@@ -326,7 +327,8 @@ function beShowPage( html, visit )
              var opopup = document.getElementById( "operationsPopup" );
              if( opopup )
              {
-                 opopup.style.display = "none";
+                 opopup.classList.remove( "d-block" );
+                 opopup.classList.add( "d-none" );
              }
 
              if( longpress ) 
@@ -371,7 +373,8 @@ function beShowPage( html, visit )
                      {
                          return;
                      }
-                     opopup.style.display = "block";
+                     opopup.classList.remove( "d-none" );
+                     opopup.classList.add( "d-block" );
                      opopup.style.position = "absolute";
                      opopup.style.left = screenX + 'px';
                      opopup.style.top = screenY + 'px';
