@@ -307,6 +307,11 @@ function beShowPage( html, visit )
              }
 
              this.classList.remove( "longpress" );
+             var opopup = document.getElementById( "operationsPopup" );
+             if( opopup )
+             {
+                 opopup.style.display = "none";
+             }
          };
 
          var click = function(e) 
@@ -318,6 +323,11 @@ function beShowPage( html, visit )
              }
 
              this.classList.remove("longpress");
+             var opopup = document.getElementById( "operationsPopup" );
+             if( opopup )
+             {
+                 opopup.style.display = "none";
+             }
 
              if( longpress ) 
              {
@@ -342,10 +352,29 @@ function beShowPage( html, visit )
 
              if( !presstimer ) 
              {
+                 //clientX / clientY - the x and y coordinates of the mouse pointer relative to the browser window, regardless of scrolling
+                 //screenX / screenY - the x and y coordinates of the mouse pointer in the screen coordinates
+                 //pageX / pageY - the x and y coordinates of the mouse pointer in the page coordinates (including scrolling)
+                 var clientX = e.clientX;
+                 var clientY = e.clientY;
+                 var screenX = e.screenX;
+                 var screenY = e.screenY;
+                 var pageX   = e.pageX;
+                 var pageY   = e.pageY;
+
                  presstimer = setTimeout( function() 
                  {
                      //alert("long click");
                      longpress = true;
+                     var opopup = document.getElementById( "operationsPopup" );
+                     if( !opopup )
+                     {
+                         return;
+                     }
+                     opopup.style.display = "block";
+                     opopup.style.position = "absolute";
+                     opopup.style.left = screenX + 'px';
+                     opopup.style.top = screenY + 'px';
                  }, 1000);
              }
 
