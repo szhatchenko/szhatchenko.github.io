@@ -341,7 +341,7 @@ function beShowPage( html, visit )
 
          var start = function(e) 
          {
-             //console.log(e);
+             console.log(e);
 
              if( e.type === "click" && e.button !== 0 )
              {
