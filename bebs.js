@@ -310,8 +310,8 @@ function beShowPage( html, visit )
              var opopup = document.getElementById( "operationsPopup" );
              if( opopup )
              {
-                 opopup.classList.remove( "d-block" );
-                 opopup.classList.add( "d-none" );
+                 //opopup.classList.remove( "d-block" );
+                 //opopup.classList.add( "d-none" );
              }
          };
 
@@ -327,8 +327,8 @@ function beShowPage( html, visit )
              var opopup = document.getElementById( "operationsPopup" );
              if( opopup )
              {
-                 opopup.classList.remove( "d-block" );
-                 opopup.classList.add( "d-none" );
+                 //opopup.classList.remove( "d-block" );
+                 //opopup.classList.add( "d-none" );
              }
 
              if( longpress ) 
