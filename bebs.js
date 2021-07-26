@@ -341,7 +341,7 @@ function beShowPage( html, visit )
 
          var start = function(e) 
          {
-             console.log(e);
+             //console.log(e);
 
              if( e.type === "click" && e.button !== 0 )
              {
@@ -377,8 +377,18 @@ function beShowPage( html, visit )
                      opopup.classList.remove( "d-none" );
                      opopup.classList.add( "d-block" );
                      opopup.style.position = "absolute";
-                     opopup.style.left = screenX + 'px';
-                     opopup.style.top = screenY + 'px';
+                     opopup.style.left = clientX + 'px';
+                     opopup.style.top = clientY + 'px';
+
+                     be$( ".recordCheckbox", tableRow ).forEach( function( checkbox )
+                     {
+                         checkbox.checked = true;
+                         recordClick( checkbox.form );
+                     }); 
+
+
+                     /*
+                     console.log( opopup.style );
 
                      console.log( "clientX = " + clientX );
                      console.log( "clientY = " + clientY );
@@ -386,6 +396,7 @@ function beShowPage( html, visit )
                      console.log( "screenY = " + screenY );
                      console.log( "pageX = " + pageX );
                      console.log( "pageY = " + pageY );
+                     */
 
                  }, 1000);
              }
