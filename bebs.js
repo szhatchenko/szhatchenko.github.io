@@ -374,11 +374,15 @@ function beShowPage( html, visit )
                          return;
                      }
 
-                     opopup.classList.remove( "d-none" );
-                     opopup.classList.add( "d-block" );
+                     //opopup.classList.remove( "d-none" );
+                     //opopup.classList.add( "d-block" );
+                     opopup.classList.remove( "hide" );
+                     opopup.classList.add( "show" );
                      opopup.style.position = "absolute";
                      opopup.style.left = clientX + 'px';
                      opopup.style.top = clientY + 'px';
+                     opopup.style[ "z-index" ] = 1;
+                     opopup.style.width = "auto";
 
                      be$( ".recordCheckbox", tableRow ).forEach( function( checkbox )
                      {
