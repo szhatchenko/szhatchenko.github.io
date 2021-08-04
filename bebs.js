@@ -378,7 +378,7 @@ function beShowPage( html, visit )
                      //opopup.classList.add( "d-block" );
                      opopup.classList.remove( "hide" );
                      opopup.classList.add( "show" );
-                     opopup.style.position = "absolute";
+                     opopup.style.position = "fixed";
                      opopup.style.left = clientX + 'px';
                      opopup.style.top = clientY + 'px';
                      opopup.style[ "z-index" ] = 1;
@@ -386,6 +386,7 @@ function beShowPage( html, visit )
 
                      be$( ".recordCheckbox", tableRow ).forEach( function( checkbox )
                      {
+                         CheckAllRecords( checkbox.form, false, 'rCheck' );
                          checkbox.checked = true;
                          recordClick( checkbox.form );
                      }); 
@@ -393,6 +394,7 @@ function beShowPage( html, visit )
 
                      /*
                      console.log( opopup.style );
+                     */
 
                      console.log( "clientX = " + clientX );
                      console.log( "clientY = " + clientY );
@@ -400,7 +402,6 @@ function beShowPage( html, visit )
                      console.log( "screenY = " + screenY );
                      console.log( "pageX = " + pageX );
                      console.log( "pageY = " + pageY );
-                     */
 
                  }, 1000);
              }
