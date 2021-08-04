@@ -348,6 +348,11 @@ function beShowPage( html, visit )
                  return;
              }
 
+             if( e.type === "touchstart" )
+             {
+                 e.stopPropagation();
+             }
+
              longpress = false;
 
              this.classList.add( "longpress" );
