@@ -394,7 +394,6 @@ function beShowPage( html, visit )
 
                      /*
                      console.log( opopup.style );
-                     */
 
                      console.log( "clientX = " + clientX );
                      console.log( "clientY = " + clientY );
@@ -402,6 +401,7 @@ function beShowPage( html, visit )
                      console.log( "screenY = " + screenY );
                      console.log( "pageX = " + pageX );
                      console.log( "pageY = " + pageY );
+                     */
 
                  }, 1000);
              }
