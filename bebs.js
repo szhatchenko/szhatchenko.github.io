@@ -572,6 +572,10 @@ function loadPageWithProgress( aEl, params, bRefreshPage )
                 {
                     continue;
                 }
+                if( input.name == "_enc_" )
+                {
+                    continue;
+                }
                 if( input.type == "radio" && !input.checked )
                 {
                     continue;
@@ -605,6 +609,10 @@ function loadPageWithProgress( aEl, params, bRefreshPage )
                     continue;
                 }
                 if( input.name.startsWith( "_internal_" ) )
+                {
+                    continue;
+                }
+                if( input.name == "_enc_" )
                 {
                     continue;
                 }
