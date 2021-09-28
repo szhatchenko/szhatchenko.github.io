@@ -572,10 +572,6 @@ function loadPageWithProgress( aEl, params, bRefreshPage )
                 {
                     continue;
                 }
-                if( input.name == "_enc_" )
-                {
-                    continue;
-                }
                 if( input.type == "radio" && !input.checked )
                 {
                     continue;
@@ -585,6 +581,10 @@ function loadPageWithProgress( aEl, params, bRefreshPage )
                 if( input.type == "checkbox" )
                 {
                     value = String( input.checked );
+                }
+                if( input.name == "_enc_" )
+                {
+                    value = "UTF-8";
                 }
 
                 if( input.type == "file" )
@@ -612,10 +612,6 @@ function loadPageWithProgress( aEl, params, bRefreshPage )
                 {
                     continue;
                 }
-                if( input.name == "_enc_" )
-                {
-                    continue;
-                }
                 if( input.type == "radio" && !input.checked )
                 {
                     continue;
@@ -625,6 +621,10 @@ function loadPageWithProgress( aEl, params, bRefreshPage )
                 if( input.type == "checkbox" )
                 {
                     value = String( input.checked );
+                }
+                if( input.name == "_enc_" )
+                {
+                    value = "UTF-8";
                 }
 
                 if( input.type == "file" )
