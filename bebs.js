@@ -572,6 +572,11 @@ function loadPageWithProgress( aEl, params, bRefreshPage )
                 {
                     continue;
                 }
+                if( input.type == "radio" && !input.checked )
+                {
+                    continue;
+                }
+
                 var value = input.value;  
                 if( input.type == "checkbox" )
                 {
@@ -603,6 +608,11 @@ function loadPageWithProgress( aEl, params, bRefreshPage )
                 {
                     continue;
                 }
+                if( input.type == "radio" && !input.checked )
+                {
+                    continue;
+                }
+
                 var value = input.value;  
                 if( input.type == "checkbox" )
                 {
