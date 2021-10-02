@@ -292,7 +292,10 @@ function beShowPage( html, visit )
         backControl.onclick = beGoBack;
     }); 
 
-    be$( ".oddRow, .evenRow", mainContent ).forEach( function( tableRow )
+    //var popupTargetClass = ".oddRow, .evenRow";
+    //var popupTargetClass = "rowNumberCell";
+    var popupTargetClass = "recordCheckbox";
+    be$( popupTargetClass, mainContent ).forEach( function( tableRow )
     {
          var longpress = false;
          var presstimer = null;
@@ -351,6 +354,7 @@ function beShowPage( html, visit )
              if( e.type === "touchstart" )
              {
                  e.stopPropagation();
+                 e.preventDefault();
              }
 
              longpress = false;
