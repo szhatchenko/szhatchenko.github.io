@@ -294,6 +294,7 @@ function beShowPage( html, visit )
 
     //var popupTargetClass = ".oddRow, .evenRow";
     //var popupTargetClass = "rowNumberCell";
+/*
     var popupTargetClass = "recordCheckbox";
     be$( popupTargetClass, mainContent ).forEach( function( tableRow )
     {
@@ -401,17 +402,6 @@ function beShowPage( html, visit )
                      }); 
 
 
-                     /*
-                     console.log( opopup.style );
-
-                     console.log( "clientX = " + clientX );
-                     console.log( "clientY = " + clientY );
-                     console.log( "screenX = " + screenX );
-                     console.log( "screenY = " + screenY );
-                     console.log( "pageX = " + pageX );
-                     console.log( "pageY = " + pageY );
-                     */
-
                  }, 1000);
              }
 
@@ -426,6 +416,7 @@ function beShowPage( html, visit )
          tableRow.addEventListener("touchleave", cancel);
          tableRow.addEventListener("touchcancel", cancel);
     });
+*/
 
     var nLoadListenersAfter = window.getEventListeners ?
              window.getEventListeners( window )[ "load" ].length : 0;
