@@ -738,7 +738,8 @@ function loadPageWithProgress( aEl, params, bRefreshPage )
             if( params.type == 'blob' ) 
             {
                 var imgSrc = URL.createObjectURL( xhr.response );
-                html = '<img class="w-100 img-fluid d-block mx-auto" src="' + imgSrc + '" />';
+                //html = '<img class="w-100 img-fluid d-block mx-auto" src="' + imgSrc + '" />';
+                html = '<div class="row"><iframe class="col-12" src="' + imgSrc + '"></iframe></div>';
             }
             else
             {
