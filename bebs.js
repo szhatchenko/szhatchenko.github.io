@@ -737,9 +737,23 @@ function loadPageWithProgress( aEl, params, bRefreshPage )
             var html = null;
             if( params.type == 'blob' ) 
             {
-                var imgSrc = URL.createObjectURL( xhr.response );
-                //html = '<img class="w-100 img-fluid d-block mx-auto" src="' + imgSrc + '" />';
-                html = '<div class="row"><iframe class="col-12" src="' + imgSrc + '"></iframe></div>';
+                var blobSrc = URL.createObjectURL( xhr.response );
+                //html = '<img class="w-100 img-fluid d-block mx-auto" src="' + blobSrc + '" />';
+                html = '<div class="row"><iframe class="col-12" frameborder="0" \
+                   style=" \
+                     overflow: hidden; \
+                     overflow-x: hidden; \
+                     overflow-y: hidden; \
+                     height: 100%; \
+                     width: 100%; \
+                     position: absolute; \
+                     top: 0px; \
+                     left: 0px; \
+                     right: 0px; \
+                     bottom: 0px; \
+                     " \
+                   height="100%" \
+                   width="100%" src="' + blobSrc + '"></iframe></div>';
             }
             else
             {
