@@ -754,6 +754,10 @@ function loadPageWithProgress( aEl, params, bRefreshPage )
                      " \
                    height="100%" \
                    width="100%" src="' + blobSrc + '"></iframe></div>';
+
+                html = '<div class="row"><iframe class="col-12" frameborder="0" \
+                   width="100%" height="1000px" \
+                   src="' + blobSrc + '"></iframe></div>';
             }
             else
             {
