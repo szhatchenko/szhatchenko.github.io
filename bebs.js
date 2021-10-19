@@ -185,7 +185,7 @@ function beFixLinks4Bootstrap( div )
             { 
                 url: this.href, 
                 title: this.innerText,
-                type: 'text'
+                type: link.classList.contains( "beBlobLink" ) ? 'blob' : 'text'
             }, /*bRefreshPage*/ this.id == "refreshLink" ); 
 
             return false;
@@ -739,6 +739,7 @@ function loadPageWithProgress( aEl, params, bRefreshPage )
             {
                 var blobSrc = URL.createObjectURL( xhr.response );
                 //html = '<img class="w-100 img-fluid d-block mx-auto" src="' + blobSrc + '" />';
+/*
                 html = '<div class="row"><iframe class="col-12" frameborder="0" \
                    style=" \
                      overflow: hidden; \
@@ -758,21 +759,42 @@ function loadPageWithProgress( aEl, params, bRefreshPage )
                 html = '<div class="row"><iframe class="col-12" frameborder="0" \
                    width="100%" height="' + ( window.innerHeight * 0.95 ) + 'px" \
                    src="' + blobSrc + '"></iframe></div>';
+*/
+
+                html = '<div class="modal fade" id="viewBlobModal" tabindex="-1" aria-labelledby="viewBlobModalLabel" aria-hidden="true"> \
+  <div class="modal-dialog modal-fullscreen"> \
+    <div class="modal-content"> \
+      <div class="modal-header"> \
+        <h5 class="modal-title" id="viewBlobModalLabel">' + params.title + '</h5> \
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> \
+      </div> \
+      <div class="modal-body"> \
+        <iframe class="col-12" frameborder="0" \
+             width="100%" height="' + ( window.innerHeight * 0.87 ) + 'px" \
+             src="' + blobSrc + '"></iframe> \
+      </div> \
+    </div> \
+  </div> \
+</div>';
+                var viewBlobContent = document.querySelector( "#viewBlobContent" );
+                viewBlobContent.innerHTML = html;                 
+                var viewBlobModal = new bootstrap.Modal(document.getElementById("viewBlobModal"));
+                viewBlobModal.show(); 
             }
             else
             {
                 html = xhr.response;
+
+                var visit = { menuLink: aEl, params: params, content: html };
+                if( bRefreshPage )
+                {
+                   visit = window.beHistory.pop();
+                }
+
+                beShowPage( html, visit );
+
+                beSaveHistoryIfNeeded( visit );
             } 
-
-            var visit = { menuLink: aEl, params: params, content: html };
-            if( bRefreshPage )
-            {
-               visit = window.beHistory.pop();
-            }
-
-            beShowPage( html, visit );
-
-            beSaveHistoryIfNeeded( visit );
         }
         else
         {
@@ -816,7 +838,7 @@ function loadPageWithProgress( aEl, params, bRefreshPage )
     {
         customSend( params.form, function()
         {
-            document.title = params.title;         
+            document.title = params.title;
             document.querySelector( '#mobileHeaderTitle' ).innerText = params.title;
             if( aEl )
             {  
@@ -829,7 +851,10 @@ function loadPageWithProgress( aEl, params, bRefreshPage )
                 window.beHistory = [];  
             }
 
-            mainContent.innerHTML = progressBar;
+            if( params.type != 'blob' )
+            {
+                mainContent.innerHTML = progressBar;
+            }  
 
             if( formData )
             {
@@ -858,7 +883,10 @@ function loadPageWithProgress( aEl, params, bRefreshPage )
             window.beHistory = [];  
         }
 
-        mainContent.innerHTML = progressBar;
+        if( params.type != 'blob' )
+        {
+            mainContent.innerHTML = progressBar;
+        }  
 
         if( formData )
         {
