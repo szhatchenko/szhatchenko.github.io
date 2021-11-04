@@ -178,6 +178,11 @@ function beFixLinks4Bootstrap( div )
             }
             return;  
         }
+      
+        if( link.target )
+        {
+            return;  
+        }
 
         link.onclick = function()
         {
@@ -781,8 +786,13 @@ function loadPageWithProgress( aEl, params, bRefreshPage )
                 var viewBlobModal = new bootstrap.Modal(document.getElementById("viewBlobModal"));
                 viewBlobModal.show(); 
             }
-            else
+            else if( [ "logout" ].indexOf( params.url ) != -1 )
             {
+                window.location.reload();
+                              
+            } 
+            else
+            {               
                 html = xhr.response;
 
                 var visit = { menuLink: aEl, params: params, content: html };
