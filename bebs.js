@@ -181,6 +181,14 @@ function beFixLinks4Bootstrap( div )
       
         if( link.target )
         {
+            var lhref = link.href;  
+            var ltarget = link.target;  
+            link.href = "#";
+            link.onclick = function()
+            {
+                window.open( lhref, ltarget );
+                return false;
+            }
             return;  
         }
 
