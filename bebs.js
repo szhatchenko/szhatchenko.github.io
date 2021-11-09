@@ -748,8 +748,10 @@ function loadPageWithProgress( aEl, params, bRefreshPage )
         if( xhr.status == 200 )
         {
             var html = null;
-            if( params.type == 'blob' ) 
+            var contentType = xhr.getResponseHeader('Content-Type');              
+            if( params.type == 'blob' || contentType && contentType.indexOf( "text/html" ) != 0 ) 
             {
+                console.log( "contentType = " + contentType );
                 var blobSrc = URL.createObjectURL( xhr.response );
                 //html = '<img class="w-100 img-fluid d-block mx-auto" src="' + blobSrc + '" />';
 /*
@@ -796,8 +798,7 @@ function loadPageWithProgress( aEl, params, bRefreshPage )
             }
             else if( [ "logout" ].indexOf( params.url ) != -1 )
             {
-                window.location.reload();
-                              
+                window.location.reload();                              
             } 
             else
             {               
