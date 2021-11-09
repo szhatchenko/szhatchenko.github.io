@@ -584,6 +584,10 @@ function loadPageWithProgress( aEl, params, bRefreshPage )
                 {
                     continue;
                 }
+                if( input.classList.contains( "goBackLink" ) )
+                {
+                    continue;
+                }
 
                 var value = input.value;  
                 if( input.type == "checkbox" )
@@ -621,6 +625,10 @@ function loadPageWithProgress( aEl, params, bRefreshPage )
                     continue;
                 }
                 if( input.type == "radio" && !input.checked )
+                {
+                    continue;
+                }
+                if( input.classList.contains( "goBackLink" ) )
                 {
                     continue;
                 }
@@ -877,7 +885,8 @@ function loadPageWithProgress( aEl, params, bRefreshPage )
 
             if( formData )
             {
-                xhr.open( "POST", params.url ); 
+                xhr.open( "POST", params.url );
+                //console.log( ...formData );
                 xhr.send( formData );
             }
             else
@@ -910,6 +919,7 @@ function loadPageWithProgress( aEl, params, bRefreshPage )
         if( formData )
         {
             xhr.open( "POST", params.url ); 
+            //console.log( ...formData );
             xhr.send( formData );
         }
         else
