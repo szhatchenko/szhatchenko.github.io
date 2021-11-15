@@ -669,6 +669,10 @@ function loadPageWithProgress( aEl, params, bRefreshPage )
                 {
                     continue;
                 }
+                if( input.name == "_enc_" )
+                {
+                    value = "UTF-8";
+                }
                 var value = input.value;  
                 if( input.type == "checkbox" )
                 {
