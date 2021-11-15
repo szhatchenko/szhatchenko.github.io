@@ -553,6 +553,21 @@ function paramsAreEqual( obj1, obj2 )
     return true;
 }
 
+function saveOrOpenBlob(blob, fileName) 
+{
+    window.requestFileSystem = window.requestFileSystem || window.webkitRequestFileSystem;
+    window.requestFileSystem(window.TEMPORARY, 1024 * 1024, function (fs) {
+        fs.root.getFile(fileName, { create: true }, function (fileEntry) {
+            fileEntry.createWriter(function (fileWriter) {
+                fileWriter.addEventListener("writeend", function () {
+                    window.location = fileEntry.toURL();
+                }, false);
+                fileWriter.write(blob, "_blank");
+            }, function () { });
+        }, function () { });
+    }, function () { });
+}
+
 function loadPageWithProgress( aEl, params, bRefreshPage )
 {
     if( document.querySelector( '#dismiss' ).classList.contains('active') )
@@ -760,10 +775,20 @@ function loadPageWithProgress( aEl, params, bRefreshPage )
         if( xhr.status == 200 )
         {
             var html = null;
-            var contentType = xhr.getResponseHeader('Content-Type');              
+            var contentType = xhr.getResponseHeader('Content-Type');
             if( params.type == 'blob' || contentType && contentType.indexOf( "text/html" ) != 0 ) 
             {
-                console.log( "contentType = " + contentType );
+                console.log( "Content-Type: " + contentType );
+                var contentDispo = xhr.getResponseHeader('Content-Disposition');
+                console.log( "Content-Disposition: " + contentDispo );
+                // https://stackoverflow.com/a/23054920/
+                var fileName = contentDispo.match(/filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/)[1];
+                if( fileName )
+                {
+                    saveOrOpenBlob( xhr.response, fileName );
+                    return;  
+                }
+
                 var blobSrc = URL.createObjectURL( xhr.response );
                 //html = '<img class="w-100 img-fluid d-block mx-auto" src="' + blobSrc + '" />';
 /*
