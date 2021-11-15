@@ -782,7 +782,7 @@ function loadPageWithProgress( aEl, params, bRefreshPage )
                 var contentDispo = xhr.getResponseHeader('Content-Disposition');
                 console.log( "Content-Disposition: " + contentDispo );
                 // https://stackoverflow.com/a/23054920/
-                var fileName = contentDispo.match(/filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/)[1];
+                var fileName = contentDispo ? contentDispo.match(/filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/)[1] : null;
                 if( fileName )
                 {
                     saveOrOpenBlob( xhr.response, fileName );
