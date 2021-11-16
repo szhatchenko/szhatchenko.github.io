@@ -815,9 +815,17 @@ function loadPageWithProgress( aEl, params, bRefreshPage )
                 {
                     console.log( "Content-Disposition: " + contentDispo );
                 } 
+
                 // https://stackoverflow.com/a/23054920/
                 var fileName = contentDispo ? contentDispo.match(/filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/)[1] : "download.bin";
+
+                if( xhr.getResponseHeader( 'Content-FileName-BE' ) )
+                {
+                    fileName = xhr.getResponseHeader( 'Content-FileName-BE' );
+                }
+
                 fileName = fileName.replaceAll( '"', '' );
+
                 console.log( "File name: '" + fileName + "'" );
                 //var fileName = "download.bin";
 
