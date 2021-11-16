@@ -764,6 +764,7 @@ function loadPageWithProgress( aEl, params, bRefreshPage )
                  var bNotDisplayable = contentType && (
                      contentType.indexOf( "application/vnd." ) == 0 ||
                      contentType.indexOf( "application/msword" ) == 0 ||
+                     contentType.indexOf( "application/octet-stream" ) == 0 ||
                      contentType.indexOf( "zip" ) > 0
 
                  );
@@ -803,6 +804,7 @@ function loadPageWithProgress( aEl, params, bRefreshPage )
 
         if( xhr.status == 200 )
         {
+            var bWasRedirectedToBlob = false;
             var html = null;
             var contentType = xhr.getResponseHeader('Content-Type');
             if( xhr.responseType == 'blob' || contentType && contentType.indexOf( "text/html" ) != 0 ) 
@@ -814,15 +816,15 @@ function loadPageWithProgress( aEl, params, bRefreshPage )
                     console.log( "Content-Disposition: " + contentDispo );
                 } 
                 // https://stackoverflow.com/a/23054920/
-                var fileName = contentDispo ? contentDispo.match(/filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/)[1] : null;
+                var fileName = contentDispo ? contentDispo.match(/filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/)[1] : "download.bin";
                 //var fileName = "download.bin";
 
                 var blobSrc = null;
                 var bNotDisplayable = contentType && (
                     contentType.indexOf( "application/vnd." ) == 0 ||
                     contentType.indexOf( "application/msword" ) == 0 ||
+                    contentType.indexOf( "application/octet-stream" ) == 0 ||
                     contentType.indexOf( "zip" ) > 0
-
                 );
 
                 var modalBody = null; 
@@ -838,6 +840,7 @@ function loadPageWithProgress( aEl, params, bRefreshPage )
                     {
                         //console.log( "Not displayable, arraybuffer = true" );
                         downloadHref = URL.createObjectURL( new Blob([xhr.response], { type: '' }) );
+                        bWasRedirectedToBlob = true;
                     }
 
                     modalBody = '<a id="modalDownloadLink" download="' + fileName + '" href="' + downloadHref + '"></a>';
@@ -872,7 +875,16 @@ function loadPageWithProgress( aEl, params, bRefreshPage )
                 //console.log( "modalDownloadLink = " + document.getElementById( "modalDownloadLink" ) );
                 if( document.getElementById( "modalDownloadLink" ) )
                 {
-                    document.getElementById( "modalDownloadLink" ).click();  
+                    document.getElementById( "modalDownloadLink" ).click();
+
+                    // bWasRedirectedToBlob can be set only as result of operation exec
+                    // therefor handle it the same way
+                    if( bWasRedirectedToBlob && window.beHistory && window.beHistory.length > 0 )
+                    {                          
+                        var last = window.beHistory.pop();  
+                        last.params.url = last.historyKeyLink; 
+                        loadPageWithProgress( last.menuLink, last.params );
+                    } 
                 } 
             }
             else if( [ "logout" ].indexOf( params.url ) != -1 )
