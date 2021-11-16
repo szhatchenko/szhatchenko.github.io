@@ -228,6 +228,18 @@ https://learn.javascript.ru/xmlhttprequest
                   <li class="nav-item">
                     <a class="nav-link" href="" onclick="loadPageWithProgress( this, 
                            { 
+                             url: 'misc/excel97.xls?' + new Date().getTime(), 
+                             title: 'Загрузка Excel', 
+                             type: 'blob',
+                             static: true
+                           }); return false;">
+                      <span data-feather="download"></span>
+                      Загрузка Excel
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="" onclick="loadPageWithProgress( this, 
+                           { 
                              url: 'thaistreetfood/thaistreetfood.html?' + new Date().getTime(), 
                              title: 'Thai Street Food', 
                              type: 'text',

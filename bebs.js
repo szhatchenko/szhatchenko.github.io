@@ -553,6 +553,7 @@ function paramsAreEqual( obj1, obj2 )
     return true;
 }
 
+/*
 function saveOrOpenBlob(blob, fileName) 
 {
     window.requestFileSystem = window.requestFileSystem || window.webkitRequestFileSystem;
@@ -566,6 +567,18 @@ function saveOrOpenBlob(blob, fileName)
             }, function () { });
         }, function () { });
     }, function () { });
+}
+*/
+
+function s2ab(s) 
+{
+    var buf = new ArrayBuffer(s.length);
+    var view = new Uint8Array(buf);
+    for( var i=0; i!=s.length; ++i )
+    {
+        view[i] = s.charCodeAt(i) & 0xFF;
+    }
+    return buf;
 }
 
 function loadPageWithProgress( aEl, params, bRefreshPage )
@@ -778,6 +791,7 @@ function loadPageWithProgress( aEl, params, bRefreshPage )
             var contentType = xhr.getResponseHeader('Content-Type');
             if( params.type == 'blob' || contentType && contentType.indexOf( "text/html" ) != 0 ) 
             {
+                /*
                 console.log( "Content-Type: " + contentType );
                 var contentDispo = xhr.getResponseHeader('Content-Disposition');
                 console.log( "Content-Disposition: " + contentDispo );
@@ -800,8 +814,17 @@ function loadPageWithProgress( aEl, params, bRefreshPage )
                     //saveOrOpenBlob( xhr.response, fileName );
                     return;  
                 }
+                */
 
-                var blobSrc = URL.createObjectURL( xhr.response );
+                var blobSrc = null;
+                if( params.type != 'blob' ) // redirect to binary file
+                {
+                    blobSrc = URL.createObjectURL( new Blob([s2ab(atob(data))], { type: '' }) );
+                }
+                else 
+                {
+                    blobSrc = URL.createObjectURL( xhr.response );
+                }
                 //html = '<img class="w-100 img-fluid d-block mx-auto" src="' + blobSrc + '" />';
 /*
                 html = '<div class="row"><iframe class="col-12" frameborder="0" \
