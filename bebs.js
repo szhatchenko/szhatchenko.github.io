@@ -770,7 +770,7 @@ function loadPageWithProgress( aEl, params, bRefreshPage )
                  if( bNotDisplayable )
                  {
                      xhr.responseType = 'arraybuffer';
-                     console.log( "onreadystatechange 2: forcing blob response for " + contentType );
+                     console.log( "onreadystatechange (headers received): forcing blob response for " + contentType );
                  }   
             }
 
@@ -811,32 +811,8 @@ function loadPageWithProgress( aEl, params, bRefreshPage )
                 var contentDispo = xhr.getResponseHeader('Content-Disposition');
                 console.log( "Content-Disposition: " + contentDispo );
                 // https://stackoverflow.com/a/23054920/
-                //var fileName = contentDispo ? contentDispo.match(/filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/)[1] : null;
+                var fileName = contentDispo ? contentDispo.match(/filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/)[1] : null;
                 var fileName = "download.bin";
-                /*
-                console.log( "Content-Type: " + contentType );
-                var contentDispo = xhr.getResponseHeader('Content-Disposition');
-                console.log( "Content-Disposition: " + contentDispo );
-                // https://stackoverflow.com/a/23054920/
-                //var fileName = contentDispo ? contentDispo.match(/filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/)[1] : null;
-                var fileName = "download.bin";
-                if( fileName )
-                {
-                    var reader = new FileReader();
-                    reader.readAsDataURL( xhr.response ); // convert to Base64, which can be directly put into a tag
-                    reader.onload = function( e ) 
-                    {
-                        var a = document.createElement( "A" ); // the conversion is complete, creating an a tag for downloading
-                        a.download = fileName;
-                        a.href = e.target.result;
-                        document.body.append( a ); // fix that click cannot be triggered in firebox
-                        a.click();
-                        document.body.remove( a );
-                    };
-                    //saveOrOpenBlob( xhr.response, fileName );
-                    return;  
-                }
-                */
 
                 var blobSrc = null;
                 var bNotDisplayable = contentType && (
@@ -852,68 +828,15 @@ function loadPageWithProgress( aEl, params, bRefreshPage )
                     var downloadHref = null;
                     if( xhr.responseType == 'blob' )
                     {
-
                         console.log( "Not displayable, blob = true" );
-                        var reader = new FileReader();
-                        reader.readAsDataURL( xhr.response ); // convert to Base64, which can be directly put into a tag
-                        reader.onload = function( e ) 
-                        {
-                            downloadHref = e.target.result;
-                        };
-
-
-                if( fileName )
-                {
-                    var reader = new FileReader();
-                    reader.readAsDataURL( xhr.response ); // convert to Base64, which can be directly put into a tag
-                    reader.onload = function( e ) 
-                    {
-                        var a = document.createElement( "A" ); // the conversion is complete, creating an a tag for downloading
-                        a.download = fileName;
-                        a.href = e.target.result;
-                        document.body.append( a ); // fix that click cannot be triggered in firebox
-                        a.click();
-                        document.body.remove( a );
-                    };
-                    return;  
-                }
-
-
+                        downloadHref = URL.createObjectURL( new Blob([xhr.response], { type: '' }) );
                     }
                     else if( xhr.responseType == 'arraybuffer' )
                     {
                         console.log( "Not displayable, arraybuffer = true" );
                         downloadHref = URL.createObjectURL( new Blob([xhr.response], { type: '' }) );
                     }
-                    else
-                    {
-                        console.log( "Not displayable, converting text to blob" );
-                        var reader = new FileReader();
-                        reader.readAsDataURL( xhr.response ); // convert to Base64, which can be directly put into a tag
-                        reader.onload = function( e ) 
-                        {
-                            downloadHref = e.target.result;
-                        };
-                    } 
-/*
-                    else
-                    {
-                        console.log( xhr.response );
 
-                        var uInt8Array = new Uint8Array( xhr.response );
-                        var i = uInt8Array.length;
-                        var binaryString = new Array( i );
-                        while( i-- )
-                        {
-                            binaryString[i] = String.fromCharCode(uInt8Array[i]);
-                        }
-                        var data = binaryString.join('');
-                        downloadHref = URL.createObjectURL( xhr.response, { type: '' });
-                    }
-
-                    //blobSrc = URL.createObjectURL( new Blob([ s2ab( atob( xhr.response ) )], { type: '' }) );
-                    //var dlName = fileName ? ' download="' + fileName + '"' : "";
-*/
                     modalBody = '<a id="modalDownloadLink" download="' + fileName + '" href="' + downloadHref + '"></a>';
                 }
                 else 
@@ -925,28 +848,6 @@ function loadPageWithProgress( aEl, params, bRefreshPage )
                             src="' + blobSrc + '"></iframe>';
 
                 }
-                //html = '<img class="w-100 img-fluid d-block mx-auto" src="' + blobSrc + '" />';
-/*
-                html = '<div class="row"><iframe class="col-12" frameborder="0" \
-                   style=" \
-                     overflow: hidden; \
-                     overflow-x: hidden; \
-                     overflow-y: hidden; \
-                     height: 100%; \
-                     width: 100%; \
-                     position: absolute; \
-                     top: 0px; \
-                     left: 0px; \
-                     right: 0px; \
-                     bottom: 0px; \
-                     " \
-                   height="100%" \
-                   width="100%" src="' + blobSrc + '"></iframe></div>';
-
-                html = '<div class="row"><iframe class="col-12" frameborder="0" \
-                   width="100%" height="' + ( window.innerHeight * 0.95 ) + 'px" \
-                   src="' + blobSrc + '"></iframe></div>';
-*/
 
                 html = '<div class="modal fade" id="viewBlobModal" tabindex="-1" aria-labelledby="viewBlobModalLabel" aria-hidden="true"> \
   <div class="modal-dialog modal-fullscreen"> \
