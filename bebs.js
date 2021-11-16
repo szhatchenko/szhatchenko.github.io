@@ -833,13 +833,31 @@ function loadPageWithProgress( aEl, params, bRefreshPage )
                 var modalBody = null; 
                 if( bNotDisplayable && fileName ) // redirect to binary file
                 {
-                    var reader = new FileReader();
-                    reader.readAsDataURL( xhr.response ); // convert to Base64, which can be directly put into a tag
                     var downloadHref = null;
-                    reader.onload = function( e ) 
+                    if( params.type == 'blob' )
                     {
-                        downloadHref = e.target.result;
-                    };
+                        console.log( "Not displayable, blob = true" );
+                        var reader = new FileReader();
+                        reader.readAsDataURL( xhr.response ); // convert to Base64, which can be directly put into a tag
+                        reader.onload = function( e ) 
+                        {
+                            downloadHref = e.target.result;
+                        };
+                    }
+                    else
+                    {
+                        console.log( "Not displayable, converting text to blob" );
+
+                        var uInt8Array = new Uint8Array(this.response);
+                        var i = uInt8Array.length;
+                        var binaryString = new Array( i );
+                        while( i-- )
+                        {
+                            binaryString[i] = String.fromCharCode(uInt8Array[i]);
+                        }
+                        var data = binaryString.join('');
+                        downloadHref = URL.createObjectURL( new Blob( data, { type: '' }) );
+                    }
 
                     //blobSrc = URL.createObjectURL( new Blob([ s2ab( atob( xhr.response ) )], { type: '' }) );
                     //var dlName = fileName ? ' download="' + fileName + '"' : "";
