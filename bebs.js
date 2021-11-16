@@ -791,6 +791,12 @@ function loadPageWithProgress( aEl, params, bRefreshPage )
             var contentType = xhr.getResponseHeader('Content-Type');
             if( params.type == 'blob' || contentType && contentType.indexOf( "text/html" ) != 0 ) 
             {
+                console.log( "Content-Type: " + contentType );
+                var contentDispo = xhr.getResponseHeader('Content-Disposition');
+                console.log( "Content-Disposition: " + contentDispo );
+                // https://stackoverflow.com/a/23054920/
+                //var fileName = contentDispo ? contentDispo.match(/filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/)[1] : null;
+                var fileName = "download.bin";
                 /*
                 console.log( "Content-Type: " + contentType );
                 var contentDispo = xhr.getResponseHeader('Content-Disposition');
@@ -817,13 +823,29 @@ function loadPageWithProgress( aEl, params, bRefreshPage )
                 */
 
                 var blobSrc = null;
-                if( params.type != 'blob' ) // redirect to binary file
+                var bNotDisplayable = contentType && (
+                    contentType.indexOf( "application/vnd." ) == 0 ||
+                    contentType.indexOf( "application/msword" ) == 0 ||
+                    contentType.indexOf( "zip" ) > 0
+
+                );
+
+                var modalBody = null; 
+                if( params.type != 'blob' && bNotDisplayable ) // redirect to binary file
                 {
                     blobSrc = URL.createObjectURL( new Blob([s2ab(atob(data))], { type: '' }) );
+                    var dlName = fileName ? ' download="' + fileName + '"' : "";
+                    modalBody = '<a id="modalDownloadLink"' + dlName + ' src="' + blobSrc + '"></a>\
+                       <script>document.getElementById("modalDownloadLink").click();</script>';
                 }
                 else 
                 {
                     blobSrc = URL.createObjectURL( xhr.response );
+                    modalBody = '\
+                       <iframe class="col-12" frameborder="0" \
+                            width="100%" height="' + ( window.innerHeight * 0.87 ) + 'px" \
+                            src="' + blobSrc + '"></iframe>';
+
                 }
                 //html = '<img class="w-100 img-fluid d-block mx-auto" src="' + blobSrc + '" />';
 /*
@@ -856,9 +878,7 @@ function loadPageWithProgress( aEl, params, bRefreshPage )
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> \
       </div> \
       <div class="modal-body"> \
-        <iframe class="col-12" frameborder="0" \
-             width="100%" height="' + ( window.innerHeight * 0.87 ) + 'px" \
-             src="' + blobSrc + '"></iframe> \
+        ' + modalBody + '\
       </div> \
     </div> \
   </div> \
