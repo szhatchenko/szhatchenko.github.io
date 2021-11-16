@@ -862,7 +862,7 @@ function loadPageWithProgress( aEl, params, bRefreshPage )
                     //blobSrc = URL.createObjectURL( new Blob([ s2ab( atob( xhr.response ) )], { type: '' }) );
                     //var dlName = fileName ? ' download="' + fileName + '"' : "";
                     modalBody = '<a id="modalDownloadLink" download="' + fileName + '" href="' + downloadHref + '"></a>\
-                       <script>document.getElementById( "modalDownloadLink" ).click();</script>';
+                       <script>document.getElementById( "modalDownloadLink" ).click();console.log( "click" );</script>';
                 }
                 else 
                 {
