@@ -859,7 +859,7 @@ function loadPageWithProgress( aEl, params, bRefreshPage )
                         }
                         var data = binaryString.join('');
 */
-                        downloadHref = URL.createObjectURL( xhr.response, { type: '' }) );
+                        downloadHref = URL.createObjectURL( xhr.response, { type: '' });
                     }
 
                     //blobSrc = URL.createObjectURL( new Blob([ s2ab( atob( xhr.response ) )], { type: '' }) );
