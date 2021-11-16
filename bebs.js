@@ -856,7 +856,7 @@ function loadPageWithProgress( aEl, params, bRefreshPage )
                             binaryString[i] = String.fromCharCode(uInt8Array[i]);
                         }
                         var data = binaryString.join('');
-                        downloadHref = URL.createObjectURL( new Blob( [ data ], { type: '' }) );
+                        downloadHref = URL.createObjectURL( new Blob( [ data ] , { type: '' }) );
                     }
 
                     //blobSrc = URL.createObjectURL( new Blob([ s2ab( atob( xhr.response ) )], { type: '' }) );
