@@ -847,8 +847,10 @@ function loadPageWithProgress( aEl, params, bRefreshPage )
                     else
                     {
                         console.log( "Not displayable, converting text to blob" );
+                        console.log( xhr.response );
 
-                        var uInt8Array = new Uint8Array(this.response);
+/*
+                        var uInt8Array = new Uint8Array( xhr.response );
                         var i = uInt8Array.length;
                         var binaryString = new Array( i );
                         while( i-- )
@@ -856,7 +858,8 @@ function loadPageWithProgress( aEl, params, bRefreshPage )
                             binaryString[i] = String.fromCharCode(uInt8Array[i]);
                         }
                         var data = binaryString.join('');
-                        downloadHref = URL.createObjectURL( new Blob( [ data ], { type: '' }) );
+*/
+                        downloadHref = URL.createObjectURL( xhr.response, { type: '' }) );
                     }
 
                     //blobSrc = URL.createObjectURL( new Blob([ s2ab( atob( xhr.response ) )], { type: '' }) );
