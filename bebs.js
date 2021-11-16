@@ -831,7 +831,7 @@ function loadPageWithProgress( aEl, params, bRefreshPage )
                 );
 
                 var modalBody = null; 
-                if( params.type != 'blob' && bNotDisplayable ) // redirect to binary file
+                if( bNotDisplayable ) // redirect to binary file
                 {
                     blobSrc = URL.createObjectURL( new Blob([s2ab(atob(data))], { type: '' }) );
                     var dlName = fileName ? ' download="' + fileName + '"' : "";
