@@ -847,9 +847,19 @@ function loadPageWithProgress( aEl, params, bRefreshPage )
                     else
                     {
                         console.log( "Not displayable, converting text to blob" );
+                        xhr.responseType = 'blob';
+                        var reader = new FileReader();
+                        reader.readAsDataURL( xhr.response ); // convert to Base64, which can be directly put into a tag
+                        reader.onload = function( e ) 
+                        {
+                            downloadHref = e.target.result;
+                        };
+                    } 
+/*
+                    else
+                    {
                         console.log( xhr.response );
 
-/*
                         var uInt8Array = new Uint8Array( xhr.response );
                         var i = uInt8Array.length;
                         var binaryString = new Array( i );
@@ -858,12 +868,12 @@ function loadPageWithProgress( aEl, params, bRefreshPage )
                             binaryString[i] = String.fromCharCode(uInt8Array[i]);
                         }
                         var data = binaryString.join('');
-*/
                         downloadHref = URL.createObjectURL( xhr.response, { type: '' });
                     }
 
                     //blobSrc = URL.createObjectURL( new Blob([ s2ab( atob( xhr.response ) )], { type: '' }) );
                     //var dlName = fileName ? ' download="' + fileName + '"' : "";
+*/
                     modalBody = '<a id="modalDownloadLink" download="' + fileName + '" href="' + downloadHref + '"></a>';
                 }
                 else 
