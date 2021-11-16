@@ -771,8 +771,25 @@ function loadPageWithProgress( aEl, params, bRefreshPage )
         {
             percentage = 50;
         }
-        if( this.readyState == 2 )
+        if( this.readyState == 2 ) // headers received
         {
+            var contentType = xhr.getResponseHeader('Content-Type');
+            console.log( "onreadystatechange 2: Content-Type: " + contentType );
+            if( xhr.responseType != 'blob' && contentType && contentType.indexOf( "text/html" ) != 0 ) 
+            {
+                 var bNotDisplayable = contentType && (
+                     contentType.indexOf( "application/vnd." ) == 0 ||
+                     contentType.indexOf( "application/msword" ) == 0 ||
+                     contentType.indexOf( "zip" ) > 0
+
+                 );
+                 if( bNotDisplayable )
+                 {
+                     xhr.responseType = 'blob';
+                     console.log( "onreadystatechange 2: forcing blob response time" );
+                 }   
+            }
+
             //console.log( "readyState == 2" );
             //percentage = 20;
         }
