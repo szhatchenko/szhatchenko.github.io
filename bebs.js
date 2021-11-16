@@ -861,8 +861,7 @@ function loadPageWithProgress( aEl, params, bRefreshPage )
 
                     //blobSrc = URL.createObjectURL( new Blob([ s2ab( atob( xhr.response ) )], { type: '' }) );
                     //var dlName = fileName ? ' download="' + fileName + '"' : "";
-                    modalBody = '<a id="modalDownloadLink" download="' + fileName + '" href="' + downloadHref + '"></a>\
-                       <script>document.getElementById( "modalDownloadLink" ).click();console.log( "click" );</script>';
+                    modalBody = '<a id="modalDownloadLink" download="' + fileName + '" href="' + downloadHref + '"></a>';
                 }
                 else 
                 {
@@ -913,6 +912,11 @@ function loadPageWithProgress( aEl, params, bRefreshPage )
                 viewBlobContent.innerHTML = html;                 
                 var viewBlobModal = new bootstrap.Modal(document.getElementById("viewBlobModal"));
                 viewBlobModal.show(); 
+                console.log( "modalDownloadLink = " + document.getElementById( "modalDownloadLink" ) );
+                if( document.getElementById( "modalDownloadLink" ) )
+                {
+                    document.getElementById( "modalDownloadLink" ).click();  
+                } 
             }
             else if( [ "logout" ].indexOf( params.url ) != -1 )
             {
