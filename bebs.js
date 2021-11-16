@@ -809,10 +809,13 @@ function loadPageWithProgress( aEl, params, bRefreshPage )
             {
                 console.log( "Content-Type: " + contentType );
                 var contentDispo = xhr.getResponseHeader('Content-Disposition');
-                console.log( "Content-Disposition: " + contentDispo );
+                if( contentDispo )
+                {
+                    console.log( "Content-Disposition: " + contentDispo );
+                } 
                 // https://stackoverflow.com/a/23054920/
                 var fileName = contentDispo ? contentDispo.match(/filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/)[1] : null;
-                var fileName = "download.bin";
+                //var fileName = "download.bin";
 
                 var blobSrc = null;
                 var bNotDisplayable = contentType && (
@@ -828,12 +831,12 @@ function loadPageWithProgress( aEl, params, bRefreshPage )
                     var downloadHref = null;
                     if( xhr.responseType == 'blob' )
                     {
-                        console.log( "Not displayable, blob = true" );
+                        //console.log( "Not displayable, blob = true" );
                         downloadHref = URL.createObjectURL( new Blob([xhr.response], { type: '' }) );
                     }
                     else if( xhr.responseType == 'arraybuffer' )
                     {
-                        console.log( "Not displayable, arraybuffer = true" );
+                        //console.log( "Not displayable, arraybuffer = true" );
                         downloadHref = URL.createObjectURL( new Blob([xhr.response], { type: '' }) );
                     }
 
@@ -866,7 +869,7 @@ function loadPageWithProgress( aEl, params, bRefreshPage )
                 viewBlobContent.innerHTML = html;                 
                 var viewBlobModal = new bootstrap.Modal(document.getElementById("viewBlobModal"));
                 viewBlobModal.show(); 
-                console.log( "modalDownloadLink = " + document.getElementById( "modalDownloadLink" ) );
+                //console.log( "modalDownloadLink = " + document.getElementById( "modalDownloadLink" ) );
                 if( document.getElementById( "modalDownloadLink" ) )
                 {
                     document.getElementById( "modalDownloadLink" ).click();  
