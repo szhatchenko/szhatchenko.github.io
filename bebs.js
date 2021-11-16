@@ -856,12 +856,12 @@ function loadPageWithProgress( aEl, params, bRefreshPage )
                             binaryString[i] = String.fromCharCode(uInt8Array[i]);
                         }
                         var data = binaryString.join('');
-                        downloadHref = URL.createObjectURL( new Blob( [ data ] , { type: '' }) );
+                        downloadHref = URL.createObjectURL( new Blob( [ data ], { type: '' }) );
                     }
 
                     //blobSrc = URL.createObjectURL( new Blob([ s2ab( atob( xhr.response ) )], { type: '' }) );
                     //var dlName = fileName ? ' download="' + fileName + '"' : "";
-                    modalBody = '<a id="modalDownloadLink download="' + fileName + '" href="' + downloadHref + '"></a>\
+                    modalBody = '<a id="modalDownloadLink" download="' + fileName + '" href="' + downloadHref + '"></a>\
                        <script>document.getElementById( "modalDownloadLink" ).click();</script>';
                 }
                 else 
