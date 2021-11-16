@@ -852,6 +852,7 @@ function loadPageWithProgress( aEl, params, bRefreshPage )
                     var downloadHref = null;
                     if( xhr.responseType == 'blob' )
                     {
+
                         console.log( "Not displayable, blob = true" );
                         var reader = new FileReader();
                         reader.readAsDataURL( xhr.response ); // convert to Base64, which can be directly put into a tag
@@ -859,11 +860,30 @@ function loadPageWithProgress( aEl, params, bRefreshPage )
                         {
                             downloadHref = e.target.result;
                         };
+
+
+                if( fileName )
+                {
+                    var reader = new FileReader();
+                    reader.readAsDataURL( xhr.response ); // convert to Base64, which can be directly put into a tag
+                    reader.onload = function( e ) 
+                    {
+                        var a = document.createElement( "A" ); // the conversion is complete, creating an a tag for downloading
+                        a.download = fileName;
+                        a.href = e.target.result;
+                        document.body.append( a ); // fix that click cannot be triggered in firebox
+                        a.click();
+                        document.body.remove( a );
+                    };
+                    return;  
+                }
+
+
                     }
                     else if( xhr.responseType == 'arraybuffer' )
                     {
                         console.log( "Not displayable, arraybuffer = true" );
-                        downloadHref = URL.createObjectURL( new Blob(xhr.response, { type: '' }) );
+                        downloadHref = URL.createObjectURL( new Blob([xhr.response], { type: '' }) );
                     }
                     else
                     {
