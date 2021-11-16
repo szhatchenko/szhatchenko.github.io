@@ -748,6 +748,7 @@ function loadPageWithProgress( aEl, params, bRefreshPage )
     xhr.onloadstart = function( e ) 
     {
         var contentType = xhr.getResponseHeader('Content-Type');
+        console.log( "onloadstart: Content-Type: " + contentType );
         if( xhr.responseType != 'blob' && contentType && contentType.indexOf( "text/html" ) != 0 ) 
         {
              var bNotDisplayable = contentType && (
@@ -759,6 +760,7 @@ function loadPageWithProgress( aEl, params, bRefreshPage )
              if( bNotDisplayable )
              {
                  xhr.responseType = 'blob';
+                 console.log( "onloadstart: forcing blob response time" );
              }   
         }
     };
