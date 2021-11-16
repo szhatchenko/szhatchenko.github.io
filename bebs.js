@@ -833,7 +833,7 @@ function loadPageWithProgress( aEl, params, bRefreshPage )
                 var modalBody = null; 
                 if( bNotDisplayable ) // redirect to binary file
                 {
-                    blobSrc = URL.createObjectURL( new Blob([s2ab(atob(data))], { type: '' }) );
+                    blobSrc = URL.createObjectURL( new Blob([ s2ab( atob( xhr.response ) )], { type: '' }) );
                     var dlName = fileName ? ' download="' + fileName + '"' : "";
                     modalBody = '<a id="modalDownloadLink"' + dlName + ' src="' + blobSrc + '"></a>\
                        <script>document.getElementById("modalDownloadLink").click();</script>';
