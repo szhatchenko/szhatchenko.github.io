@@ -782,10 +782,22 @@ function loadPageWithProgress( aEl, params, bRefreshPage )
                 var contentDispo = xhr.getResponseHeader('Content-Disposition');
                 console.log( "Content-Disposition: " + contentDispo );
                 // https://stackoverflow.com/a/23054920/
-                var fileName = contentDispo ? contentDispo.match(/filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/)[1] : null;
+                //var fileName = contentDispo ? contentDispo.match(/filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/)[1] : null;
+                var fileName = "download.bin";
                 if( fileName )
                 {
-                    saveOrOpenBlob( xhr.response, fileName );
+                    var reader = new FileReader();
+                    reader.readAsDataURL( xhr.response ); // convert to Base64, which can be directly put into a tag
+                    reader.onload = function( e ) 
+                    {
+                        var a = document.createElement( "A" ); // the conversion is complete, creating an a tag for downloading
+                        a.download = fileName;
+                        a.href = e.target.result;
+                        document.body.append( a ); // fix that click cannot be triggered in firebox
+                        a.click();
+                        document.body.remove( a );
+                    };
+                    //saveOrOpenBlob( xhr.response, fileName );
                     return;  
                 }
 
