@@ -553,34 +553,6 @@ function paramsAreEqual( obj1, obj2 )
     return true;
 }
 
-/*
-function saveOrOpenBlob(blob, fileName) 
-{
-    window.requestFileSystem = window.requestFileSystem || window.webkitRequestFileSystem;
-    window.requestFileSystem(window.TEMPORARY, 1024 * 1024, function (fs) {
-        fs.root.getFile(fileName, { create: true }, function (fileEntry) {
-            fileEntry.createWriter(function (fileWriter) {
-                fileWriter.addEventListener("writeend", function () {
-                    window.location = fileEntry.toURL();
-                }, false);
-                fileWriter.write(blob, "_blank");
-            }, function () { });
-        }, function () { });
-    }, function () { });
-}
-*/
-
-function s2ab(s) 
-{
-    var buf = new ArrayBuffer(s.length);
-    var view = new Uint8Array(buf);
-    for( var i=0; i!=s.length; ++i )
-    {
-        view[i] = s.charCodeAt(i) & 0xFF;
-    }
-    return buf;
-}
-
 function loadPageWithProgress( aEl, params, bRefreshPage )
 {
     if( document.querySelector( '#dismiss' ).classList.contains('active') )
@@ -821,7 +793,7 @@ function loadPageWithProgress( aEl, params, bRefreshPage )
 
                 if( xhr.getResponseHeader( 'Content-FileName-BE' ) )
                 {
-                    fileName = xhr.getResponseHeader( 'Content-FileName-BE' );
+                    fileName = decodeURI( xhr.getResponseHeader( 'Content-FileName-BE' ) );
                 }
 
                 fileName = fileName.replaceAll( '"', '' );
