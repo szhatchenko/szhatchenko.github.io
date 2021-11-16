@@ -747,7 +747,20 @@ function loadPageWithProgress( aEl, params, bRefreshPage )
     };
     xhr.onloadstart = function( e ) 
     {
-        //console.log( "onloadstart" );
+        var contentType = xhr.getResponseHeader('Content-Type');
+        if( xhr.responseType != 'blob' && contentType && contentType.indexOf( "text/html" ) != 0 ) 
+        {
+             var bNotDisplayable = contentType && (
+                 contentType.indexOf( "application/vnd." ) == 0 ||
+                 contentType.indexOf( "application/msword" ) == 0 ||
+                 contentType.indexOf( "zip" ) > 0
+
+             );
+             if( bNotDisplayable )
+             {
+                 xhr.responseType = 'blob';
+             }   
+        }
     };
     xhr.onreadystatechange = function( e ) 
     {
@@ -789,7 +802,7 @@ function loadPageWithProgress( aEl, params, bRefreshPage )
         {
             var html = null;
             var contentType = xhr.getResponseHeader('Content-Type');
-            if( params.type == 'blob' || contentType && contentType.indexOf( "text/html" ) != 0 ) 
+            if( xhr.responseType == 'blob' || contentType && contentType.indexOf( "text/html" ) != 0 ) 
             {
                 console.log( "Content-Type: " + contentType );
                 var contentDispo = xhr.getResponseHeader('Content-Disposition');
@@ -834,7 +847,7 @@ function loadPageWithProgress( aEl, params, bRefreshPage )
                 if( bNotDisplayable && fileName ) // redirect to binary file
                 {
                     var downloadHref = null;
-                    if( params.type == 'blob' )
+                    if( xhr.responseType == 'blob' )
                     {
                         console.log( "Not displayable, blob = true" );
                         var reader = new FileReader();
@@ -847,7 +860,6 @@ function loadPageWithProgress( aEl, params, bRefreshPage )
                     else
                     {
                         console.log( "Not displayable, converting text to blob" );
-                        xhr.responseType = 'blob';
                         var reader = new FileReader();
                         reader.readAsDataURL( xhr.response ); // convert to Base64, which can be directly put into a tag
                         reader.onload = function( e ) 
