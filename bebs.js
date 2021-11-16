@@ -747,22 +747,6 @@ function loadPageWithProgress( aEl, params, bRefreshPage )
     };
     xhr.onloadstart = function( e ) 
     {
-        var contentType = xhr.getResponseHeader('Content-Type');
-        console.log( "onloadstart: Content-Type: " + contentType );
-        if( xhr.responseType != 'blob' && contentType && contentType.indexOf( "text/html" ) != 0 ) 
-        {
-             var bNotDisplayable = contentType && (
-                 contentType.indexOf( "application/vnd." ) == 0 ||
-                 contentType.indexOf( "application/msword" ) == 0 ||
-                 contentType.indexOf( "zip" ) > 0
-
-             );
-             if( bNotDisplayable )
-             {
-                 xhr.responseType = 'blob';
-                 console.log( "onloadstart: forcing blob response time" );
-             }   
-        }
     };
     xhr.onreadystatechange = function( e ) 
     {
@@ -774,7 +758,7 @@ function loadPageWithProgress( aEl, params, bRefreshPage )
         if( this.readyState == 2 ) // headers received
         {
             var contentType = xhr.getResponseHeader('Content-Type');
-            console.log( "onreadystatechange 2: Content-Type: " + contentType );
+            //console.log( "onreadystatechange 2: Content-Type: " + contentType );
             if( xhr.responseType != 'blob' && contentType && contentType.indexOf( "text/html" ) != 0 ) 
             {
                  var bNotDisplayable = contentType && (
@@ -785,8 +769,8 @@ function loadPageWithProgress( aEl, params, bRefreshPage )
                  );
                  if( bNotDisplayable )
                  {
-                     xhr.responseType = 'blob';
-                     console.log( "onreadystatechange 2: forcing blob response time" );
+                     xhr.responseType = 'arraybuffer';
+                     console.log( "onreadystatechange 2: forcing blob response for " + contentType );
                  }   
             }
 
@@ -875,6 +859,11 @@ function loadPageWithProgress( aEl, params, bRefreshPage )
                         {
                             downloadHref = e.target.result;
                         };
+                    }
+                    else if( xhr.responseType == 'arraybuffer' )
+                    {
+                        console.log( "Not displayable, arraybuffer = true" );
+                        downloadHref = URL.createObjectURL( new Blob(xhr.response, { type: '' }) );
                     }
                     else
                     {
