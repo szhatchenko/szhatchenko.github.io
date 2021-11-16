@@ -831,12 +831,20 @@ function loadPageWithProgress( aEl, params, bRefreshPage )
                 );
 
                 var modalBody = null; 
-                if( bNotDisplayable ) // redirect to binary file
+                if( bNotDisplayable && fileName ) // redirect to binary file
                 {
-                    blobSrc = URL.createObjectURL( new Blob([ s2ab( atob( xhr.response ) )], { type: '' }) );
-                    var dlName = fileName ? ' download="' + fileName + '"' : "";
-                    modalBody = '<a id="modalDownloadLink"' + dlName + ' src="' + blobSrc + '"></a>\
-                       <script>document.getElementById("modalDownloadLink").click();</script>';
+                    var reader = new FileReader();
+                    reader.readAsDataURL( xhr.response ); // convert to Base64, which can be directly put into a tag
+                    var downloadHref = null;
+                    reader.onload = function( e ) 
+                    {
+                        downloadHref = e.target.result;
+                    };
+
+                    //blobSrc = URL.createObjectURL( new Blob([ s2ab( atob( xhr.response ) )], { type: '' }) );
+                    //var dlName = fileName ? ' download="' + fileName + '"' : "";
+                    modalBody = '<a id="modalDownloadLink download="' + fileName + '" href="' + downloadHref + '"></a>\
+                       <script>document.getElementById( "modalDownloadLink" ).click();</script>';
                 }
                 else 
                 {
