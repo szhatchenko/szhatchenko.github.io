@@ -817,6 +817,7 @@ function loadPageWithProgress( aEl, params, bRefreshPage )
                 } 
                 // https://stackoverflow.com/a/23054920/
                 var fileName = contentDispo ? contentDispo.match(/filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/)[1] : "download.bin";
+                console.log( "File name: '" + fileName + "'" );
                 //var fileName = "download.bin";
 
                 var blobSrc = null;
