@@ -870,7 +870,14 @@ function loadPageWithProgress( aEl, params, bRefreshPage )
                         var last = window.beHistory.pop();  
                         last.params.url = last.historyKeyLink; 
                         loadPageWithProgress( last.menuLink, last.params );
-                    } 
+                    }
+                    else
+                    {
+                        var msg = typeof( M_DOWNLOAD_WILL_START_SHORTLY ) != 'undefined' ?  
+                            M_DOWNLOAD_WILL_START_SHORTLY : "Please wait, your file is being downloaded";
+                        document.querySelector( "#mainContent" ).innerHTML =
+                            '<div class="alert alert-primary" role="alert">' + msg + '</div>';
+                    }
                 } 
             }
             else if( [ "logout" ].indexOf( params.url ) != -1 )
@@ -894,7 +901,14 @@ function loadPageWithProgress( aEl, params, bRefreshPage )
         }
         else
         {
-            var text = "Ошибка " + xhr.status + " при загрузке " + xhr.responseURL;
+            var msg1 = typeof( M_ERROR_CODE_WHILE_LOADING ) != 'undefined' ?  
+                M_ERROR_CODE_WHILE_LOADING : "Error code";
+
+            var msg2 = typeof( M_WHILE_LOADING ) != 'undefined' ?  
+                M_WHILE_LOADING : "while loading page from";
+
+            var text = msg1 + " " + xhr.status + " " + msg2 + " " + xhr.responseURL;
+
             document.querySelector( "#mainContent" ).innerHTML = '<div class="alert alert-danger" role="alert">' + text + '</div>';
         }  
     };
