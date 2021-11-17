@@ -562,6 +562,7 @@ function loadPageWithProgress( aEl, params, bRefreshPage )
 
     var customSend = null;
     var formData = null;
+    var formUrlEncoded = null;
     if( params.form )
     {
         var form = params.form; 
@@ -655,8 +656,10 @@ function loadPageWithProgress( aEl, params, bRefreshPage )
         }
         else if( form.id == "rForm" )
         {
-            formData = new FormData();
-            formData.append( params.execOp, "1" );          
+            //formData = new FormData();
+            //formData.append( params.execOp, "1" );          
+            formUrlEncoded = "";
+            formUrlEncoded += encodeURIComponent( params.execOp ) + "=1";
             //console.log( "" + params.execOp + "=1" ); 
             for( var i = 0; i < form.elements.length; i++ )
             {
@@ -669,11 +672,11 @@ function loadPageWithProgress( aEl, params, bRefreshPage )
                 {
                     continue;
                 }
+                var value = input.value;  
                 if( input.name == "_enc_" )
                 {
                     value = "UTF-8";
                 }
-                var value = input.value;  
                 if( input.type == "checkbox" )
                 {
                     if( !input.checked )
@@ -683,12 +686,13 @@ function loadPageWithProgress( aEl, params, bRefreshPage )
 
                     value = input.name.startsWith( "_rec_" ) ? "1" : String( input.checked );
                 }
-                formData.append( input.name, value );
+                formUrlEncoded += "&" + encodeURIComponent( input.name ) + "=" + encodeURIComponent( value );
+                //formData.append( input.name, value );
                 //console.log( "" + input.name + "=" + value ); 
             }
         }
 
-        if( !formData )
+        if( !formData && !formUrlEncoded )
         {
             return false; 
         }  
@@ -866,7 +870,14 @@ function loadPageWithProgress( aEl, params, bRefreshPage )
                         var last = window.beHistory.pop();  
                         last.params.url = last.historyKeyLink; 
                         loadPageWithProgress( last.menuLink, last.params );
-                    } 
+                    }
+                    else
+                    {
+                        var msg = typeof( M_DOWNLOAD_WILL_START_SHORTLY ) != 'undefined' ?  
+                            M_DOWNLOAD_WILL_START_SHORTLY : "Please wait, your file is being downloaded";
+                        document.querySelector( "#mainContent" ).innerHTML =
+                            '<div class="alert alert-primary" role="alert">' + msg + '</div>';
+                    }
                 } 
             }
             else if( [ "logout" ].indexOf( params.url ) != -1 )
@@ -890,7 +901,14 @@ function loadPageWithProgress( aEl, params, bRefreshPage )
         }
         else
         {
-            var text = "Ошибка " + xhr.status + " при загрузке " + xhr.responseURL;
+            var msg1 = typeof( M_ERROR_CODE_WHILE_LOADING ) != 'undefined' ?  
+                M_ERROR_CODE_WHILE_LOADING : "Error code";
+
+            var msg2 = typeof( M_WHILE_LOADING ) != 'undefined' ?  
+                M_WHILE_LOADING : "while loading page from";
+
+            var text = msg1 + " " + xhr.status + " " + msg2 + " " + xhr.responseURL;
+
             document.querySelector( "#mainContent" ).innerHTML = '<div class="alert alert-danger" role="alert">' + text + '</div>';
         }  
     };
@@ -926,44 +944,9 @@ function loadPageWithProgress( aEl, params, bRefreshPage )
 
     var mainContent = document.querySelector( "#mainContent" );  
 
-    if( customSend )
+    var makeRequest = function()
     {
-        customSend( params.form, function()
-        {
-            document.title = params.title;
-            document.querySelector( '#mobileHeaderTitle' ).innerText = params.title;
-            if( aEl )
-            {  
-                document.querySelectorAll( '.nav-link' ).forEach( function( el ) { el.classList.remove( "active" ); });
-                aEl.classList.add( "active" );
-            }  
-
-            if( !window.beHistory || aEl )
-            {
-                window.beHistory = [];  
-            }
-
-            if( params.type != 'blob' )
-            {
-                mainContent.innerHTML = progressBar;
-            }  
-
-            if( formData )
-            {
-                xhr.open( "POST", params.url );
-                //console.log( ...formData );
-                xhr.send( formData );
-            }
-            else
-            {
-                xhr.open( "GET", params.url ); 
-                xhr.send();
-            }
-        });  
-    }
-    else
-    {   
-        document.title = params.title;         
+        document.title = params.title;
         document.querySelector( '#mobileHeaderTitle' ).innerText = params.title;
         if( aEl )
         {  
@@ -981,9 +964,16 @@ function loadPageWithProgress( aEl, params, bRefreshPage )
             mainContent.innerHTML = progressBar;
         }  
 
-        if( formData )
+        if( formUrlEncoded )
         {
+            //console.log( formUrlEncoded ); 
             xhr.open( "POST", params.url ); 
+            xhr.setRequestHeader( 'Content-type', "application/x-www-form-urlencoded; charset=utf-8" ); 
+            xhr.send( formUrlEncoded );
+        }
+        else if( formData )
+        {
+            xhr.open( "POST", params.url );
             //console.log( ...formData );
             xhr.send( formData );
         }
@@ -992,6 +982,15 @@ function loadPageWithProgress( aEl, params, bRefreshPage )
             xhr.open( "GET", params.url ); 
             xhr.send();
         }
+    };
+
+    if( customSend )
+    {
+        customSend( params.form, makeRequest );  
+    }
+    else
+    {   
+        makeRequest(); 
     }
 
     return true;
