@@ -783,7 +783,12 @@ function loadPageWithProgress( aEl, params, bRefreshPage )
             var bWasRedirectedToBlob = false;
             var html = null;
             var contentType = xhr.getResponseHeader('Content-Type');
-            if( xhr.responseType == 'blob' || contentType && contentType.indexOf( "text/html" ) != 0 ) 
+            var bFullPage = false;
+            if( contentType.indexOf( "text/html" ) == 0 && xhr.response )
+            {
+                bFullPage = xhr.response.indexOf( "<html>" ) >= 0 || xhr.response.indexOf( "<HTML>" ) >= 0;
+            }
+            if( bFullPage || xhr.responseType == 'blob' || contentType && contentType.indexOf( "text/html" ) != 0 ) 
             {
                 console.log( "Content-Type: " + contentType );
                 var contentDispo = xhr.getResponseHeader('Content-Disposition');
@@ -832,8 +837,8 @@ function loadPageWithProgress( aEl, params, bRefreshPage )
                     modalBody = '<a id="modalDownloadLink" download="' + fileName + '" href="' + downloadHref + '"></a>';
                 }
                 else 
-                {
-                    blobSrc = URL.createObjectURL( xhr.response );
+                {                       
+                    blobSrc = bFullPage ? xhr.responseURL : URL.createObjectURL( xhr.response );
                     modalBody = '\
                        <iframe class="col-12" frameborder="0" \
                             width="100%" height="' + ( window.innerHeight * 0.87 ) + 'px" \
