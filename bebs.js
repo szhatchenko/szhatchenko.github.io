@@ -553,6 +553,28 @@ function paramsAreEqual( obj1, obj2 )
     return true;
 }
 
+function isDisplayable( contentType )
+{
+    if( !contentType )
+    {
+        return true;
+    }
+
+    if( 
+        contentType.indexOf( "application/vnd." ) == 0 ||
+        contentType.indexOf( "application/msword" ) == 0 ||
+        contentType.indexOf( "application/octet-stream" ) == 0 ||
+        contentType.indexOf( "text/comma-separated-values" ) == 0 ||
+        contentType.indexOf( "text/csv" ) == 0 ||
+        contentType.indexOf( "zip" ) > 0
+    )
+    {
+        return false;
+    }
+
+    return true;
+}
+
 function loadPageWithProgress( aEl, params, bRefreshPage )
 {
     if( document.querySelector( '#dismiss' ).classList.contains('active') )
@@ -737,13 +759,7 @@ function loadPageWithProgress( aEl, params, bRefreshPage )
             //console.log( "onreadystatechange 2: Content-Type: " + contentType );
             if( xhr.responseType != 'blob' && contentType && contentType.indexOf( "text/html" ) != 0 ) 
             {
-                 var bNotDisplayable = contentType && (
-                     contentType.indexOf( "application/vnd." ) == 0 ||
-                     contentType.indexOf( "application/msword" ) == 0 ||
-                     contentType.indexOf( "application/octet-stream" ) == 0 ||
-                     contentType.indexOf( "zip" ) > 0
-
-                 );
+                 var bNotDisplayable = contentType && !isDisplayable( contentType );
                  if( bNotDisplayable )
                  {
                      xhr.responseType = 'arraybuffer';
@@ -811,12 +827,7 @@ function loadPageWithProgress( aEl, params, bRefreshPage )
                 //var fileName = "download.bin";
 
                 var blobSrc = null;
-                var bNotDisplayable = contentType && (
-                    contentType.indexOf( "application/vnd." ) == 0 ||
-                    contentType.indexOf( "application/msword" ) == 0 ||
-                    contentType.indexOf( "application/octet-stream" ) == 0 ||
-                    contentType.indexOf( "zip" ) > 0
-                );
+                var bNotDisplayable = contentType && !isDisplayable( contentType );
 
                 var modalBody = null; 
                 if( bNotDisplayable && fileName ) // redirect to binary file
@@ -883,7 +894,23 @@ function loadPageWithProgress( aEl, params, bRefreshPage )
                         document.querySelector( "#mainContent" ).innerHTML =
                             '<div class="alert alert-primary" role="alert">' + msg + '</div>';
                     }
-                } 
+                }
+                else if( bFullPage )
+                {
+                    if( window.beHistory && window.beHistory.length > 0 )
+                    {                          
+                        var last = window.beHistory.pop();  
+                        last.params.url = last.historyKeyLink; 
+                        loadPageWithProgress( last.menuLink, last.params );
+                    }
+                    else
+                    {
+                        var msg = typeof( M_USE_SEPARATE_WINDOW ) != 'undefined' ?  
+                            M_USE_SEPARATE_WINDOW : "Please follow directions in popup window";
+                        document.querySelector( "#mainContent" ).innerHTML =
+                            '<div class="alert alert-primary" role="alert">' + msg + '</div>';
+                    }
+                }
             }
             else if( [ "logout" ].indexOf( params.url ) != -1 )
             {
