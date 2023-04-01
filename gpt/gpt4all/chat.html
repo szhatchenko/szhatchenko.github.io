@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Gpt4all Chat</title>
+        <style>
+* {
+	box-sizing: border-box;
+}
+
+body {
+	margin: 0;
+	padding: 0;
+	font-family: monospace;
+	background-color: #000;
+	color: #fff;
+}
+
+.shell-container {
+	display: flex;
+	flex-direction: column;
+	height: 100vh;
+	margin: 0 auto;
+	background-color: #000;
+}
+
+.shell-header {
+	background-color: #000;
+	padding: 0.5rem;
+	border-bottom: 1px solid #fff;
+}
+
+.shell-header p {
+	margin: 0;
+	font-size: 1.5rem;
+	text-align: center;
+}
+
+.shell-body {
+	flex-grow: 1;
+	padding: 1rem;
+	overflow: auto;
+}
+
+ul {
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+}
+
+li {
+	margin-bottom: 0.5rem;
+}
+
+.prompt-container {
+	display: flex;
+	align-items: center;
+	margin-bottom: 0.5rem;
+}
+
+.prompt {
+	color: #0f0;
+	margin-right: 0.5rem;
+}
+
+#input-message {
+	flex-grow: 1;
+	padding: 0.5rem;
+	background-color: transparent;
+	border: none;
+	color: #fff;
+	font-size: 1rem;
+	outline: none;
+}
+
+button {
+	background-color: #00f;
+	color: #fff;
+	border: none;
+	padding: 0.5rem;
+	border-radius: 0.25rem;
+	cursor: pointer;
+}
+
+button:hover {
+	background-color: #0cf;
+}
+</style>  
+</head>
+<body>
+	<div class="shell-container">
+		<div class="shell-header">
+			<p>Welcome to AI Chat (gpt4all)</p>
+		</div>
+		<div class="shell-body">
+			<ul id="messages"></ul>
+			<form id="message-form">
+				<div class="prompt-container">
+					<span class="prompt">$</span>
+					<input type="text" id="input-message" autocomplete="off">
+				</div>
+				<button type="submit">Send</button>
+			</form>
+		</div>
+	</div>
+	<script>
+const socket = new WebSocket('ws://' + location.host);
+
+socket.onopen = function(event) {
+  console.log('WebSocket is open now.');
+  const messages = document.getElementById('messages');
+  const li = document.createElement('li');
+  //li.textContent = "Чат инициализируется, немного терпения..."
+  li.textContent = "Chat is initializing, please wait..."
+  messages.appendChild( li );
+};
+
+socket.onmessage = function(event) {
+  const messages = document.getElementById('messages');
+  var respStr = event.data;
+  if( respStr == "[33m" )
+  {
+      respStr = "I'm ready to chat (English language is preferred)."; 
+      const li = document.createElement('li');
+      li.textContent = respStr;
+      messages.appendChild(li);
+      return;
+  }  
+
+  var isFirst = respStr.startsWith( "> [1m[32m[0m" );
+  var isLast = respStr.endsWith( "[0m" );
+
+  respStr = respStr.replace( "> [1m[32m[0m", "" );
+  respStr = respStr.replace( "[0m", "" );
+
+  if( isFirst )
+  {
+      messages.appendChild( document.createElement('hr') );
+  }
+
+  const li = document.createElement('li');
+  li.textContent = respStr;
+  messages.appendChild(li);
+
+  if( isLast )
+  {
+      messages.appendChild( document.createElement('hr') );
+  }
+
+};
+
+document.getElementById('message-form').addEventListener('submit', function(event) {
+  event.preventDefault();
+  const input = document.getElementById('input-message');
+  const messages = document.getElementById('messages');
+  const li = document.createElement('li');
+  li.textContent = "< " + input.value;
+  messages.appendChild( li );
+  socket.send(input.value);
+  input.value = '';
+});
+
+        </script>
+</body>
+</html>

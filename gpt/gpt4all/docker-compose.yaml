@@ -1,0 +1,12 @@
+version: "3"
+services:
+  gpt4all:
+    image: developmentontheedge/gpt4all
+    container_name: gpt4all
+    network_mode: host
+    restart: unless-stopped
+    volumes:
+      - ./models/gpt4all-lora-quantized.bin:/chat/gpt4all-lora-quantized.bin:ro
+      - ./chat.html:/chat/chat.html:ro
+    #command: ./websocketd --staticdir=. --port=9091 ./chat.sh
+    command: ./websocketd --staticdir=. --port=9091 ./chat-avx-f16c-sse3 -t 8 -s 42 --top_p 2 --top_k 160 --n_predict 100 --temp 0.50 --repeat_penalty 1.1 -i -c 5121 --repeat_last_n 128
