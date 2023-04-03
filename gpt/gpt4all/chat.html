@@ -144,6 +144,10 @@ socket.onmessage = function(event) {
   if( isLast )
   {
       messages.appendChild( document.createElement('hr') );
+      window.gptEndTime = new Date().getTime();
+      const li = document.createElement('li');
+      li.textContent = "Took " + Math.round( ( window.gptEndTime - window.gptStartTime ) / 1000 ) + " seconds.";
+      messages.appendChild(li);    
   }
 
 };
@@ -157,6 +161,7 @@ document.getElementById('message-form').addEventListener('submit', function(even
   messages.appendChild( li );
   socket.send(input.value);
   input.value = '';
+  window.gptStartTime = new Date().getTime();
 });
 
         </script>
