@@ -1,0 +1,13 @@
+version: "3"
+services:
+  llama-cpp:
+    image: developmentontheedge/llama.cpp
+    container_name: llama-cpp
+    network_mode: host
+    restart: unless-stopped
+    volumes:
+      - ./chat.html:/chat/chat.html:ro
+      - ./ggml-model-7b-q4_0.bin:/chat/ggml-model-7b-q4_0.bin:ro
+      - ./ggml-model-13b-q4_0.bin:/chat/ggml-model-13b-q4_0.bin:ro
+      - ./ggml-model-30b-q4_1.bin:/chat/ggml-model-30b-q4_1.bin:ro
+    command: ./websocketd --staticdir=. --port=9093 bash
