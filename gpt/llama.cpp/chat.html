@@ -110,7 +110,8 @@ socket.onopen = function(event) {
   const messages = document.getElementById('messages');
   const li = document.createElement('li');
   //li.textContent = "Чат инициализируется, немного терпения..."
-  li.textContent = "Chat is initializing, please wait..."
+  //li.textContent = "Chat is initializing, please wait..."
+  li.textContent = "I'm ready to chat (English language is preferred)."
   messages.appendChild( li );
 };
 
@@ -126,10 +127,11 @@ socket.onmessage = function(event) {
       return;
   }  
 
-  var isFirst = respStr.startsWith( "> [1m[32m[0m" );
+  var isFirst = respStr.indexOf( "[1m[32m[0m" ) != -1; 
   var isLast = respStr.endsWith( "[0m" );
 
-  respStr = respStr.replace( "> [1m[32m[0m", "" );
+  respStr = respStr.replace( "[1m[32m[0m", "" );
+  respStr = respStr.replace( "[33m", "" );
   respStr = respStr.replace( "[0m", "" );
 
   if( isFirst )
