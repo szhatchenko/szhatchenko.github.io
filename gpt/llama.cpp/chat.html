@@ -127,11 +127,10 @@ socket.onmessage = function(event) {
       return;
   }  
 
-  var isFirst = respStr.indexOf( "[1m[32m[0m" ) != -1; 
+  var isFirst = respStr.startsWith( "> [1m[32m[0m" );
   var isLast = respStr.endsWith( "[0m" );
 
-  respStr = respStr.replace( "[1m[32m[0m", "" );
-  respStr = respStr.replace( "[33m", "" );
+  respStr = respStr.replace( "> [1m[32m[0m", "" );
   respStr = respStr.replace( "[0m", "" );
 
   if( isFirst )
