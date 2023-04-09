@@ -19,4 +19,7 @@ services:
       - ./chat.sh:/chat/chat.sh:ro
       - ./chat.html:/chat/chat.html:ro
       - ./models:/chat/models:ro
-    command: ./websocketd --staticdir=. --port=9094 ./chat.sh ggml-vicuna-7b-4bit-rev1.bin
+    #command: ./websocketd --staticdir=. --port=9094 ./chat.sh ggml-vicuna-7b-4bit-rev1.bin
+    command: ./websocketd --staticdir=. --port=9094 ./main-avx-avx2-fma-f16c-sse3 --color -i --interactive-first -r "### Human:" --temp 0 -n -1 --ignore-eos --repeat_penalty 1.2 --instruct -m models/ggml-vicuna-7b-4bit-rev1.bin
+
+

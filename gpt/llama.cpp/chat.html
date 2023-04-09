@@ -118,24 +118,35 @@ socket.onopen = function(event) {
 socket.onmessage = function(event) {
   const messages = document.getElementById('messages');
   var respStr = event.data;
-  if( respStr == "[33m" )
+  if( respStr.indexOf( "[33m" ) == 0 )
   {
-      respStr = "I'm ready to chat (English language is preferred)."; 
+      respStr = "Running Vicuna model."; 
       const li = document.createElement('li');
       li.textContent = respStr;
       messages.appendChild(li);
       return;
   }  
 
-  var isFirst = respStr.startsWith( "> [1m[32m[0m" );
-  var isLast = respStr.endsWith( "[0m" );
+  if( respStr.startsWith( "### Instruction:" ) ) // vicuna
+  {
+      return;  
+  }
+
+  var isFirst = respStr.startsWith( "> [1m[32m[0m" ) || respStr.startsWith( "> " );
+  var isLast = respStr.endsWith( "[0m" ) || respStr.endsWith( "[1m[32m" );
 
   respStr = respStr.replace( "> [1m[32m[0m", "" );
   respStr = respStr.replace( "[0m", "" );
+  respStr = respStr.replace( "[1m[32m", "" );
 
   if( isFirst )
   {
       messages.appendChild( document.createElement('hr') );
+  }
+
+  if( isFirst && respStr.startsWith( "> " ) ) // vicuna
+  {
+     respStr = respStr.substring( 2 );
   }
 
   const li = document.createElement('li');
