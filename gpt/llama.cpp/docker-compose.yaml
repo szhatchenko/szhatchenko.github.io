@@ -8,8 +8,15 @@ services:
     volumes:
       - ./chat.sh:/chat/chat.sh:ro
       - ./chat.html:/chat/chat.html:ro
-      - ./ggml-model-7b-q4_0.bin:/chat/ggml-model-7b-q4_0.bin:ro
-      - ./ggml-model-13b-q4_0.bin:/chat/ggml-model-13b-q4_0.bin:ro
-      - ./ggml-model-30b-q4_1.bin:/chat/ggml-model-30b-q4_1.bin:ro
-    #command: ./websocketd --staticdir=. --port=9093 ./main-avx-avx2-fma-f16c-sse3 -m ggml-model-7b-q4_0.bin --color --interactive-first -t 18 -s 42 --top_p 2 --top_k 160 --n_predict 100 --temp 0.50 --repeat_penalty 1.1 -i -c 5121 --repeat_last_n 128
-    command: ./websocketd --staticdir=. --port=9093 ./chat.sh
+      - ./models:/chat/models:ro
+    command: ./websocketd --staticdir=. --port=9093 ./chat.sh ggml-model-7b-q4_0.bin
+  vicuna:
+    image: developmentontheedge/llama.cpp
+    container_name: vicuna
+    network_mode: host
+    restart: unless-stopped
+    volumes:
+      - ./chat.sh:/chat/chat.sh:ro
+      - ./chat.html:/chat/chat.html:ro
+      - ./models:/chat/models:ro
+    command: ./websocketd --staticdir=. --port=9094 ./chat.sh ggml-vicuna-7b-4bit-rev1.bin
