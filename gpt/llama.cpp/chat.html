@@ -117,7 +117,7 @@ socket.onopen = function(event) {
 
 socket.onmessage = function(event) {
   const messages = document.getElementById('messages');
-  var respStr = event.data;
+  var respStr = event.data.trim();
   if( respStr.indexOf( "[33m" ) == 0 )
   {
       respStr = "Running Vicuna model."; 
@@ -132,10 +132,22 @@ socket.onmessage = function(event) {
       return;  
   }
 
-  var isFirst = respStr.startsWith( "> [1m[32m[0m" ) || respStr.startsWith( "> " );
+  var pats = [ String( ( window.gptQuestion || "" ) + " Выход: " ), 
+               String( ( window.gptQuestion || "" ) + " Ответ: " ),
+               "Output: ", 
+               "Выход: ", 
+               "Ответ: ", 
+               "> [1m[32m[0m", 
+               "> " ];
+
+  var isFirst = false;
+  for( var p in pats )
+  {
+      isFirst = isFirst || respStr.startsWith( pats[ p ] );
+  }
+
   var isLast = respStr.endsWith( "[0m" ) || respStr.endsWith( "[1m[32m" );
 
-  respStr = respStr.replace( "> [1m[32m[0m", "" );
   respStr = respStr.replace( "[0m", "" );
   respStr = respStr.replace( "[1m[32m", "" );
 
@@ -144,9 +156,23 @@ socket.onmessage = function(event) {
       messages.appendChild( document.createElement('hr') );
   }
 
-  if( isFirst && respStr.startsWith( "> " ) ) // vicuna
+  if( isFirst ) // orig llama.cpp
   {
-     respStr = respStr.substring( 2 );
+      for( var p in pats )
+      {
+          if( respStr.startsWith( pats[ p ] ) )
+          { 
+              try
+              {
+                  respStr = respStr.substring( pats[ p ].length );
+              }
+              catch( e )
+              {
+                  console.log( 'Bad pattern: "' + pats[ p ] + '": ' + e.message );
+              }
+              break;
+          }
+      }
   }
 
   const li = document.createElement('li');
@@ -169,9 +195,10 @@ document.getElementById('message-form').addEventListener('submit', function(even
   const input = document.getElementById('input-message');
   const messages = document.getElementById('messages');
   const li = document.createElement('li');
-  li.textContent = "< " + input.value;
+  li.textContent = "> " + input.value;
   messages.appendChild( li );
-  socket.send(input.value);
+  socket.send(input.value.trim());
+  window.gptQuestion = input.value.trim();
   input.value = '';
   window.gptStartTime = new Date().getTime();
 });
