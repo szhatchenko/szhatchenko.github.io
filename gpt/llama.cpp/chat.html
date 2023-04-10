@@ -127,7 +127,7 @@ socket.onmessage = function(event) {
       return;
   }  
 
-  if( respStr.startsWith( "### Instruction:" ) ) // vicuna
+  if( respStr.startsWith( "### Instruction:" ) || respStr == "### Human:" ) // vicuna
   {
       return;  
   }
