@@ -8,4 +8,4 @@ services:
     volumes:
       - ./chat.html:/chat/chat.html:ro
       - ./models:/chat/models:ro
-    command: ./websocketd --staticdir=. --port=9092 ./chat-avx-avx2-fma-f16c-sse3 -m models/ggml-alpaca-7b-q4.bin -t 18 -s 42 --top_p 2 --top_k 160 --n_predict 100 --temp 0.50 --repeat_penalty 1.1 -i -c 5121 --repeat_last_n 128
+    command: ./websocketd --staticdir=. --port=9092 ./chat-avx-avx2-fma-f16c-sse3 -m models/ggml-alpaca-13b-q4.bin -t 18 -s 42 --top_p 2 --top_k 160 --n_predict 100 --temp 0.50 --repeat_penalty 1.1 -i -c 5121 --repeat_last_n 128

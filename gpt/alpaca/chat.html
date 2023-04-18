@@ -157,7 +157,7 @@ document.getElementById('message-form').addEventListener('submit', function(even
   const input = document.getElementById('input-message');
   const messages = document.getElementById('messages');
   const li = document.createElement('li');
-  li.textContent = "< " + input.value;
+  li.textContent = "> " + input.value;
   messages.appendChild( li );
   socket.send(input.value);
   input.value = '';
