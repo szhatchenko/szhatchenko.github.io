@@ -117,7 +117,7 @@ socket.onopen = function(event) {
 
 socket.onmessage = function(event) {
   const messages = document.getElementById('messages');
-  var respStr = event.data.trim();
+  var respStr = String( event.data ).trim();
   if( respStr.indexOf( "[33m" ) == 0 )
   {
       respStr = "Running Vicuna model."; 
@@ -127,7 +127,7 @@ socket.onmessage = function(event) {
       return;
   }  
 
-  if( respStr.startsWith( "### Instruction:" ) || respStr == "### Human:" ) // vicuna
+  if( respStr.startsWith( "### Instruction:" ) ) // vicuna
   {
       return;  
   }
@@ -150,6 +150,7 @@ socket.onmessage = function(event) {
 
   respStr = respStr.replace( "[0m", "" );
   respStr = respStr.replace( "[1m[32m", "" );
+  respStr = respStr.replace( "### Human:", "" );
 
   if( isFirst )
   {
