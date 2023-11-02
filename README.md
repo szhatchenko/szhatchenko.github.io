@@ -1,5 +1,6 @@
 # szhatchenko.github.io
-```
+
+```sh
 Some command
 ```
 
