@@ -1,6 +1,27 @@
 <!DOCTYPE html>
 <html>
 <head>
+
+{% macro video(file) %}
+
+<div class="ratio ratio-4x3">
+<video controls="controls" height="480" width="640">
+<source src="videos/{{ file }}" type="video/mp4" />
+</video>
+</div>
+
+{% endmacro %}
+
+{% macro video_with_poster(poster,file) %}
+
+<div class="ratio ratio-4x3">
+<video controls="controls" poster="videos/posters/{{ poster }}" height="480" width="640">
+<source src="videos/{{ file }}" type="video/mp4" />
+</video>
+</div>
+
+{% endmacro %}
+
 {% comment %} 
 https://getbootstrap.com/docs/4.1/examples/dashboard/
 https://stackoverflow.com/questions/29063244/consistent-styling-for-nested-lists-with-bootstrap
