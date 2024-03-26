@@ -52,19 +52,7 @@ https://www.labnol.org/embed/google/photos/
 <p>
 15 секундное видео залилось на Ютьюб где то за 4 минуты
 
-{% if page.layout == "sidenav5" or page.layout == "travel-report5" %}
-
-<div class="ratio ratio-16x9">
-  <iframe src="https://www.youtube.com/embed/nLofZJOrXNg" allowfullscreen></iframe>
-</div>
-
-{% else %}
-
-<div class="embed-responsive embed-responsive-16by9">
-  <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/nLofZJOrXNg" allowfullscreen></iframe>
-</div>
-
-{% endif %}
+{% include video.html poster="VID_20210131_171300.jpg" file="VID_20210131_171300.mp4" ratio="16x9" %}
 
 </p>
 
