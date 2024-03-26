@@ -1,7 +1,11 @@
 {% if page.layout == "sidenav5" or page.layout == "travel-report5" %}
 
 <div class="ratio ratio-4x3">
-<video controls="controls" poster="videos/posters/{{ include.poster }}" height="480" width="640">
+  {% if include.poster %}
+  <video controls="controls" poster="videos/posters/{{ include.poster }}" height="480" width="640">
+  {% else %}
+  <video controls="controls" height="480" width="640">
+  {% endif %}
 <source src="videos/{{ include.file }}" type="video/mp4" />
 </video>
 </div>
@@ -9,7 +13,11 @@
 {% else %}
 
 <div class="embed-responsive embed-responsive-4by3">
-<video class="embed-responsive-item" controls="controls" poster="videos/posters/{{ include.poster }}" height="480" width="640">
+  {% if include.poster %}
+  <video class="embed-responsive-item" controls="controls" poster="videos/posters/{{ include.poster }}" height="480" width="640">
+  {% else %}
+  <video class="embed-responsive-item" controls="controls" height="480" width="640">
+  {% endif %}
 <source src="videos/{{ include.file }}" type="video/mp4" />
 </video>
 </div>
